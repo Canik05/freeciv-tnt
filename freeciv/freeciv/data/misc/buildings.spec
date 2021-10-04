@@ -114,4 +114,5 @@ tiles = { "row", "column", "tag"
   9,  3, "b.internet"
   9,  4, "b.ecclesiastical_palace"
   9,  5, "b.genghis_khans_equestrian_school"
+  9,  6, "b.shrine"
 }

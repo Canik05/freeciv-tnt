@@ -42,7 +42,7 @@
 	}
 	#game-launcher .game-type {
 		width: 100%;
-		background: url('/images/woodgrey-bg.jpg');
+		background: url('/images/vertplyicenite.jpeg');
 		display: inline-table;
 		top: 0;
     border-radius: 20px 20px 20px 20px;
@@ -52,14 +52,14 @@
 		border: solid 2px #BBA;
     border-radius: 20px 20px 20px 20px;
 		border-bottom: 1 !important;
-		color :#a8a8a8;
+		color :#627ce1;
 	}
 	#game-launcher .header {
-		color: #9d8e5a;
+		color: #e3d276d6;
 		font-family: 'Freeciv', 'Tahoma', 'Arial';
 		padding: 15px;
 		margin-bottom: 0px;
-		background-image: url('/images/bg-odin.jpg');
+		background-image: url('/images/icebg2cool.jpeg');
 		background-repeat: repeat;
 		border: 3px solid #51510c29;
 		border-radius: 25px 25px 0px 0px;
@@ -81,7 +81,7 @@
 	}
 	#game-launcher .btn {
 		display: inline-block;
-		color: #a8a8a8;
+		color: #d3dfec;
 		border: 0;
 		border-radius: 15px 15px 15px 15px;
 		padding: 10px;
@@ -91,7 +91,7 @@
 		font-size: 20px;
 		text-transform: uppercase;
 		margin: 20px auto 10px;
-		background: #000913d1;
+		background: #1e344d4d;
                 5px 5px 10px #26260c, -4px -4px 10px #8e8e5954;
    text-shadow:
     -0.5px -0.5px 0 #000,
@@ -101,9 +101,9 @@
 	}
 	/* overrides the above */
 	#game-launcher .btn {
-    color: ##9d8e5a;
+    color: #d3dfec;
 		text-shadow: 1px 1px #000 !important;
-    color: ##9f9665
+    color: #d3dfec
 	}
 	#game-launcher a.small { width: 130px;	}
 	.multiplayer-games th:last-child { width: 80px; }
@@ -159,15 +159,15 @@
 		background: url('/images/unnamedbk-dk.jpg');
 	}
 	body {
-		color: #a8a8a8;
-  	background-image: url('/images/bg-alt-dark.jpg'); 
+		color: #d2c990;
+  	background-image: url('/images/bg-dark-blue.png'); 
 	}
 	.container {
 		background: none !important;
-		color: #9d8e5a;
+		color: #97a3b7;
 	}
 	.lead {
-		color: #9d8e5a
+		color: #d2c990;
 	}
 	.panel-freeciv {
 		background-color: #ccc1;
@@ -220,7 +220,7 @@
 		<div class="jumbotron">
 			<div class="row">
 
-				<img style="border-radius: 1px 1px 1px 1px; box-shadow: -2px -2px 20px -50px #08375357, -1px 4px 14px 8px #00000059; width:55%" src="/static/images/freeciv-tnt-classic2.png">
+				<img style="border-radius: 1px 1px 1px 1px; box-shadow: -2px -2px 20px -50px #08375357, -1px 4px 14px 8px #00000059; width:65%" src="/static/images/freeciv-val-tnt.png">
 
 			</div>
 			<div class="container-fluid">
@@ -273,10 +273,10 @@
 					<a href="/game/list?v=multiplayer" class="btn"><i class="fa fa-users"></i> <fmt:message key="index-game-launcher-multiplayer"/></a>
 					<c:if test="${default_lang}">
 						<div class="features">
-							Play the revolutionary Valhalla Calls mod with <br> arctic terrain, viking units and Norse gods!
+							Start a play-by-email game where you get an e-mail <br> when it is your turn to play. Make your moves then end turn.
 						</div>
 					</c:if>
-					<a href="https://val.tacticsandtriumph.com" class="btn"><i class="fa fa-bolt"></i> Valhalla </a>
+					<a href="/webclient/?action=pbem&type=pbem" class="btn"><i class="fa fa-envelope"></i> <fmt:message key="index-game-launcher-play-by-email"/></a>
 					
 				</div>
 			</div>
@@ -287,7 +287,7 @@
 			<div id="statistics" class="row">
 				<div class="col-md-12">
 					<div class="panel-freeciv statistics">
-						<h4 style="color:#a8a8a8"><span id="statistics-singleplayer"><b></b></span> <fmt:message key="index-stats-singleplayer"/> <span id="statistics-multiplayer"><b></b></span> <fmt:message key="index-stats-multiplayer"/><br>
+						<h4 style="color:#82a5b9"><span id="statistics-singleplayer"><b>0</b></span> <fmt:message key="index-stats-singleplayer"/> <span id="statistics-multiplayer"><b>0</b></span> <fmt:message key="index-stats-multiplayer"/><br>
 						<fmt:message key="index-stats-since"/></h4>
 
 					</div>
@@ -305,7 +305,7 @@
 						<table class="table multiplayer-games">
 							<thead>
 								<tr>
-									<th>Game name</th>
+									<th>Game Name</th>
 									<th class="hidden-xs">State</th>
 									<th>Turn</th>
 									<th>Players</th>
@@ -315,7 +315,7 @@
 							<tbody>
 								<c:forEach items="${games}" var="game">
 									<tr class="${game.players > 0 && state == 'Pregame' ? 'highlight' : ''}">
-										<td style="color:#a89a55">
+										<td style="color:#ccc77d">
 										    <b>
 											  ${fn:replace(game.message, 'LongTurn', ' One Turn per Day ')}
 											</b>
@@ -447,7 +447,7 @@
 					<div class="panel-freeciv">
 						<h4><fmt:message key="index-contributing"/></h4>
 						Freeciv is open source software released under the GNU General Public License.
-						<a href="https://github.com/Canik05/fcw.org-server"><fmt:message key="index-developers"/></a> and Artists are welcome to join development.
+						<a href="https://github.com/Canik05/tnt.com-server"><fmt:message key="index-developers"/></a> and Artists are welcome to join development.
 					</div>
 				</div>
 				<div class="col-md-4">
@@ -473,8 +473,8 @@
 					<div class="panel-freeciv">
 						<h4><fmt:message key="index-credits"/></h4>
 						<ul>
-							<li>TnT Admin - Canik <i class="fa fa-github"></i>  <a href="https://github.com/Canik05">@Canik05</a></li>
-							<li>Andreas R&oslash;sdal <i class="fa fa-twitter"></i>  <a href="https://github.com/andreasrosdal/">@andreasrosdal</a></li>
+							<li>Canik - TnT Admin <i class="fa fa-github"></i>  <a href="https://github.com/Canik05">@Canik05</a></li>
+                                                        <li>Andreas R&oslash;sdal <i class="fa fa-twitter"></i>  <a href="https://github.com/andreasrosdal/">@andreasrosdal</a></li>
 							<li>Lexxie L. <i class="fa fa-github"></i>  <a href="https://github.com/Lexxie9952/">@lexxie9952</a></li>
 							<li>Sveinung Kvilhaugsvik <i class="fa fa-github"></i>  <a href="https://github.com/kvilhaugsvik">@kvilhaugsvik</a></li>
 							<li>Marko Lindqvist <i class="fa fa-github"></i>  <a href="https://github.com/cazfi">@cazfi</a></li>

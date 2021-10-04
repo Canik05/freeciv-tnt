@@ -610,51 +610,6 @@ flags         = "Unreachable", "DoesntOccupyTile", "Airliftable"
 ;
 ; */ <-- avoid gettext warnings
 
-[unit_neolithic_settlers]
-name          = _("Neolithic Settlers")
-class         = "Land"
-tech_req      = "None"
-obsolete_by   = "None"
-graphic       = "u.neolithic"
-graphic_alt   = "u.settlers"
-sound_move    = "m_settlers"
-sound_move_alt = "m_generic"
-sound_fight   = "f_settlers"
-sound_fight_alt = "f_generic"
-build_cost    = 40
-pop_cost      = 1
-city_size     = 2
-attack        = 0
-defense       = 1
-hitpoints     = 10
-firepower     = 1
-move_rate     = 1
-vision_radius_sq = 8
-transport_cap = 0
-fuel          = 0
-uk_happy      = 0
-uk_shield     = 1
-uk_food       = 1
-uk_gold       = 0
-flags         = "Settlers", "IgTer", "Infra", "CanRoad", "CanFortress", "NonMil", "HasNoZOC", "AddToCity", "Cities", "Cant_Fortify", "Expellable", "NoBuild"
-; No veteran levels (level name is never displayed)
-veteran_names = _("green")
-veteran_base_raise_chance = 0
-veteran_work_raise_chance = 0
-veteran_power_fact = 100
-veteran_move_bonus = 0
-roles         = "FerryStartUnit"
-hut_behavior  = "Normal"
-helptext      = _("\
-Neolithic Settlers are 'Starter' Settlers only.\
-"), _("\
-They Ignore Terrain movement costs, have 1 2/3 moves\
-(effectively 5 moves no matter the land type) until\
-your first city is built then they have 1 1/3 moves\
-"), _("\
-Cannot be built. Only have 10 HP. Can Join City.\
-")
-
 [unit_settlers]
 name          = _("Settlers")
 class         = "Land"
@@ -688,7 +643,6 @@ veteran_work_raise_chance = 0
 veteran_power_fact = 100
 veteran_move_bonus = 0
 roles         = "CitiesStartUnit"
-hut_behavior  = "Normal"
 helptext      = _("\
 Settlers are your only means of founding new cities.\
 "), _("\
@@ -700,65 +654,6 @@ Upkeep for Settlers costs food as well as production. A Settler\
  Republic, Democracy, or Fundamentalist nation require twice as\
  much food per turn.\
 ")
-
-[unit_loki]
-name          = _("Loki")
-class         = "Land"
-tech_req      = "Railroad"
-impr_req      = "Voyage of Darwin"
-obsolete_by   = "None"
-graphic       = "u.loki"
-graphic_alt   = "-"
-sound_move    = "m_spy"
-sound_move_alt = "m_generic"
-sound_fight   = "f_spy"
-sound_fight_alt = "f_generic"
-build_cost    = 75
-pop_cost      = 0
-attack        = 1
-defense       = 1
-hitpoints     = 10
-firepower     = 3
-move_rate     = 5
-vision_radius_sq = 8
-transport_cap = 0
-fuel          = 0
-min_speed     = 2
-uk_happy      = 1
-uk_shield     = 1
-uk_food       = 0
-uk_gold       = 1
-;convert_to    =
-embarks       = "LandRoad", "LandRail", "Helicopter"    ; transport helicopter only
-disembarks    = "LandRoad", "LandRail", "Helicopter"
-targets       = "LandRail"
-flags         = "Unique", "CanEscape", "CanHide", "HasNoZOC", "Expellable", "NonMilAttack", "Diplomat", "Spy",
-                "IgZOC", "MultiSlot", "Capturer", "WillNever", "EvacuateFirst"
-veteran_names =
-  _("?spy_level:informant"),
-  _("?spy_level:handler"),
-  _("?spy_level:agent"),
-  _("?spy_level:operative"),
-  _("?spy_level:secret agent"),
-  _("?spy_level:neutralizer"),
-  _("?spy_level:spymaster")
-  
-veteran_base_raise_chance = 50, 33, 20, 15, 15, 15, 0
-veteran_work_raise_chance = 0, 0, 0, 0, 0, 0, 0
-veteran_power_fact = 100, 110, 115, 120, 125, 130, 135
-veteran_move_bonus = 0, 0, 0, 0, 0, 0, 0
-roles         = "DefendOk"
-hut_behavior  = "Normal"
-helptext      = _("\
-A unique unit that has all spy abilities, +4 vision,\n\
- can escape stack kills, can hideout, ignores ZoC, can't fortify.\n\
- Can Teleport (Paradrop) 3 tiles from any land. No city required.\n\
- Requires and consumes 3 moves. Can Capture. Can Hide. Can Escape.\
-"),_("\ Costs 1 shield and 1 gold upkeep per turn.\
-")
-paratroopers_range = 3
-paratroopers_mr_req = 3
-paratroopers_mr_sub = 3
 
 [unit_tribesmen]
 name          = _("?unit:Tribesmen")
@@ -778,7 +673,7 @@ defense       = 1
 hitpoints     = 5
 firepower     = 1
 move_rate     = 2
-vision_radius_sq = 6
+vision_radius_sq = 4
 transport_cap = 0
 fuel          = 0
 uk_happy      = 0
@@ -793,7 +688,6 @@ veteran_work_raise_chance = 0
 veteran_power_fact = 100
 veteran_move_bonus = 0
 roles         = "DefendGoodStartUnit"  ; re-purposed from Phalanx
-hut_behavior  = "Normal"
 helptext      = _("\
 Tribesmen are ancestors whose contributions are forgotten\
  in the sands of time. Tribesmen help new nations by disbanding,\
@@ -826,9 +720,9 @@ vision_radius_sq = 4
 transport_cap = 0
 fuel          = 0
 uk_happy      = 0
-uk_shield     = 4
+uk_shield     = 5
 uk_food       = 2
-uk_gold       = 3
+uk_gold       = 2
 flags         = "Settlers", "Infra", "NonMil", "HasNoZOC", "Cant_Fortify", "Unique", "Well-Digger", "Expellable"
 embarks       = "LandRoad"
 disembarks    = "LandRoad"
@@ -839,13 +733,12 @@ veteran_work_raise_chance = 0
 veteran_power_fact = 100
 veteran_move_bonus = 0
 roles         = "AttackFastStartUnit"     ;this role taken over for well-digger
-hut_behavior  = "Normal"
 helptext      = _("\
 This unit can fix unlucky starts, but has very high upkeep.\ 
  If you have no water, make a Well-Digger in a city that can\
  support it, create a water source, then disband the unit.\n\
  This unit can dig wells; or irrigate any lowland tile. It will cost its home city\
- -2 Food -3 Gold -4 Prod. This unit WILL NOT WORK: • Outside your borders,\
+ -2 Food -2 Prod. This unit WILL NOT WORK: • Outside your borders,\
  • After Alphabet or Pottery, • After any player discovers Writing, • After 10 turns.\
  >> Don't fool around: high upkeep will permanently hinder you. Only make this unit if you\
  lack water when the game starts!\
@@ -888,7 +781,6 @@ veteran_work_raise_chance = 0
 veteran_power_fact = 100
 veteran_move_bonus = 1
 roles         = "Settlers"
-hut_behavior  = "Normal"
 helptext      = _("\
 Proletarians can only be controlled by Communist governments.\
 "), _("\
@@ -983,7 +875,6 @@ veteran_work_raise_chance = 0, 0, 0, 0
 veteran_power_fact = 100, 100, 100, 100
 veteran_move_bonus = 0, 1, 1, 1
 roles         = "Settlers", "WorkerStartUnit"
-hut_behavior  = "Normal"
 helptext      = _("\
 Workers can improve terrain tiles. See the manual on Terrain for details.\
 "), _("\
@@ -1030,7 +921,6 @@ veteran_work_raise_chance = 0
 veteran_power_fact = 100
 veteran_move_bonus = 0
 roles         = "Settlers", "WorkerStartUnit"
-hut_behavior  = "Normal"
 helptext      = _("\
 Engineers can do everything Workers can do, at twice the speed.\
  Unlike Workers, Engineers can Transform, such as converting\
@@ -1068,7 +958,6 @@ embarks       = "LandRoad", "LandRail", "Helicopter"    ; transport helicopter o
 disembarks    = "LandRoad", "LandRail", "Helicopter"
 flags         = "FootSoldier", "CantReachAir", "Settlers", "CanHide", "MultiSlot", "Shield2Gold", "WillNever"
 roles         = "DefendOk", "DefendOkStartUnit", "FirstBuild", "Hut"
-hut_behavior  = "Normal"
 helptext      = _("\
 The Warrior is the weakest military unit, but can also be very cost effective.\
 ")
@@ -1102,7 +991,6 @@ embarks       = "LandRoad", "LandRail", "Helicopter"    ; transport helicopter o
 disembarks    = "LandRoad", "LandRail", "Helicopter"
 flags         = "FootSoldier", "CantReachAir", "Settlers", "CanHide", "MultiSlot", "Shield2Gold", "WillNever"
 roles         = "DefendGood", "FirstBuild", "HutTech"
-hut_behavior  = "Normal"
 helptext      = _("\
 The Phalanx is armored infantry, suitable for defending your cities. It offers good value\
  for defending.\
@@ -1137,7 +1025,6 @@ embarks       = "LandRoad", "LandRail", "Helicopter"    ; transport helicopter o
 disembarks    = "LandRoad", "LandRail", "Helicopter"
 flags         = "FootSoldier", "Capturer", "CantReachAir", "Bombarder", "Settlers", "CanHide", "MultiSlot", "Shield2Gold", "WillNever"
 roles         = "DefendOk", "DefendOkStartUnit"
-hut_behavior  = "Normal"
 helptext      = _("\
 Archers fight with bows and arrows. They have good offense and decent defense.\
  Rather than fight to the death, Archers can also do a Ranged Attack with no risk\
@@ -1179,7 +1066,6 @@ disembarks    = "LandRoad", "LandRail", "Helicopter"
 flags         = "FootSoldier", "Settlers", "CanHide", "Infra", "CanRoad", "CanFortress", "Capturer",
                 "CantReachAir", "MultiSlot", "Shield2Gold", "WillNever"
 roles         = "DefendOk", "DefendOkStartUnit", "BarbarianBuild", "BarbarianSea"
-hut_behavior  = "Normal"
 helptext      = _("\
 Legions are heavily armed well disciplined soldiers with excellent offensive strength.\
  They are famous and feared for their engineering abilities: with the required\
@@ -1220,7 +1106,6 @@ bonuses       =
    }
 flags         = "FootSoldier", "CantReachAir", "Settlers", "CanHide", "MultiSlot", "Shield2Gold", "WillNever"
 roles         = "DefendGood", "DefendGoodStartUnit", "FirstBuild"
-hut_behavior  = "Normal"
 helptext      = _("\
 Equipped with long pikes and a 2× defence bonus against\
  mounted units, Pikemen replace the Phalanx as the\
@@ -1258,7 +1143,6 @@ targets       = "LandRail"
 flags         = "FootSoldier", "Capturer", "CantReachAir", "Settlers", "CanHide", "MultiSlot", "Shield2Gold", "WillNever"
 roles         = "DefendGood", "DefendGoodStartUnit", "FirstBuild",
                 "BarbarianTech", "BarbarianBuildTech", "BarbarianSeaTech"
-hut_behavior  = "Normal"
 helptext      = _("\
 Musketeers are infantry equipped with early\
  firearms and replace Pikemen as the preferred\
@@ -1298,7 +1182,6 @@ targets       = "Balloon", "Helicopter", "LandRail"
 flags         = "Fanatic", "FootSoldier", "Capturer", "CantReachAir", "Unbribable", "Bombarder",
                 "Settlers", "CanHide", "MultiSlot", "Shield2Gold", "WillNever"
 roles         = "DefendGood", "DefendGoodStartUnit"
-hut_behavior  = "Normal"
 helptext      = _("\
 Fanatics are warriors devoted to a higher cause. Their faith\
  is strong and they cannot be bribed.\
@@ -1349,7 +1232,6 @@ flags         = "MultiSlot", "IgTer", "IgZOC", "NoHome", "FootSoldier", "Capture
                 "Shield2Gold", "Settlers", "CanHide", "WillNever"
 ;yes Partisan has 0 upkeep so Shield2Gold is meaningless, but currently used to substitute MultiSlot inaccessible in c-server
 roles         = "DefendGood", "DefendGoodStartUnit", "Partisan", "BarbarianTech"
-hut_behavior  = "Normal"
 helptext      = _("\
 Partisans are guerilla fighters who can use the terrain to their advantage.  Like the Explorer\
  that they upgrade, they can slip through ZOC and live off the land with no upkeep.\
@@ -1393,7 +1275,6 @@ disembarks    = "LandRoad", "LandRail", "Helicopter"
 targets       = "Balloon", "Helicopter", "LandRail"
 flags         = "MultiSlot", "IgTer", "FootSoldier", "Capturer", "CantReachAir", "Shield2Gold", "Settlers", "CanHide", "WillNever"
 roles         = "DefendGood", "DefendGoodStartUnit"
-hut_behavior  = "Normal"
 helptext      = _("\
 Alpine Troops are highly mobile units and\
  excellent defenders.  Similar to an Explorer, they\
@@ -1434,7 +1315,6 @@ disembarks    = "LandRoad", "LandRail", "Helicopter"
 targets       = "Balloon", "Helicopter", "LandRail"
 flags         = "MultiSlot", "FootSoldier", "Capturer", "CantReachAir", "Shield2Gold", "Settlers", "CanHide", "WillNever"
 roles         = "DefendGood", "DefendGoodStartUnit", "FirstBuild"
-hut_behavior  = "Normal"
 helptext      = _("\
 Riflemen are World War-era infantry. They are good at defending cities and\
  strategic Fortresses. They also have good attack capability.\ 
@@ -1488,7 +1368,6 @@ veteran_work_raise_chance = 0, 0, 0, 0, 0, 0, 0
 veteran_power_fact = 100, 150, 175, 250, 300, 350, 400
 veteran_move_bonus = 0, 0, 0, 1, 1, 1, 1
 roles         = "DefendOk", "DefendOkStartUnit", "BarbarianSeaTech"
-hut_behavior  = "Normal"
 helptext      = _("\
 Marines are experts at all-terrain warfare. They are the strongest\
  foot unit in the game, and are armed with diverse weaponry.\n\
@@ -1534,7 +1413,6 @@ targets       = "Balloon", "Helicopter", "LandRail"
 flags         = "Paratroopers", "FootSoldier", "Capturer", "CantReachAir", "Provoking",
                 "Shield2Gold", "MultiSlot", "Settlers", "CanHide", "WillNever"
 roles         = "DefendOk", "DefendOkStartUnit"
-hut_behavior  = "Normal"
 helptext      = _("\
 Paratroopers are experts at airborne attacks.\
  From a friendly city or airbase, Paratroopers who have not used any\
@@ -1581,7 +1459,6 @@ embarks       = "Helicopter"    ; transport helicopter only
 targets       = "Balloon", "Helicopter", "LandRail"
 flags         = "CantReachAir", "Shield2Gold", "MultiSlot", "WillNever"
 roles         = "DefendGood", "DefendGoodStartUnit"
-hut_behavior  = "Normal"
 helptext      = _("\
 Mechanized Infantry have the strongest general defense strength of any land unit.\
  They have decent attack strength in open field engagements, and excellent mobility.\
@@ -1616,7 +1493,6 @@ uk_food       = 0
 uk_gold       = 0
 flags         = "Horse", "CantReachAir", "WillNever"
 roles         = "AttackFastStartUnit", "Barbarian", "Hunter"
-hut_behavior  = "Normal"
 helptext      = _("\
 Horsemen are mounted warriors and an early shock-troop that can penetrate deep into\
  enemy territory.\
@@ -1649,7 +1525,6 @@ uk_food       = 0
 uk_gold       = 0
 flags         = "Horse", "Capturer", "CantReachAir", "WillNever"
 roles         = "AttackFastStartUnit", "Hunter"
-hut_behavior  = "Normal"
 helptext      = _("\
 Chariots are horse-pulled war wagons, stronger but more expensive than horsemen.\
 ")
@@ -1681,7 +1556,6 @@ uk_food       = 0
 uk_gold       = 0
 flags         = "Horse", "Capturer", "CantReachAir", "WillNever"
 roles         = "AttackFastStartUnit"
-hut_behavior  = "Normal"
 helptext      = _("\
 Elephants are towering animals trained for war. Their mobility and formidable\
  attack strength make them excellent for offensive engagements, but they\
@@ -1715,7 +1589,6 @@ uk_food       = 0
 uk_gold       = 0
 flags         = "Horse", "Capturer", "CantReachAir", "WillNever"
 roles         = "AttackFastStartUnit"
-hut_behavior  = "Normal"
 helptext      = _("\
 Crusaders are mounted warriors driven by a higher cause.\
  They have superior attack to Knights, but are poor at defending.\
@@ -1755,7 +1628,6 @@ bonuses       =
 flags         = "Horse", "Capturer", "CantReachAir", "WillNever"
 roles         = "AttackFastStartUnit", "BarbarianTech",
                 "BarbarianBuildTech", "BarbarianSeaTech", "Hunter"
-hut_behavior  = "Normal"
 helptext      = _("\
 Knights are heavily armored mounted warriors. They defend at D:3 against mounted units.\
  They defend at D:2 against foot units. They defend at D:1 against everything else.\
@@ -1790,7 +1662,6 @@ uk_gold       = 0
 targets       = "LandRail"
 flags         = "Horse", "Capturer", "CantReachAir", "WillNever"
 roles         = "AttackFastStartUnit", "BarbarianBuildTech", "BarbarianSeaTech", "Hunter"
-hut_behavior  = "Normal"
 helptext      = _("\
 Dragoons are mounted warriors carrying early firearms.\
  Being the first highly mobile gunpowder unit, they are\
@@ -1830,7 +1701,6 @@ bonuses       =
    }
 flags         = "Capturer", "CantReachAir", "WillNever"
 roles         = "AttackFastStartUnit", "Hunter"
-hut_behavior  = "Normal"
 helptext      = _("\
 The combination of mobility and superior attack strength make Cavalry\
  the most feared offensive unit in their era.\
@@ -1866,7 +1736,6 @@ embarks       = "Helicopter"    ; transport helicopter only
 targets       = "Balloon", "Helicopter", "LandRail"
 flags         = "CantReachAir", "FortBuster", "WillNever"
 roles         = "AttackFastStartUnit", "Hunter"
-hut_behavior  = "Normal"
 helptext      = _("\
 Armor is the mechanized equivalent of a Cavalry unit. They have high attack strength,\
  superb mobility, and the highest defense of any offensive unit. They are massive all-terrain\
@@ -1908,7 +1777,6 @@ bonuses       =
    }
 flags         = "CantReachAir", "FortressBuster", "NeverBlocked", "WillNever"
 roles         = "AttackFastStartUnit", "Hunter"
-hut_behavior  = "Frighten"
 helptext      = _("\
 Armor II is the ultra-modern upgrade to Armor. It features high tech composite armor and\
  electronic countermeasures (ECM). Forts and Fortresses gain no bonus against\
@@ -1944,7 +1812,6 @@ uk_food       = 0
 uk_gold       = 0
 flags         = "CantReachAir", "WillNever"
 roles         = ""
-hut_behavior  = "Normal"
 helptext      = _("\
 Catapults are war machines that hurl massive rocks to crush\
  and break their targets. They are strong attackers but equally\
@@ -1981,7 +1848,6 @@ disembarks    = "Helicopter"
 targets       = "LandRail"
 flags         = "CantReachAir", "WillNever"
 roles         = "BarbarianTech", "BarbarianBuildTech"
-hut_behavior  = "Normal"
 helptext      = _("\
 Cannons are huge guns that fire heavy metallic projectiles. They are strong\
  attackers but weak defenders, so they need an escort to be effective.\
@@ -1992,7 +1858,7 @@ name          = _("Artillery")
 class         = "Land"
 tech_req      = "Machine Tools"
 obsolete_by   = "Howitzer"
-graphic       = "u.artillery"
+graphic       = "u.artillery_o"
 graphic_alt   = "-"
 sound_move    = "m_artillery"
 sound_move_alt = "m_generic"
@@ -2017,7 +1883,6 @@ disembarks    = "Helicopter"
 targets       = "Balloon", "LandRail"
 flags         = "CantReachAir", "WillNever"
 roles         = ""
-hut_behavior  = "Normal"
 helptext      = _("\
 Artillery are a major upgrade to Cannons, with doubled firepower. They are\
  superb attackers but poor at defense. They need an escort to be effective.\
@@ -2060,7 +1925,6 @@ bonuses       =
    }
 flags         = "NeverBlocked", "AntiAir", "Marines", "WillNever", "TransportDefender"
 roles         = ""
-hut_behavior  = "Normal"
 helptext      = _("\
 Anti-Aircraft Artillery (AAA) can attack almost anything from anywhere. AAA get a\
  2× bonus against Air units. AAA qualify as weaponry for Marines and have the same\
@@ -2109,7 +1973,6 @@ bonuses       =
    }
 flags         = "NeverBlocked", "AntiAir", "WillNever"
 roles         = ""
-hut_behavior  = "Frighten"
 helptext      = _("\
 The Mobile SAM is the strongest Anti-Air unit on the ground. It can\
  attack nearby aircraft. It has a 2× bonus against all Air units. The\
@@ -2125,8 +1988,8 @@ name          = _("Howitzer")
 class         = "Land"
 tech_req      = "Robotics"
 obsolete_by   = "None"
-graphic       = "u.howitzer"
-graphic_alt   = "u.howitzer_o"
+graphic       = "u.howitzer_o"
+graphic_alt   = "u.howitzer"
 sound_move    = "m_howitzer"
 sound_move_alt = "m_generic"
 sound_fight   = "f_howitzer"
@@ -2150,7 +2013,6 @@ disembarks    = "Helicopter"
 targets       = "Balloon", "LandRail"
 flags         = "CantReachAir", "WillNever"
 roles         = ""
-hut_behavior  = "Frighten"
 helptext      = _("\
 Howitzers are upgraded Artillery with significant increase in mobility and attack strength. They can fire over city walls, ignoring their effect.\
 ")
@@ -2188,7 +2050,6 @@ veteran_work_raise_chance = 0
 veteran_power_fact = 100
 veteran_move_bonus = 0
 roles         = ""
-hut_behavior  = "Nothing"
 helptext      = _("\
 Balloons gather intel on potential battle areas. They have great vision and\
  are unreachable by units prior to Riflemen and Ironclads. They can stay in\
@@ -2233,7 +2094,6 @@ veteran_work_raise_chance = 0
 veteran_power_fact = 100
 veteran_move_bonus = 0
 roles         = ""
-hut_behavior  = "Nothing"
 cargo         = "Land"
 helptext      = _("\
 Airplanes can carry a single diplomatic unit. They can land in any domestic or allied\
@@ -2288,7 +2148,6 @@ veteran_work_raise_chance = 0, 0, 0, 0, 0, 0, 0
 veteran_power_fact = 100, 150, 175, 200, 210, 220, 230
 veteran_move_bonus = 0, 0, 0, 0, 9, 9, 9
 roles         = ""
-hut_behavior  = "Nothing"
 helptext      = _("\
 Fighters are the first offensive Air units. Their superior mobility and firepower alter\
  the very nature of warfare. They can move anywhere and attack any unit (except Submarines\
@@ -2344,7 +2203,6 @@ veteran_work_raise_chance = 0, 0, 0, 0, 0, 0, 0
 veteran_power_fact = 100, 150, 175, 200, 210, 220, 230
 veteran_move_bonus = 0, 0, 0, 0, 9, 9, 9
 roles         = ""
-hut_behavior  = "Nothing"
 helptext      = _("\
 Escort Fighters are large fighters with high fuel capacity. Higher mass and\
  stronger construction allow them to absorb more damage. They do not attack\
@@ -2411,7 +2269,6 @@ veteran_work_raise_chance = 0, 0, 0, 0, 0, 0, 0
 veteran_power_fact = 100, 150, 175, 200, 210, 220, 230
 veteran_move_bonus = 0, 0, 0, 0, 9, 9, 9
 roles         = ""
-hut_behavior  = "Frighten"
 helptext      = _("\
 Dive Bombers are like Fighters but fitted for Ground Attack and Sea combat. Range\
  is reduced by heavy armor and armaments which help in attacking surface targets\
@@ -2476,7 +2333,6 @@ veteran_work_raise_chance = 0, 0, 0, 0, 0, 0, 0
 veteran_power_fact = 100, 150, 175, 200, 210, 220, 230
 veteran_move_bonus = 0, 0, 0, 0, 9, 9, 9
 roles         = ""
-hut_behavior  = "Frighten"
 helptext      = _("\
 The Medium Bomber is well suited for moderately strong targets or multiple weak targets.\
  It may not attack other Air units. It is a Soft Field Unit and can't carry Bomb\
@@ -2534,7 +2390,6 @@ veteran_work_raise_chance = 0, 0, 0, 0, 0, 0, 0
 veteran_power_fact = 100, 150, 175, 200, 210, 220, 230
 veteran_move_bonus = 0, 0, 0, 0, 9, 9, 9
 roles         = ""
-hut_behavior  = "Frighten"
 helptext      = _("\
 Heavy Bombers are large and sturdy Bombers with larger payload and numerous gunner defense stations.\
  They are excellent for hitting strong well-defended ground targets.\
@@ -2592,7 +2447,6 @@ veteran_work_raise_chance = 0, 0, 0, 0, 0, 0, 0
 veteran_power_fact = 100, 150, 175, 200, 210, 220, 230
 veteran_move_bonus = 0, 0, 0, 0, 9, 9, 9
 roles         = ""
-hut_behavior  = "Frighten"
 helptext      = _("\
 The Strategic Bomber offers a small improvement in attack. Higher altitude offers a good upgrade in\
  defense. It has considerably longer range, with one more turn of fuel. May carry two Bombs.\
@@ -2634,7 +2488,6 @@ veteran_work_raise_chance = 0
 veteran_power_fact = 100
 veteran_move_bonus = 0
 roles         = ""
-hut_behavior  = "Nothing"
 helptext      = _("\
 The AWACS has great fuel capacity for long range flights, and advanced radar that can determine\
  the location of enemy units over a wide area. The AWACS has 2 turns of fuel.\
@@ -3120,7 +2973,7 @@ uk_food       = 0
 uk_gold       = 0
 cargo         = "Land", "LandNoKill", "LandAirSea", "LandRoad"
 flags         = "BadCityDefender", "HelpWonder", "TradeRoute", "CoastStrict", "NonMil", "HasNoZOC"
-roles         = "Ferryboat"
+roles         = "Ferryboat", "FerryStartUnit"
 helptext      = _("\
 Boats were used pre-historically for exploration,\
  transport, and interaction with other tribes. They\
@@ -3160,7 +3013,7 @@ uk_gold       = 0
 cargo         = "Land", "LandNoKill", "LandAirSea", "LandRoad"
 flags         = "BadCityDefender", "CantReachAir", "HelpWonder",
                 "TradeRoute", "Coast", "WillNever", "NonMil", "NonMilAttack"
-roles         = "Ferryboat"
+roles         = "Ferryboat", "FerryStartUnit"
 helptext      = _("\
 Triremes are used for exploration, transport, and Commerce.\
  The entry on Caravan explains what Commerce units may do.\
@@ -3239,7 +3092,7 @@ uk_gold       = 0
 cargo         = "Land", "LandNoKill", "LandAirSea", "LandRoad"
 flags         = "BadCityDefender", "CantReachAir", "HelpWonder",
                 "Traderoute", "Only_Native_Attack", "WillNever", "NonMil", "NonMilAttack"
-roles         = "Ferryboat", "BarbarianBoat"
+roles         = "Ferryboat", "FerryStartUnit", "BarbarianBoat"
 helptext      = _("\
 The Galley is an all-purpose sea unit and upgrades the Trireme. It has decent\
  combat strength, can transport, and is a Commerce unit. The entry on Caravan\
@@ -3278,7 +3131,7 @@ uk_food       = 0
 uk_gold       = 0
 cargo         = "Land", "LandNoKill", "LandAirSea", "LandRoad"
 flags         = "BadCityDefender", "CantReachAir", "WillNever"
-roles         = "Ferryboat", "BarbarianBoat", "Hunter"
+roles         = "Ferryboat", "FerryStartUnit", "BarbarianBoat", "Hunter"
 helptext      = _("\
 The War Galley has improved offense, defense, and cargo capacity, but lacks commerce\
  ability. War Galleys can travel and attack on rivers, and do shore attacks from the sea.\
@@ -3349,7 +3202,7 @@ uk_food       = 0
 uk_gold       = 0
 cargo         = "Land", "LandNoKill", "LandAirSea", "LandRoad"
 flags         = "BadCityDefender", "CantReachAir", "Traderoute", "WillNever", "NonMil", "NonMilAttack"
-roles         = "Ferryboat", "BarbarianBoat", "Hunter"
+roles         = "Ferryboat", "FerryStartUnit", "BarbarianBoat", "Hunter"
 helptext      = _("\
 Caravels upgrade older sea units, and are a big advance in combat, speed, range, and transport capacity. They have\
  the commerce ability of the Galley, but cannot build Wonders. Caravels can travel and attack on rivers and do shore attacks.\
@@ -3722,7 +3575,6 @@ bonuses       =
 flags         = "NeverProtects", "BadCityDefender", "Only_Native_Attack",
                 "Submarine", "CanEscape", "CantReachAir", "WillNever"
 roles         = "Hunter"
-hut_behavior  = "Nothing"
 helptext      = _("\
 Submarines are strong attackers but weak defenders. They can carry 8 Missiles.\
  They are unreachable by Air units, but do not block air attacks on surface ships.\
@@ -3767,7 +3619,6 @@ bonuses       =
 flags         = "BadCityDefender", "Only_Native_Attack", "CanEscape",
                 "CantReachAir", "WillNever"
 roles         = ""
-hut_behavior  = "Frighten"
 helptext      = _("\
 The Carrier is a mobile airport that can carry Air units, Helicopters, AAA, Marines, and Missiles.\
  Fighters can Vigil on a Carrier if they have enough moves and the Carrier has not moved since the\
@@ -3810,7 +3661,6 @@ veteran_work_raise_chance = 0
 veteran_power_fact = 100
 veteran_move_bonus = 0
 roles         = ""
-hut_behavior  = "Nothing"
 helptext      = _("\
 Cargo ships are Commerce units: they can establish Trade Routes and help\
  build Wonders. They can travel rivers and oceans. Cargo ships can also carry\
@@ -3849,7 +3699,6 @@ bonuses       =
    }
 flags         = "BadCityDefender", "CanEscape"
 roles         = "Ferryboat", "FerryStartUnit"
-hut_behavior  = "Nothing"
 helptext      = _("\
 The Transport cannot attack but can defend itself when under attack.\
  Marines and Anti-Aircraft Artillery can directly attack from a Transport. Its\
@@ -3858,7 +3707,7 @@ The Transport cannot attack but can defend itself when under attack.\
 ")
 
 [unit_cruise_missile]
-name          = _("Missile")
+name          = _("Cruise Missile")
 class         = "Missile"
 tech_req      = "Rocketry"
 obsolete_by   = "None"
@@ -3888,7 +3737,6 @@ targets       = "LandRail"
 flags         = "NeverProtects", "FieldUnit", "OneAttack", "HasNoZOC", "Unbribable",
                 "CantReachAir", "Missile", "NeverBlocked", "WillNever"
 roles         = ""
-hut_behavior  = "Frighten"
 helptext      = _("\
 A Cruise Missile can strike distant targets. It\
  cannot attack Air units, but Air units never block\
@@ -3935,7 +3783,6 @@ veteran_work_raise_chance = 0
 veteran_power_fact = 100
 veteran_move_bonus = 0
 roles         = ""
-hut_behavior  = "Frighten"
 helptext      = _("\
 If you have Nuclear Fission and the Manhattan Project has been built by any player, you can make Atom Bombs.\
  A Bomber can drop it within two tiles of its location. Unload the bomb and fly the Bomber out of range, then\
@@ -3983,7 +3830,6 @@ veteran_work_raise_chance = 0
 veteran_power_fact = 100
 veteran_move_bonus = 0
 roles         = ""
-hut_behavior  = "Frighten"
 helptext      = _("\
 Hydrogen Bombs make Atom Bombs seem tame. Any unprotected city at Ground Zero will be absolutely annihilated.\
  In other cities in the blast radius, population is reduced by about 75%. Blast area is 21 tiles:\
@@ -4034,7 +3880,6 @@ veteran_work_raise_chance = 0
 veteran_power_fact = 100
 veteran_move_bonus = 0
 roles         = ""
-hut_behavior  = "Frighten"
 helptext      = _("\
 The Doomsday Bomb is the mother of all bombs. Blast area is about 100 tiles.\
  Only one can be made at a time. A city at Ground Zero will be\
@@ -4086,7 +3931,6 @@ veteran_work_raise_chance = 0
 veteran_power_fact = 100
 veteran_move_bonus = 0
 roles         = ""
-hut_behavior  = "Frighten"
 helptext      = _("\
 If you have Space Flight and the Manhattan Project has been built by any player, you can make Nuclear Missiles.\
  Nuclear blasts destroy ALL units in a 3×3 area. City population is reduced by half. Land tiles may get nuclear fallout.\
@@ -4134,7 +3978,6 @@ veteran_work_raise_chance = 0
 veteran_power_fact = 100
 veteran_move_bonus = 0
 roles         = ""
-hut_behavior  = "Frighten"
 helptext      = _("\
 Tactical Nukes are very small warheads attached to missiles. A Tactical Nuke destroys all units on\
  a single tile. City population is reduced by half. The target tile may get Fallout. In theory,\
@@ -4187,7 +4030,6 @@ veteran_work_raise_chance = 0, 0, 0, 0, 0, 0, 0
 veteran_power_fact = 100, 110, 115, 120, 125, 130, 135
 veteran_move_bonus = 0, 0, 0, 0, 0, 0, 0
 roles         = "DiplomatStartUnit"
-hut_behavior  = "Normal"
 helptext      = _("\
 A Diplomat performs official or covert actions. Covert acts make incidents\
  which let Senates break treaties. Diplomats in cities defend such acts with\
@@ -4239,7 +4081,6 @@ veteran_work_raise_chance = 0, 0, 0, 0, 0, 0, 0
 veteran_power_fact = 100, 110, 115, 120, 125, 130, 135
 veteran_move_bonus = 0, 0, 0, 0, 0, 0, 0
 roles         = "DiplomatStartUnit"
-hut_behavior  = "Normal"
 helptext      = _("\
 Spies can do what a Diplomat can, and also: • Survive ops\
  • Sabotage lone units • Poison city water • Steal specific tech\
@@ -4279,7 +4120,6 @@ embarks       = "LandRoad", "Helicopter"    ; transport helicopter only
 disembarks    = "LandRoad", "Helicopter"
 flags         = "HelpWonder", "TradeRoute", "IgZOC", "NonMil", "HasNoZOC", "Capturable", "Expellable", "Shield2Gold"
 roles         = "AttackStrongStartUnit"  ;note: MP2 doesn't start games with ASSU's so has co-opted this for caravan start unit.
-hut_behavior  = "Normal"
 helptext      = _("\
 Caravans are Commerce units. Commerce units can help build Wonders in any city with whom\
  you are not at war. In foreign cities 12+ tiles distant, they can create Trade Routes,\
@@ -4320,7 +4160,6 @@ uk_food       = 0
 uk_gold       = 0
 flags         = "HelpWonder", "TradeRoute", "IgZOC", "NonMil", "HasNoZOC", "Capturable", "Expellable"
 roles         = ""
-hut_behavior  = "Frighten"
 helptext      = _("\
 The Freight unit replaces the Caravan as the basic Commerce unit on Land. It moves at\
  twice the speed, but must stay on roads. Each Freight used to build a wonder will add\
@@ -4345,7 +4184,7 @@ defense       = 1
 hitpoints     = 10
 firepower     = 1
 move_rate     = 2
-vision_radius_sq = 6
+vision_radius_sq = 5
 transport_cap = 0
 fuel          = 0
 uk_happy      = 0
@@ -4356,7 +4195,6 @@ embarks       = "LandRoad", "Helicopter"    ; transport helicopter only
 disembarks    = "LandRoad", "Helicopter"
 flags         = "IgTer", "IgZOC", "NonMil", "HasNoZOC", "Capturable", "Expellable"
 roles         = "Explorer", "ExplorerStartUnit"
-hut_behavior  = "Normal"
 helptext      = _("\
 Explorers are brave individuals who map unknown territory. They can slip through enemy\
  ZOC, and have no unit upkeep.\
@@ -4396,7 +4234,6 @@ veteran_work_raise_chance = 0
 veteran_power_fact = 100
 veteran_move_bonus = 0
 roles         = ""
-hut_behavior  = "Frighten"
 helptext      = _("\
 Trains are Commerce units with a bonus: they allow units with 2 or less\
  move points to travel your rails at distances comparable to other units. Only Foot Soldiers\
@@ -4444,7 +4281,6 @@ veteran_work_raise_chance = 0
 veteran_power_fact = 100
 veteran_move_bonus = 0
 roles         = "KingStartUnit"
-hut_behavior  = "Normal"
 helptext      = _("\
 This is you. If you lose this unit, you lose the game.\
 "), _("\
@@ -4490,7 +4326,6 @@ veteran_work_raise_chance = 0
 veteran_power_fact = 100
 veteran_move_bonus = 0
 roles         = "KingStartUnit"
-hut_behavior  = "Normal"
 helptext      = _("\
 (Alternate form of Leader. Behaves identically in-game.)\
  This is you. If you lose this unit, you lose the game.\
@@ -4535,7 +4370,6 @@ veteran_work_raise_chance = 0
 veteran_power_fact = 100
 veteran_move_bonus = 0
 roles         = "BarbarianLeader"
-hut_behavior  = "Nothing"
 helptext      = _("\
 One Barbarian Leader appears every time there is a barbarian uprising\
  somewhere in the world.\

@@ -27,10 +27,10 @@ try {
 <!DOCTYPE html>
 <html>
 <head>
-<title>Freeciv-web</title>
+<title>Freeciv-TnT</title>
 <link rel="stylesheet" href="/css/font-awesome.min.css">
 <link rel="stylesheet" type="text/css" href="/css/webclient.min.css?ts=${initParam.buildTimeStamp}" />
-<meta name="description" content="Freeciv-Web allows you to play Civ on the web for free. Single and multiplayer! Can you build an empire that stands the test of time?">
+<meta name="description" content="Freeciv-TnT allows you to play Civ on the web for free. Single and multiplayer! Can you build an empire that stands the test of time?">
 <% if (trackJsToken != null) { %>
 <script type="text/javascript">window._trackJs = { token: '<%= trackJsToken %>' };</script>
 <script type="text/javascript" src="https://cdn.trackjs.com/releases/current/tracker.js"></script>

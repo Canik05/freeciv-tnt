@@ -1,0 +1,109 @@
+#LongTurn Val 1
+#autoreload
+
+cmdlevel ctrl first
+
+rulesetdir mp2b-vc1
+
+#server
+set nationset all
+set compresstype xs
+set allowtake=""
+set autotoggle false
+set netwait 150
+set nettimeout 120
+set pingtime 30
+set pingtimeout 240
+set maxconnectionsperhost 500
+set threaded_save enabled
+set scorelog disabled
+set saveturns=1
+set autosaves=TURN|TIMER
+set savefrequency 60
+metaconnection persistent
+set ec_chat=enabled
+set ec_info=enabled 
+set ec_max_size=5000
+set ec_turns=7
+
+#time control
+set timeout 82800
+set first_timeout 208800
+set unitwaittime=28800
+set unitwaittime_style = "ACTIVITIES|FORTIFY|DELAYGOTO"
+set fortifywaittime=7200
+
+#players
+set minplayers 0
+set maxplayers 15
+set aifill 15
+
+#economic
+set gold 100	        ; start gold    default=75
+set diplgoldcost 10		; tax in % of transferring gold through diplocamy window   default=5
+set city_output_style 1
+
+#geological
+set mapsize PLAYER		; PLAYER = tiles pr player. XYSIZE = defined x and y size. 		
+set tilesperplayer 240	; default 250 to 300
+set topology WRAPX
+set generator ISLAND    ; RANDOM, FRACTAL, ISLAND, FAIR, FRACTURE 
+set startpos SINGLE
+set landmass 66
+set specials 400 
+set tinyisles "DISABLED"
+set alltemperate "ENABLED"    ; This setting does not work for FRACTAL generator
+set separatepoles "ENABLED"
+set polarstrip disabled        ; This setting does not work for FRACTAL generator
+set temperature 80
+set steepness 30
+set wetness 60
+set huts 0
+
+#sociological
+set startunits=xxccccwwwwAD      ; x=explorer, c=settler, w=worker, a=well-digger, A=caravan, D=tribesmen
+set dispersion 0		        ; Setting to 0 avoids problem with bribing settlers. Can set higher on games with no idlers.
+set trading_city disabled
+set rapturedelay 1
+set revolentype FIXED
+set revolen 1
+set endturn 300
+set contactturns 10
+set barbarians "disabled"
+set onsetbarbs 50
+
+#scientific
+set diplbulbcost 10 		; Bulbcost in % of tech traded through the diplomacy window. 
+set techlevel 0                 ; number of random starting techs awarded (warning: can create large luck disparity)
+set freecost 10          	; Bulbcost in % of tech through stealing (with diplomat/spy)
+set conquercost 10		; Bulbcost in % of tech acquired through conquest. 
+#set sciencebox 125		; Used to reduce or increase tech cost. Default is 100. Tech cost in ruleset is multiplicated with this number as %.  
+#set team_pooled_research "DISABLED"
+
+set techleak 40			; default:25 to 50. Discount % to a tech if every player already knows it; or, Discount% = (% players knowing * techleak)
+set techlossforgiveness 210     ; How much bulb-debt one can have before losing tech, as a percent of current tech you are researching. NB: If tech leak is enabled, lower tech costs can spiral players into massive tech losses. 
+set techlossrestore 25		; How many bulbs in percent you get back if you lose tech from being in tech-debt
+
+#victory-conditions
+set victories ALLIED
+set endspaceship ENABLED
+
+#military
+set airliftdestdivisor 3
+set airliftingstyle "FROM_ALLIES|TO_ALLIES"
+set borders "ENABLED"       ; "ENABLED" only gives vision on tiles city can use, not inside all border. Depending on ruleset, certain techs might change this. 
+set diplomacy "HUMAN"	       ; Disabled disables the diplomacywindow
+set foggedborders enabled
+
+set looting "BASE_TRADE"
+set nuclearwinter_percent 20   ; default 20, hasn't been tuned and tested a lot though
+set restrictinfra "ENABLED"    ; non-allied rails only serve as roads
+set universal_unload "ENABLED" ; unloading from ships has universal consistency regardless of ocean or river
+#set unload_override 0         ; move fragments used when unloading cargo on native tile; 0=use universal_unload 
+
+#compatibility
+set move_bonus_in_frags "ENABLED"   ; MP2 may give move bonuses <1 full move point
+
+metamessage LongTurn Valhalla Calls G1 | mp2b-vc1 | 15 players | 40% Techleak | CLOSE ISLANDS | GM: Canik
+
+cmdlevel basic

@@ -24,7 +24,7 @@ var income_needs_refresh = false;
 
 var last_ground_attack_time = 0;
 
-/* Freeciv Web Client.
+/* Freeciv TnT Client.
    This file contains the handling-code for packets from the civserver.
 */
 
@@ -54,7 +54,7 @@ function handle_thaw_hint(packet)
 /* 100% */
 function handle_ruleset_terrain(packet)
 {
-  /* FIXME: These two hacks are there since Freeciv-web doesn't support rendering Lake and Glacier correctly. */
+  /* FIXME: These two hacks are there since Freeciv-TnT doesn't support rendering Lake and Glacier correctly. */
   if (packet['name'] == "Lake") packet['graphic_str'] = packet['graphic_alt'];
   //if (packet['name'] == "Glacier") packet['graphic_str'] = "tundra";
   terrains[packet['id']] = packet;
@@ -430,7 +430,7 @@ function decode_user_hyperlinks(message)
 
    // EXTRACT ENCODED DISCORD LINK
    if (message.includes("%%Discord")) {
-        message = message.replace( "%%Discord", "<a href='https://discord.gg/Zj8UQSN' target='_new'>Freeciv-Web Discord Chat</a>")
+        message = message.replace( "%%Discord", "<a href='https://discord.gg/BrpzgpgMAF' target='_new'>Freeciv-TnT Discord Chat</a>")
    }
   return message;
 }
@@ -1684,7 +1684,7 @@ function recreate_old_tech_req(packet)
     }
   }
 
-  /* Fill in A_NONE just in case Freeciv-web assumes its size is 2. */
+  /* Fill in A_NONE just in case Freeciv-TnT assumes its size is 2. */
   while (packet['req'].length < 2) {
     packet['req'].push(A_NONE);
   }

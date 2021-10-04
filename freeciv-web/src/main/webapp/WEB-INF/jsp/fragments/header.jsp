@@ -31,7 +31,7 @@
 				</ul>
 			</li>
 			<li id="donate_link"><a href="https://www.patreon.com/freeciv_val">Donations</a></li>
-			<li><a href="https://val.tacticsandtriumph.com/">TnT Valhalla</a></li>
+			<li><a href="https://www.tacticsandtriumph.com">TnT Home</a></li>
 			<%--<li class="dropdown">
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" title="${pageContext.request.locale.language} ${pageContext.request.locale.country}">
 					Language <span class="caret"></span>
@@ -49,7 +49,7 @@
 			<input type="hidden" name="sites" value="www.freeciv.org,forum.freeciv.org,freeciv.wikia.com">
 			<div class="form-group">
 				<div class="input-group">
-					<input type="text" class="form-control" name="q" placeholder="Tactics&Triumph">
+					<input type="text" class="form-control" name="q" placeholder="tacticsandtriumph.com">
 					<span class="input-group-btn">
 						<button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
 					</span>

@@ -7,6 +7,7 @@ options = "+Freeciv-spec-Devel-2019-Jul-03"
 [info]
 
 artists = "
+    Canik <www.tacticsandtriumph.com>
     Hogne Håskjold
     Daniel Speyer
     Yautja
@@ -44,8 +45,6 @@ tiles = { "row", "column", "tag"
  6,  0, "t.l0.tundra1"
 
  7,  0, "t.l0.arctic1"
-;7,  0, "t.l1.arctic1" not redrawn
-;7,  0, "t.l2.arctic1" not redrawn
 
  8,  0, "t.l0.swamp1"
 

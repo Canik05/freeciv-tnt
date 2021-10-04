@@ -185,7 +185,7 @@ files =
 match_types = "shallow", "deep", "land"
 
 [layer1]
-match_types = "forest", "hills", "mountains", "water", "ice"
+match_types = "forest", "hills", "mountains", "water", "ice", "tundra"
 
 [layer2]
 match_types = "water", "ice"
@@ -290,15 +290,15 @@ tag = "swamp"
 blend_layer = 1
 num_layers = 2
 layer0_match_type = "land"
-layer1_match_type = "forest"
-layer1_match_with = "forest"
+layer1_match_type = "swamp"
+later1_match_with = "forest"
 
 [tile_tundra]
 tag = "tundra"
 blend_layer = 1
 num_layers = 2
 layer0_match_type = "land"
-layer1_match_type = "forest"
+layer1_match_type = "tundra"
 layer1_match_with = "forest"
 
 [tile_inaccessible]

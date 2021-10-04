@@ -181,7 +181,7 @@ function supports_mp3() {
 
 /****************************************************************************
   Mac OS X and Chrome OS does not support the right-click-and-drag to select
-  units on the map in Freeciv-web at the moment.
+  units on the map in Freeciv-TnT at the moment.
 ****************************************************************************/
 function is_right_mouse_selection_supported()
 {

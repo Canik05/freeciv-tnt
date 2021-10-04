@@ -33,7 +33,7 @@
 		<p>In Longturn games, each player will play one turn every day. There are many players in each game, typically 50, 100 or more. </p>
 
 
-		<p>Join the game now, and also talk to the other players on <a href="https://discord.gg/PscmWqu">Discord</a>.</p>
+		<p>Join the game now, and also talk to the other players on <a href="https://discord.gg/BrpzgpgMAF">Discord</a>.</p>
 
 
 		</b>

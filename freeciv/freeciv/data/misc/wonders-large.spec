@@ -37,6 +37,7 @@ artists = "
   b.olympics
   b.roman_colosseum
   b.seti_program
+  b.shrine
   b.sphinx
   b.statue_of_liberty
   b.statue_of_zeus
@@ -106,6 +107,7 @@ sprites =
 		"b.seti_program", "wonders/seti_program"
 		"b.shakespeares_theatre", "wonders/shakespeares_theatre"
 		"b.statue_of_liberty", "wonders/statue_of_liberty"
+                "b.shrine", "wonders/shrine"
                 "b.sphinx", "wonders/sphinx"
                 "b.statue_of_zeus", "wonders/statue_of_zeus"
 		"b.sun_tzus_war_academy", "wonders/sun_tzus_war_academy"

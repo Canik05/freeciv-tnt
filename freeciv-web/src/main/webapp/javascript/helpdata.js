@@ -235,7 +235,7 @@ function handle_help_menu_select( ui )
     generate_help_text(selected_tag);
   } else if (selected_tag == "help_copying") {
     $.get( "/docs/LICENSE.txt", function( data ) {
-      $("#help_info_page").html("<h1>Freeciv-Web License</h1>" + data.replace(/\n/g, "<br>"));
+      $("#help_info_page").html("<h1>Freeciv-TnT License</h1>" + data.replace(/\n/g, "<br>"));
     });
     clear_sidebar();
   } else if (selected_tag == "help_controls") {
@@ -530,7 +530,7 @@ function generate_help_text(key)
    *
    * Freeciv has the tool freeciv-manual. It can use the ruleset based auto
    * help text generation. It can output HTML. Some of its HTML output is
-   * machine readable enough to be usable for Freeciv-web.
+   * machine readable enough to be usable for Freeciv-TnT.
    *
    * Use the machine readable and wanted parts of freeciv-manual's output to
    * add auto generated help texts for the current ruleset. */

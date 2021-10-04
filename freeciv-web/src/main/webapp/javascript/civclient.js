@@ -51,7 +51,7 @@ var dialog_close_trigger = "";
 var dialog_message_close_task;
 
 /**************************************************************************
- Main starting point for Freeciv-web
+ Main starting point for Freeciv-TnT
 **************************************************************************/
 $(document).ready(function() {
   civclient_init();
@@ -348,7 +348,7 @@ function init_common_intro_dialog() {
     }
   } else if ($.getUrlVar('action') == "earthload") {
     show_intro_dialog("Welcome to Freeciv-TnT",
-      "You can now play Freeciv-web on the earth map you have chosen. " +
+      "You can now play Freeciv-TnT on the earth map you have chosen. " +
       "Please enter your name: ");
 
   } else if ($.getUrlVar('action') == "load") {

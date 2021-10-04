@@ -61,7 +61,7 @@ button {
 
 #freeciv_logo {
   float:left; 
-  background-image: url(/images/freeciv-web-logo2.png);
+  background-image: url(/images/brand.png);
   width: 118px; 
   height: 30px; 
   margin-right: 10px;
@@ -1525,7 +1525,7 @@ li.tech-me_only::before {
   background: #cb842e url("/images/themes/faroese/ui-widget-header.png") 100% 50% repeat-x;
 }
 .faroese7 {
-  background: #444444 url(/images/freeciv-web-logo2.png);
+  background: #444444 url(/images/brand.png);
 }
 
 /* GREEK */
@@ -1548,7 +1548,7 @@ li.tech-me_only::before {
   background: #cb842e url("/images/themes/greek/ui-widget-header.png") 100% 50% repeat-x;
 }
 .greek7 {
-  background: #444444 url(/images/themes/greek/freeciv-web-logo.png);
+  background: #444444 url(/images/themes/greek/brand.png);
 }
 
 .ui-widget:not(.ui-button,.ui-dialog,.ui-tabs-anchor, #game_chatbox_panel, #game_message_area) {
@@ -2119,8 +2119,8 @@ input[type="email" i], #email {
 }
 
 #city_canvas_div {
-  width: 444px; 
-  height: 222px; 
+  width: 350px; 
+  height: 175px; 
   float: left;
   margin: 5px;
   border: 1px solid #888888;

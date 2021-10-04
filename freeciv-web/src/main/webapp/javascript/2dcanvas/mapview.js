@@ -862,10 +862,10 @@ function set_city_mapview_active()
 
   mapview_canvas_ctx = city_canvas.getContext("2d");
 
-  mapview['width'] = 444;
-  mapview['height'] = 222;
-  mapview['store_width'] = 444;
-  mapview['store_height'] = 222;
+  mapview['width'] = 350;
+  mapview['height'] = 175;
+  mapview['store_width'] = 350;
+  mapview['store_height'] = 175;
 
   set_default_mapview_inactive();
 

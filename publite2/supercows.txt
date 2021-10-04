@@ -8,10 +8,4 @@
 # Warning: There is a bug which causes the server to crash, if this file contains a line with just some spaces.
 #
 #Rhue:6003
-Cyrus De GreenWood:6003
-panch93:6004
-Cyrus De GreenWood:6005
-Canik:6006
-Canik:6007
-Canik:6008
-Canik:6009
+Canik:6003

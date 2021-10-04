@@ -252,12 +252,12 @@ function show_new_game_message()
   }
   else if (is_longturn()) {
     message = "Welcome, " + capitalize(username) + "! This is a Longturn game, where you play one turn per day. " +
-    "Make your moves and come back tomorrow when the timer advances to the next turn! You may " +
+    "Just do your moves, and come back tomorrow when the timer advances to the next turn! You may " +
     "bookmark this page to return. You can also find the game again at " + window.location.host + ".<br> "+
     "<font color='#90FFFF'>Freeciv is a game of diplomacy. Your nation is encouraged to talk to other nations. "+
-    "Please join the <a href='https://discord.gg/BrpzgpgMAF' target='_new'>community Discord chat</a>. "+
-    "Players are responsible for following the #rules posted there. Be polite; please keep talk related "+
-    "to the game; do not post spam or advertisements if you wish to remain in the game.</font> Good luck and have fun!";
+    "Please click to join the <a href='https://discord.gg/BrpzgpgMAF' target='_new'>community Discord chat</a>. "+
+    "Players are responsible for following the #rules posted there. Be polite; please keep in-game talk "+
+    "related to the game; do not post spam or advertisements if you wish to remain in the game.</font> Good luck, have fun!";
 
     if (is_small_screen) {
       message += "This is your message window that reports ongoing game events. " +
@@ -266,11 +266,10 @@ function show_new_game_message()
     }
 
   } else if (is_small_screen()) {
-    message = "Welcome, " + capitalize(username) + "! You have just become ruler of a young but promising civilization!\n" +
-      "You must balance expansion, education, economy, military and diplomacy to thrive.\n" +
-      "Can you lead your people to glory? Can you dominate all others? Only time can tell..\n" +
+    message = "Welcome, " + capitalize(username) + "! You lead a great civilization. Your task is to conquer the world!\n" +
       "Please join the <a href='https://discord.gg/BrpzgpgMAF' target='_new'>community Discord chat</a>. "+
-      "This message window reports game events.\n Do not post spam or offsite advertisements." +
+      "Click on units for giving them orders, and drag units on the map to move them.\n" +
+      "Good luck, and have a lot of fun!\n<br><br>This message window reports game events. " +
       "<u style='color:#fde'>Tap the yellow <b>minimize button</b> at the top to enter the game</u>. You can return here to view " +
       "game messages by hitting the maximize button."; 
 

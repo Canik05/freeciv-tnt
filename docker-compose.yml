@@ -2,9 +2,9 @@ version: "3"
 services:
 
   freeciv-web:
-    image: freeciv/freeciv-tnt
+    image: freeciv/freeciv-val
     build: .
-    container_name: tnt.com
+    container_name: tnt.val
     command: ["sleep", "infinity"]
     volumes:
       - "data:/var/lib/tomcat8/webapps/data"
@@ -14,7 +14,7 @@ services:
             #      - "6000-6009:6000-6009"
             #      - "7000-7009:7000-7009"
             #      - "8888:8080"
-      - "8080:80"
+      - "9595:80"
     user: docker
 
 volumes:

@@ -2154,7 +2154,7 @@ graphic_alt	= "-"
 obsolete_by	=
     { "type", "name", "range"
     }
-build_cost	= 225
+build_cost	= 200
 upkeep		= 0
 sabotage	= 0
 sound		= "w_darwins_voyage"

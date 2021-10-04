@@ -40,8 +40,7 @@ description = *mp2-brava/README.brava*
 
 ; What capabilities ruleset provides for the scenarios.
 ; mimimum-default-sets - Default units, terrains, buildings, etc
-capabilities = "minimum-default-sets"
-; capabilities = "std-terrains"
+capabilities = "std-terrains"
 
 [options]
 global_init_techs=""
@@ -1128,7 +1127,7 @@ action = "Attack"
 actor_reqs    =
     { "type",          "name",    "range", "present"
       "UnitFlag",      "NonMil",  "Local", FALSE
-      "UnitClassFlag", "Missile", "Local", FALSE
+      "UnitClassFlag","Missile", "Local", FALSE
       "MinMoveFrags",  "1",       "Local", TRUE
       "UnitFlag",      "Marines", "Local", TRUE
       "DiplRel",       "War",     "Local", TRUE
@@ -1268,20 +1267,11 @@ actor_reqs    =
       "CityTile",  "Center",       "Local", TRUE
     }
 
-[actionenabler_loki_teleport]
-action = "Paradrop Unit"
-actor_reqs    =
-    { "type",         "name",          "range", "present"
-      "UnitType",     "Loki",          "Local",  TRUE
-      "UnitState",    "Transporting",  "Local",  FALSE
-      "TerrainFlag",  "CanHaveRiver",  "Local",  TRUE
-    }
-
 [actionenabler_upgrade_unit]
 action = "Upgrade Unit"
 actor_reqs    =
     { "type",    "name",       "range", "present"
-      "DiplRel", "Foreign",    "Local", FALSE
+      "DiplRel", "Foreign", "Local", FALSE
     }
 
 [actionenabler_airlift_unit]

@@ -40,7 +40,8 @@ var unit_bombard_attack_names = {
   "Zealots":    "Skirmish Assault",
   "Marines":    "Bazooka Attack",
   "Zeppelin":   "Bomb",
-  "Battleship": "Bombard"
+  "Battleship": "Bombard",
+  "Thor":       "Lightning Strike"
 };
 
 // Determines if victory by this unit shows crossed swords or gunpowder explosion.
@@ -68,7 +69,10 @@ var units_pregunpowder = [
 "Galley",
 "Siege Ram",
 "Caravel",
-"Ram Ship"
+"Ram Ship",
+"Thor",
+"Loki",
+"Freya"
 ];
 
 var SINGLE_MOVE;

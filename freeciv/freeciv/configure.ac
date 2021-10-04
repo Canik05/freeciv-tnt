@@ -1638,14 +1638,14 @@ fi
 
 AC_CONFIG_FILES([Makefile
           data/Makefile
-	  data/hex2t/Makefile
-          data/hexemplio/Makefile
 	  data/amplio2/Makefile
           data/alio/Makefile
 	  data/buildings/Makefile
 	  data/flags/Makefile
 	  data/misc/Makefile
 	  data/cimpletoon/Makefile
+	  data/hex2t/Makefile
+          data/hexemplio/Makefile
 	  data/trident/Makefile
 	  data/isophex/Makefile
 	  data/isotrident/Makefile
@@ -1665,9 +1665,7 @@ AC_CONFIG_FILES([Makefile
 	  data/mp2/Makefile
           data/ag/Makefile
           data/mp2-brava/Makefile
-          data/mp2-caravel/Makefile
-          data/mp2b-occ/Makefile
-          data/mp2b-valhalla/Makefile
+          data/mp2b-vc1/Makefile
 	  data/scenarios/Makefile
 	  data/nation/Makefile
           data/ruledit/Makefile

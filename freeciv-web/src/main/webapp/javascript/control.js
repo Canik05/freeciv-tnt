@@ -1765,7 +1765,7 @@ function update_unit_order_commands()
         $("#order_forest_remove").show();
         $("#order_irrigate").hide();
         $("#order_build_farmland").hide();
-	      unit_actions["forest"] = {name: "Chop Forest (I)"};
+	      unit_actions["forest"] = {name: "chop Forest (I)"};
       } else if (can_irrigate(punit, ptile)) {
         $("#order_irrigate").show();
         $("#order_forest_remove").hide();

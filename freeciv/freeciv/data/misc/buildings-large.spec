@@ -53,6 +53,7 @@ sprites =
 		"b.sam_battery", "buildings/sam_battery"
 		"b.sdi_defense", "buildings/sdi_defense"
 		"b.sewer_system", "buildings/sewer_system"
+                "b.shrine, "buildings/shrine"
 		"b.solar_plant", "buildings/solar_plant"
 		"b.space_component", "buildings/space_component"
 		"b.space_modules", "buildings/space_modules"

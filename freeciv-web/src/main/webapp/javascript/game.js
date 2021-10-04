@@ -138,7 +138,7 @@ function update_game_status_panel() {
   
       var civ_flag = "";
       if (!pnation['customized']) {
-        civ_flag += "<img class='lowered_gov' style='background-color:transparent;margin-top:-3px;margin-right:3px;' src='/images/flags/" + tag + "-web" + get_tileset_file_extention() + "' width='42'>";
+        civ_flag += "<img class='lowered_gov' style='background-color:transparent;margin-top:-3px;margin-right:3px;' src='/images/flags/" + tag + "-TnT" + get_tileset_file_extention() + "' width='42'>";
         status_html += "<span>"+civ_flag+"</span>";
       } 
     }
@@ -219,7 +219,7 @@ function update_game_status_panel() {
   }
 
   // TODO: Game # can be put in here when we figure out how to set more meta-info
-  var page_title = "Freeciv-web - " + username
+  var page_title = "Freeciv-TnT - " + username
                                     + "  (turn:" + game_info['turn'] + ", port:"
                                     + civserverport + ") ";
   if (server_settings['metamessage'] != null) {

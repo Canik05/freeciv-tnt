@@ -392,9 +392,20 @@ ui_name_plant = _("%sPlant%s")
 ; /* TRANS: Build _Irrigation (100% chance of success). */
  ui_name_irrigate = _("Build %sIrrigation%s")
 
-; NOT IMPLEMENTED IN SERVER YET
- ; /* TRANS: _Unload (100% chance of success). */
-;ui_name_transport_unload = _("%sUnload%s")
+; /* TRANS: _Deboard (100% chance of success). */
+ui_name_transport_deboard = _("%sDeboard%s")
+
+; /* TRANS: _Board (100% chance of success). */
+ui_name_transport_board = _("%sBoard%s")
+
+; /* TRANS: _Unload (100% chance of success). */
+ui_name_transport_unload = _("%sUnload%s")
+
+; /* TRANS: _Disembark (100% chance of success). */
+ui_name_transport_disembark = _("%sDisembark%s")
+
+; /* TRANS: _Embark (100% chance of success). */
+ui_name_transport_embark = _("%sEmbark%s")
 
 ; Suppress automatic help text generation about what enables and/or
 ; disables the following actions.
@@ -1592,18 +1603,60 @@ target_reqs    =
       "Extra",   "Irrigation", "CAdjacent", TRUE
     }
 
-; NOT IMPLEMENTED IN SERVER YET
-;[actionenabler_unload]
-;action        = "Transport Unload"
-;actor_reqs    =
-;    { "type",      "name",         "range"
-;      "UnitState", "Transporting", "Local"
-;    }
-;target_reqs    =
-;    { "type",      "name",          "range"
-;      "UnitState", "OnLivableTile", "Local"
-;      "UnitState", "Transported",   "Local"
-;    }
+[actionenabler_deboard]
+action        = "Transport Deboard"
+actor_reqs    =
+    { "type",      "name",          "range"
+      "UnitState", "OnLivableTile", "Local"
+      "UnitState", "Transported",   "Local"
+    }
+target_reqs    =
+    { "type",      "name",         "range"
+      "UnitState", "Transporting", "Local"
+    }
+
+[actionenabler_board]
+action        = "Transport Board"
+actor_reqs    =
+    { "type",    "name",       "range", "present"
+      "DiplRel", "Armistice",  "Local", FALSE
+      "DiplRel", "War",        "Local", FALSE
+      "DiplRel", "Cease-fire", "Local", FALSE
+      "DiplRel", "Peace",      "Local", FALSE
+      "DiplRel", "Never met",  "Local", FALSE
+    }
+
+[actionenabler_unload]
+action        = "Transport Unload"
+actor_reqs    =
+    { "type",      "name",         "range"
+      "UnitState", "Transporting", "Local"
+    }
+target_reqs    =
+    { "type",      "name",          "range"
+      "UnitState", "OnLivableTile", "Local"
+      "UnitState", "Transported",   "Local"
+    }
+
+[actionenabler_disembark]
+action        = "Transport Disembark"
+actor_reqs    =
+    { "type",         "name",        "range"
+      "UnitState",    "Transported", "Local"
+      "MinMoveFrags", "1",           "Local"
+    }
+
+[actionenabler_embark]
+action        = "Transport Embark"
+actor_reqs    =
+    { "type",         "name",       "range", "present"
+      "MinMoveFrags", "1",          "Local", TRUE
+      "DiplRel",      "Armistice",  "Local", FALSE
+      "DiplRel",      "War",        "Local", FALSE
+      "DiplRel",      "Cease-fire", "Local", FALSE
+      "DiplRel",      "Peace",      "Local", FALSE
+      "DiplRel",      "Never met",  "Local", FALSE
+    }
 
 [borders]
 ; Base border radius from city.

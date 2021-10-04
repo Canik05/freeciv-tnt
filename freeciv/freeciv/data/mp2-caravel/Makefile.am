@@ -17,6 +17,6 @@ pkgdata_DATA =			\
 	techs.ruleset		\
 	terrain.ruleset		\
 	units.ruleset		\
-	README.txt
+	README.brava
 
 EXTRA_DIST = $(pkgdata_DATA)

@@ -804,14 +804,14 @@ actor_reqs    =
     }
 
 [actionenabler_irrigate_tf]
-action        = "Irrigate TF"
+action        = "Cultivate"
 actor_reqs    =
     { "type",          "name",         "range", "present"
       "UnitFlag",      "Settlers",     "Local", TRUE
     }
 
 [actionenabler_mine_tf]
-action        = "Mine TF"
+action        = "Plant"
 actor_reqs    =
     { "type",          "name",         "range", "present"
       "UnitFlag",      "Settlers",     "Local", TRUE

@@ -697,11 +697,11 @@ function pregame_settings()
       + "<div id='pregame_settings_tabs-1'><table id='settings_table'> "
       + "<tr title='Ruleset version'><td>Ruleset:</td>"
       + "<td><select name='ruleset' id='ruleset'>"
-      + "<option value='mp2-caravel'>Multiplayer 2.3 Caravel</option>"
+      + "<option value='mp2b-vc1'>MP2 Valhalla Calls 1.0</option>"
       + "<option value='mp2-brava'>Multiplayer 2.2 Brava</option>"
-      + "<option value='mp2b-occ'>MP2.2 One City Challenge</option>"
       + "<option value='ag'>Multiplayer 2.1 Avant-garde</option>"
       + "<option value='mpplus'>Multiplayer+ 1.1</option>"
+      + "<option value='multiplayer'>Multiplayer 1.0</option>"
       + "<option value='classic'>Classic</option>"
       + "<option value='civ2civ3'>Civ2Civ3</option>"
       + "</select><a id='ruleset_description'></a></td></tr>"
@@ -727,11 +727,11 @@ function pregame_settings()
     "</select></td></tr>"+
     "<tr class='not_pbem' title='This setting sets the world general tempeture, changing the types of tiles.'><td>Temperature</td>" +
     "<td><select name='temperature' id='temperature'>" +
-        "<option value='100'>Very Hot</option>" +
-        "<option value='70'>Hot</option>" +
+        "<option value='80'>Very Hot</option>" +
+        "<option value='65'>Hot</option>" +
         "<option value='50'>Normal</option>" +
-        "<option value='30'>Cold</option>" +
-        "<option value='0'>Very Cold</option>" +
+        "<option value='35'>Cold</option>" +
+        "<option value='20'>Very Cold</option>" +
     "</select></td></tr>"+
     "<tr title='Number of initial techs per player'><td>Tech level:</td>" +
     "<td><input type='number' name='techlevel' id='techlevel' size='3' length='3' min='0' max='100' step='10'></td></tr>" +
