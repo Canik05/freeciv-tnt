@@ -52,10 +52,10 @@
 		border: solid 2px #BBA;
     border-radius: 20px 20px 20px 20px;
 		border-bottom: 1 !important;
-		color :#627ce1;
+		color :#a8a8a8;
 	}
 	#game-launcher .header {
-		color: #e3d276d6;
+		color: #9d8e5a;
 		font-family: 'Freeciv', 'Tahoma', 'Arial';
 		padding: 15px;
 		margin-bottom: 0px;
@@ -81,7 +81,7 @@
 	}
 	#game-launcher .btn {
 		display: inline-block;
-		color: rgba(215, 208, 101, 0.91);
+		color: #a8a8a8;
 		border: 0;
 		border-radius: 15px 15px 15px 15px;
 		padding: 10px;
@@ -101,9 +101,9 @@
 	}
 	/* overrides the above */
 	#game-launcher .btn {
-    color: ##717171;
+    color: ##9d8e5a;
 		text-shadow: 1px 1px #000 !important;
-    color: ##717171
+    color: ##9f9665
 	}
 	#game-launcher a.small { width: 130px;	}
 	.multiplayer-games th:last-child { width: 80px; }
@@ -159,15 +159,15 @@
 		background: url('/images/unnamedbk-dk.jpg');
 	}
 	body {
-		color: #8c8951;
+		color: #a8a8a8;
   	background-image: url('/images/bg-alt-dark.jpg'); 
 	}
 	.container {
 		background: none !important;
-		color: ##97a3b7;
+		color: #9d8e5a;
 	}
 	.lead {
-		color: #8c8951;
+		color: #9d8e5a
 	}
 	.panel-freeciv {
 		background-color: #ccc1;
@@ -220,7 +220,7 @@
 		<div class="jumbotron">
 			<div class="row">
 
-				<img style="border-radius: 1px 1px 1px 1px; box-shadow: -2px -2px 20px -50px #08375357, -1px 4px 14px 8px #00000059; width:65%" src="/static/images/fc-tnt-cavflag07.png">
+				<img style="border-radius: 1px 1px 1px 1px; box-shadow: -2px -2px 20px -50px #08375357, -1px 4px 14px 8px #00000059; width:55%" src="/static/images/freeciv-tnt-classic2.png">
 
 			</div>
 			<div class="container-fluid">
@@ -273,10 +273,10 @@
 					<a href="/game/list?v=multiplayer" class="btn"><i class="fa fa-users"></i> <fmt:message key="index-game-launcher-multiplayer"/></a>
 					<c:if test="${default_lang}">
 						<div class="features">
-							Start a play-by-email game where you get an e-mail <br> when it is your turn to play. Make your moves then end turn.
+							Play the revolutionary Valhalla Calls mod with <br> arctic terrain, viking units and Norse gods!
 						</div>
 					</c:if>
-					<a href="/webclient/?action=pbem&type=pbem" class="btn"><i class="fa fa-envelope"></i> <fmt:message key="index-game-launcher-play-by-email"/></a>
+					<a href="https://val.tacticsandtriumph.com" class="btn"><i class="fa fa-bolt"></i> Valhalla </a>
 					
 				</div>
 			</div>
@@ -287,7 +287,7 @@
 			<div id="statistics" class="row">
 				<div class="col-md-12">
 					<div class="panel-freeciv statistics">
-						<h4 style="color:#728baa"><span id="statistics-singleplayer"><b>44327</b></span> <fmt:message key="index-stats-singleplayer"/> <span id="statistics-multiplayer"><b>2632</b></span> <fmt:message key="index-stats-multiplayer"/><br>
+						<h4 style="color:#a8a8a8"><span id="statistics-singleplayer"><b></b></span> <fmt:message key="index-stats-singleplayer"/> <span id="statistics-multiplayer"><b></b></span> <fmt:message key="index-stats-multiplayer"/><br>
 						<fmt:message key="index-stats-since"/></h4>
 
 					</div>
@@ -315,7 +315,7 @@
 							<tbody>
 								<c:forEach items="${games}" var="game">
 									<tr class="${game.players > 0 && state == 'Pregame' ? 'highlight' : ''}">
-										<td style="color:#ccc77d">
+										<td style="color:#a89a55">
 										    <b>
 											  ${fn:replace(game.message, 'LongTurn', ' One Turn per Day ')}
 											</b>
@@ -473,12 +473,12 @@
 					<div class="panel-freeciv">
 						<h4><fmt:message key="index-credits"/></h4>
 						<ul>
+							<li>TnT Admin - Canik <i class="fa fa-github"></i>  <a href="https://github.com/Canik05">@Canik05</a></li>
 							<li>Andreas R&oslash;sdal <i class="fa fa-twitter"></i>  <a href="https://github.com/andreasrosdal/">@andreasrosdal</a></li>
 							<li>Lexxie L. <i class="fa fa-github"></i>  <a href="https://github.com/Lexxie9952/">@lexxie9952</a></li>
 							<li>Sveinung Kvilhaugsvik <i class="fa fa-github"></i>  <a href="https://github.com/kvilhaugsvik">@kvilhaugsvik</a></li>
 							<li>Marko Lindqvist <i class="fa fa-github"></i>  <a href="https://github.com/cazfi">@cazfi</a></li>
 							<li>M&#xE1;ximo Casta&#xF1;eda <i class="fa fa-github"></i>  <a href="https://github.com/lonemadmax">@lonemadmax</a></li>
-							<li>Canik V <i class="fa fa-github"></i>  <a href="https://github.com/Canik05">@Canik05</a></li>
 							<li><a href="https://github.com/Canik05/fcw.org-server/graphs/contributors">Full list</a></li>
 						</ul>
 						

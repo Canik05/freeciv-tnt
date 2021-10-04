@@ -30,16 +30,21 @@ CLIENT_FILES =
 endif
 
 SRV_RE_FILES = \
-	civ1.serv \
-	civ2.serv \
-	classic.serv \
-	default.serv \
+	civ1.serv        \
+	civ2.serv        \
+	classic.serv     \
+	default.serv     \
 	multiplayer.serv \
-	alien.serv \
-	civ2civ3.serv \
-	sandbox.serv \
-	mpplus.serv \
-	mp2.serv
+	alien.serv       \
+	civ2civ3.serv    \
+	sandbox.serv     \
+	mpplus.serv      \
+	mp2.serv         \
+	ag.serv          \
+	mp2-brava.serv   \
+        mp2-caravel.serv \
+        mp2b-occ.serv    \
+	mp2b-valhalla.serv
 
 if SERVER
 SERVER_FILES = $(SRV_RE_FILES)
@@ -54,32 +59,37 @@ endif
 pkgdata_DATA = $(SERVER_FILES) $(CLIENT_FILES)
 
 EXTRA_DIST = \
-	freeciv-client.png \
-	gtk3_menus.xml	\
-	gtk3.22_menus.xml	\
-	gtk4_menus.xml	\
-	amplio2.tilespec \
-	cimpletoon.tilespec \
-	hex2t.tilespec	\
-	hexemplio.tilespec	\
-	isophex.tilespec	\
-	isotrident.tilespec \
-	toonhex.tilespec	\
-	alio.tilespec	\
-	trident.tilespec	\
-	stdmusic.musicspec	\
-	stdsounds.soundspec	\
-	helpdata.txt	\
-	civ1.serv	\
-	civ2.serv	\
-	classic.serv	\
-	default.serv	\
+	freeciv-client.png    \
+	gtk3_menus.xml	      \
+	gtk3.22_menus.xml     \
+	gtk4_menus.xml	      \
+	amplio2.tilespec      \
+	cimpletoon.tilespec   \
+	hex2t.tilespec	      \
+	hexemplio.tilespec    \
+	isophex.tilespec      \
+	isotrident.tilespec   \
+	toonhex.tilespec      \
+	alio.tilespec	      \
+	trident.tilespec      \
+	stdmusic.musicspec    \
+	stdsounds.soundspec   \
+	helpdata.txt	 \
+	civ1.serv	 \
+	civ2.serv	 \
+	classic.serv	 \
+	default.serv	 \
 	multiplayer.serv \
-	alien.serv \
-	civ2civ3.serv \
-	sandbox.serv \
-	mpplus.serv \
-	mp2.serv
+	alien.serv       \
+	civ2civ3.serv    \
+	sandbox.serv     \
+	mpplus.serv      \
+	mp2.serv         \
+	ag.serv          \
+	mp2-brava.serv   \
+        mp2-caravel.serv \
+        mp2b-occ.serv    \
+        mp2b-valhalla.serv
 
 if CLIENT
 CLIENTDATADIRS = amplio2 misc flags buildings cimpletoon isotrident trident\
@@ -88,7 +98,7 @@ else
 CLIENTDATADIRS = 
 endif
 
-SRV_RE_DATADIRS = default classic civ1 civ2 sandbox multiplayer alien civ2civ3 webperimental mpplus mp2 nation
+SRV_RE_DATADIRS = default classic civ1 civ2 sandbox multiplayer alien civ2civ3 webperimental mpplus mp2 ag mp2-brava mp2-caravel mp2b-valhalla mp2b-occ nation
 if SERVER
 SERVERDATADIRS = $(SRV_RE_DATADIRS) scenarios
 else

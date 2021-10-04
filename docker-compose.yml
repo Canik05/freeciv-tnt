@@ -2,18 +2,19 @@ version: "3"
 services:
 
   freeciv-web:
-    image: freeciv/freeciv-web
+    image: freeciv/freeciv-tnt
     build: .
-    container_name: fcw.org
+    container_name: tnt.com
     command: ["sleep", "infinity"]
     volumes:
       - "data:/var/lib/tomcat8/webapps/data"
     ports:
-      - "80:80"
-      - "4002"
-      - "6000-6009:6000-6009"
-      - "7000-7009:7000-7009"
-      - "8888:8080"
+            #      - "8080:8081"
+            #      - "4002"
+            #      - "6000-6009:6000-6009"
+            #      - "7000-7009:7000-7009"
+            #      - "8888:8080"
+      - "8080:80"
     user: docker
 
 volumes:

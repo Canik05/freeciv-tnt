@@ -2141,7 +2141,7 @@ actor_reqs    =
     }
 
 [actionenabler_irrigate_tf]
-action        = "Irrigate TF"
+action        = "Cultivate"
 actor_reqs    =
     { "type",          "name",         "range", "present"
       "UnitFlag",      "Settlers",     "Local", TRUE
@@ -2150,7 +2150,7 @@ actor_reqs    =
       "UnitType",      "Proletarians", "Local", FALSE
     }
 [actionenabler_irrigate_tf_prole]
-action        = "Irrigate TF"
+action        = "Cultivate"
 actor_reqs    =
     { "type",          "name",         "range", "present"
       "UnitFlag",      "Settlers",     "Local",  TRUE
@@ -2159,7 +2159,7 @@ actor_reqs    =
     }
 
 [actionenabler_mine_tf_outside_city]
-action        = "Mine TF"
+action        = "Plant"
 actor_reqs    =
     { "type",          "name",        "range", "present"
       "UnitFlag",      "Settlers",    "Local", TRUE
@@ -2170,7 +2170,7 @@ actor_reqs    =
       "CityTile",      "Center",      "Local", FALSE
     }
 [actionenabler_mine_tf_outside_city_prole]
-action        = "Mine TF"
+action        = "Plant"
 actor_reqs    =
     { "type",          "name",        "range",  "present"
       "UnitFlag",      "Settlers",    "Local",  TRUE
@@ -2179,7 +2179,7 @@ actor_reqs    =
       "CityTile",      "Center",      "Local",  FALSE
     }
 [actionenabler_mine_tf_inside_city] ;you can't plant a forest in an existing city
-action        = "Mine TF"
+action        = "Plant"
 actor_reqs    =
     { "type",          "name",      "range", "present"
       "UnitFlag",      "Settlers",  "Local", TRUE
@@ -2258,7 +2258,7 @@ actor_reqs    =
 
 ;******************************** ROADS ************************
 [actionenabler_road]
-action        = "Road"
+action        = "Build Road"
 actor_reqs    =
     { "type",          "name",         "range",   "present"
       "UnitFlag",      "Settlers",     "Local",   TRUE
@@ -2268,7 +2268,7 @@ actor_reqs    =
       "UnitState",     "Transported",  "Local",   FALSE    ; Prevent quay exploit
     }
 [actionenabler_road1] ; can't road while transported in foreign lands
-action        = "Road"
+action        = "Build Road"
 actor_reqs    =
     { "type",          "name",         "range",   "present"
       "UnitFlag",      "Settlers",     "Local",   TRUE
@@ -2281,7 +2281,7 @@ target_reqs    =
         "CityTile", "Claimed", "Local", FALSE
     }
 [actionenabler_road2_sea_bridge]
-action        = "Road"
+action        = "Build Road"
 actor_reqs    =
     { "type",          "name",         "range",   "present"
       "UnitFlag",      "Settlers",     "Local",   TRUE
@@ -2296,7 +2296,7 @@ target_reqs    =
       "TerrainClass", "Land",    "CAdjacent",TRUE
     }
 [actionenabler_road_tribesmen]
-action        = "Road"
+action        = "Build Road"
 actor_reqs    =
     { "type",          "name",         "range",   "present"
       "UnitFlag",      "Settlers",     "Local",   TRUE
@@ -2305,7 +2305,7 @@ actor_reqs    =
       "MinYear",       "-2400",        "World",   FALSE   ; they get old
     }
 [actionenabler_road_prole]
-action        = "Road"
+action        = "Build Road"
 actor_reqs    =
     { "type",          "name",         "range",   "present"
       "UnitFlag",      "Settlers",     "Local",   TRUE
@@ -2314,7 +2314,7 @@ actor_reqs    =
       "UnitState",     "Transported",  "Local",   FALSE    ; Prevent quay exploit
     }
 [actionenabler_road_prole1] ; can't road while transported in foreign lands
-action        = "Road"
+action        = "Build Road"
 actor_reqs    =
     { "type",          "name",         "range",   "present"
       "UnitFlag",      "Settlers",     "Local",   TRUE
@@ -2327,7 +2327,7 @@ target_reqs    =
         "CityTile", "Claimed", "Local", FALSE
     }
 [actionenabler_road_prole2_sea_bridge]
-action        = "Road"
+action        = "Build Road"
 actor_reqs    =
     { "type",          "name",         "range",   "present"
       "UnitFlag",      "Settlers",     "Local",   TRUE
@@ -2341,7 +2341,7 @@ target_reqs    =
       "TerrainClass", "Land",    "CAdjacent",TRUE
     }
 [actionenabler_legion_road]
-action        = "Road"
+action        = "Build Road"
 actor_reqs    =
     { "type",          "name",          "range",   "present"
       "UnitFlag",      "Settlers",      "Local",   TRUE
@@ -2352,7 +2352,7 @@ actor_reqs    =
 ; Don't force legions to road BEFORE making a fortress 
 ; from fortress being "domestic national territory"
 [actionenabler_legion_road2]
-action        = "Road"
+action        = "Build Road"
 actor_reqs    =
     { "type",          "name",          "range",   "present"
       "UnitFlag",      "Settlers",      "Local",   TRUE

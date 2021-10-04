@@ -215,18 +215,9 @@ function civclient_init()
     show_compass = true;  // Default case
     $("#compass").show();
   } else $("#compass").hide();
-
   var tmp = simpleStorage.get('chatDlg');
   if (tmp != null)  {// don't overwrite object keys if not yet stored
     restore_chatbox_vals = tmp;
-  }
-
-  show_order_buttons = simpleStorage.get('ordrbtns');
-  if (show_order_buttons == null || show_order_buttons === true) {
-    show_order_buttons = 1;  // Default case: show common; 2==show all
-  } else if (show_order_buttons == 0) {
-    $("#game_unit_orders_default").hide(); // no order buttons at all
-    $("#game_status_panel_bottom").hide();
   }
 
   draw_highlighted_pollution = simpleStorage.get('showpollution');
@@ -338,7 +329,7 @@ function civclient_init()
 function init_common_intro_dialog() {
 
   if (observing) {
-    show_intro_dialog("Welcome to Freeciv-web",
+    show_intro_dialog("Welcome to Freeciv-TnT",
       "You have joined the game as an observer. Please enter your name:");
     $("#turn_done_button").button( "option", "disabled", true);
 
@@ -352,16 +343,16 @@ function init_common_intro_dialog() {
     if (is_longturn()) {
         setTimeout(show_longturn_intro_dialog, 300);
     } else {
-      show_intro_dialog("Welcome to Freeciv-web",
+      show_intro_dialog("Welcome to Freeciv-TnT",
         "You are about to join the game. Please enter your name:");
     }
   } else if ($.getUrlVar('action') == "earthload") {
-    show_intro_dialog("Welcome to Freeciv-web",
+    show_intro_dialog("Welcome to Freeciv-TnT",
       "You can now play Freeciv-web on the earth map you have chosen. " +
       "Please enter your name: ");
 
   } else if ($.getUrlVar('action') == "load") {
-    show_intro_dialog("Welcome to Freeciv-web",
+    show_intro_dialog("Welcome to Freeciv-TnT",
       "You are about to join this game server, where you can " +
       "load a savegame, tutorial, custom map generated from an image or a historical scenario map. " +
       "Please enter your name: ");
@@ -383,7 +374,7 @@ function init_common_intro_dialog() {
     if ($.getUrlVar('civserverport') != null) {
       hack_port = $.getUrlVar('civserverport');
     } else {
-      show_intro_dialog("Welcome to Freeciv-web",
+      show_intro_dialog("Welcome to Freeciv-TnT",
         "Hack mode disabled because civserverport wasn't specified. "
         + "Falling back to regular mode.");
       return;
@@ -394,7 +385,7 @@ function init_common_intro_dialog() {
     } else if (simpleStorage.hasKey("username")) {
       hack_username = simpleStorage.get("username");
     } else {
-      show_intro_dialog("Welcome to Freeciv-web",
+      show_intro_dialog("Welcome to Freeciv-TnT",
         "Hack mode disabled because \"username\" wasn't specified and no "
         + "stored user name was found. " +
         "Falling back to regular mode.");
@@ -493,9 +484,7 @@ function show_dialog_message(title, message)
   $("#game_text_input").blur();
 
   if (title=="Tile Information")
-      $("#calc_tip").tooltip({
-        show: { delay:150, effect:"none", duration: 0 }, hide: {delay:120, effect:"none", duration: 0}
-      });
+      $("#calc_tip").tooltip();
   
   // Automatically close dialog after 38 seconds, because sometimes the dialog can't be closed manually.
   // When can't it be closed manually? This made problems if two dialogs opened in <30 and first one 
@@ -564,11 +553,7 @@ function update_timeout()
       } else {                          // big screen && longturn:   
         $("#turn_done_button").button("option", "label", "Turn Done (" + seconds_to_human_time(remaining) + ")");
       }
-      if (!is_touch_device()) $("#turn_done_button").tooltip({ 
-        disabled: false,
-        show: { delay:200, effect:"none", duration: 0 },
-        hide: {delay:0, effect:"none", duration: 0}
-      });
+      if (!is_touch_device()) $("#turn_done_button").tooltip({ disabled: false });
     }
   }
 }

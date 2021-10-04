@@ -151,6 +151,7 @@ function format_act_prob_part(prob)
 {
   return (prob / 2) + "%";
 }
+
 /****************************************************************************
   Format the probability that an action will be a success.
 ****************************************************************************/
@@ -168,6 +169,7 @@ function format_action_probability(probability)
     return "";
   }
 }
+
 /**************************************************************************
   Format the label of an action selection button.
 **************************************************************************/
@@ -516,6 +518,13 @@ function popup_action_selection(actor_unit, action_probabilities,
             }
           };
           buttons.push(button);
+        } else {
+            request_unit_do_action(ACTION_ATTACK,
+              actor_unit['id'], target_tile['index']);
+            // unit lost hp or died or promoted after attack, so update it:
+            setTimeout(update_active_units_dialog, update_focus_delay);
+            //action_selection_no_longer_in_progress(actor_unit['id']);
+            return;
         }
   }
 
@@ -568,7 +577,7 @@ function popup_action_selection(actor_unit, action_probabilities,
   if (SUA) {
     switch (ptype['rule_name']) {
       case "Siege Ram":  for (button_id in buttons) {
-        if (buttons[button_id].text.startsWith("Special Attack")) {
+        if (buttons[button_id].text.startsWith("Ranged Attack")) {
           buttons[button_id].text = utype_get_bombard_name(ptype)+" (100%)"
           buttons[button_id].title = "Odds of survival:  100%\n"
                                   + "Combat:                4 rounds\n"
@@ -594,7 +603,7 @@ function popup_action_selection(actor_unit, action_probabilities,
         }
       } break;
       case "Phalanx":  for (button_id in buttons) {
-        if (buttons[button_id].text.startsWith("Special Attack")) {
+        if (buttons[button_id].text.startsWith("Ranged Attack")) {
           buttons[button_id].text = utype_get_bombard_name(ptype)+" (100%)"
           buttons[button_id].title = "Odds of survival:  100%\n"
                                   + "Combat:                3 rounds\n"
@@ -608,7 +617,7 @@ function popup_action_selection(actor_unit, action_probabilities,
         }
       } break;
       case "Archers":  for (button_id in buttons) {
-        if (buttons[button_id].text.startsWith("Special Attack")) {
+        if (buttons[button_id].text.startsWith("Ranged Attack")) {
             buttons[button_id].text = utype_get_bombard_name(ptype)+" (100%)"
             buttons[button_id].title = "Odds of survival:  100%\n"
                                     + "Combat:                2 rounds\n"
@@ -621,7 +630,7 @@ function popup_action_selection(actor_unit, action_probabilities,
         }
       } break;
       case "Legion":  for (button_id in buttons) {
-        if (buttons[button_id].text.startsWith("Special Attack")) {
+        if (buttons[button_id].text.startsWith("Ranged Attack")) {
           buttons[button_id].text = utype_get_bombard_name(ptype)+" (100%)"
           buttons[button_id].title = "Odds of survival:  100%\n"
                                   + "Attack bonus:        2x\n"
@@ -635,7 +644,7 @@ function popup_action_selection(actor_unit, action_probabilities,
         }
       } break;
       case "Fanatics":  for (button_id in buttons) {
-        if (buttons[button_id].text.startsWith("Special Attack")) {
+        if (buttons[button_id].text.startsWith("Ranged Attack")) {
           buttons[button_id].text = utype_get_bombard_name(ptype)+" (100%)"
           buttons[button_id].title = "Odds of survival:  100%\n"
                                     + "Combat:                3 rounds\n"
@@ -649,7 +658,7 @@ function popup_action_selection(actor_unit, action_probabilities,
         }
       } break;
       case "Zealots":  for (button_id in buttons) {
-        if (buttons[button_id].text.startsWith("Special Attack")) {
+        if (buttons[button_id].text.startsWith("Ranged Attack")) {
           buttons[button_id].text = utype_get_bombard_name(ptype)+" (100%)"
           buttons[button_id].title = "Odds of survival:  100%\n"
                                     + "Combat:                3 rounds\n"
@@ -663,7 +672,7 @@ function popup_action_selection(actor_unit, action_probabilities,
         }
       } break;
       case "Marines":  for (button_id in buttons) {
-        if (buttons[button_id].text.startsWith("Special Attack")) {
+        if (buttons[button_id].text.startsWith("Ranged Attack")) {
           buttons[button_id].text = utype_get_bombard_name(ptype)+" (100%)"
           buttons[button_id].title = "Odds of survival:  100%\n"
                                   + "Combat:                3 rounds\n"
@@ -675,7 +684,7 @@ function popup_action_selection(actor_unit, action_probabilities,
         }
       } break;
       case "Battleship":  for (button_id in buttons) {
-        if (buttons[button_id].text.startsWith("Special Attack")) {
+        if (buttons[button_id].text.startsWith("Ranged Attack")) {
           buttons[button_id].text = utype_get_bombard_name(ptype)+" (100%)"
           buttons[button_id].title = "Odds of survival:  100%\n"
                                   + "Combat:                3 rounds\n"
@@ -687,7 +696,7 @@ function popup_action_selection(actor_unit, action_probabilities,
         }
       } break;
       case "Zeppelin":  for (button_id in buttons) {
-        if (buttons[button_id].text.startsWith("Special Attack")) {
+        if (buttons[button_id].text.startsWith("Ranged Attack")) {
           buttons[button_id].text = utype_get_bombard_name(ptype)+" (100%)"
           buttons[button_id].title = "Odds of survival:  100%\n"
                                   + "Combat:                4 rounds\n"
@@ -1439,191 +1448,6 @@ function select_tgt_extra(actor_unit, target_unit,
   $(id).dialog('open');
   $(id).dialog('widget').position({my:"center top", at:"center top", of:window})
   dialog_register(id, actor_unit['id']);
-}
-
-/**************************************************************************
-  Create a dialog to set the last order/action for goto and rally
-**************************************************************************/
-function select_last_action()
-{
-  var id     = "#sel_last_action_dialog";
-  var dhtml   = "";
-  var buttons = [];
-
-  /* Reset dialog page. */
-  remove_active_dialog(id);
-  $("<div id='sel_last_action_dialog'></div>").appendTo("div#game_page");
-
-  if (rally_active) {
-    dhtml += "Select action to do at RALLY point:";
-    // Turn off mouse-cursor pathing while dialog is open:
-    old_rally_active = rally_active; // Remembers it was on.
-    rally_active = false; // Gets turned back on after picking an action
-  } else dhtml += "Select action to perform after GOTO:";
-  $(id).html(dhtml);
-
-  /* TO DO:
-=========================================================================================================
-    make non-working //commented-out actions to work
-
-    capture units trying to do to same tile instead of next one.
-      order_wants_direction() is to blame?
-    
-    double clicking unit acting funny and being dead click, when before it didn't; are 
-      state vars not being cleaned in these cases, can we find out what they are and 
-      compare working  vs not-working on the state vars to discover it ?
-      console.log("%s %s",came_from_context_menu,last_unit_clicked);
-          NOT WORKING      true 371
-          WORKING          false -1
-  */
-
-//function add_action_last_button(buttons, action_id,   override_name, order,                activity,        target, subtarget)
-  buttons = add_action_last_button(buttons, ACTION_ATTACK);
-  buttons = add_action_last_button(buttons, ACTION_BOMBARD,
-                                  current_focus.length ? unit_get_bombard_name(current_focus[0]) :
-                                  "Special Attack");
-  buttons = add_action_last_button(buttons, ACTION_TRANSPORT_BOARD, "Board");
-  buttons = add_action_last_button(buttons, ACTION_SPY_BRIBE_UNIT, "Bribe");
-  if (tech_known('Radio'))
-    buttons = add_action_last_button(buttons, ACTION_BASE, "Build Airbase", ORDER_PERFORM_ACTION, null, null, EXTRA_AIRBASE);
-  buttons = add_action_last_button(buttons, ACTION_FOUND_CITY, "Build City");
-  if (client_rules_flag[CRF_MASONRY_FORT] && tech_known('Masonry'))
-    buttons = add_action_last_button(buttons, ACTION_BASE, "Build Fort", ORDER_PERFORM_ACTION, null, null, EXTRA_FORT);
-  if (tech_known('Construction'))
-    buttons = add_action_last_button(buttons, ACTION_BASE, "Build Fortress", ORDER_PERFORM_ACTION, null, null, EXTRA_FORTRESS);
-  if (client_rules_flag[CRF_MAGLEV] && tech_known('Superconductors'))
-    buttons = add_action_last_button(buttons, ACTION_ROAD, "Build MagLev", ORDER_PERFORM_ACTION, null, null, EXTRA_MAGLEV);
-  if (tech_known('Railroad'))
-    buttons = add_action_last_button(buttons, ACTION_ROAD, "Build Railroad", ORDER_PERFORM_ACTION, null, null, EXTRA_RAILROAD);
-  buttons = add_action_last_button(buttons, ACTION_ROAD, "Build Road", ORDER_PERFORM_ACTION, null, null, EXTRA_ROAD);
-  if (client_rules_flag[CRF_CANALS] && tech_known('Engineering')) {
-    buttons = add_action_last_button(buttons, ACTION_ROAD, "Build Canal, coastal", ORDER_PERFORM_ACTION, null, null, EXTRA_CANAL);
-    buttons = add_action_last_button(buttons, ACTION_ROAD, "Build Canal, inland", ORDER_PERFORM_ACTION, null, null, EXTRA_WATERWAY);
-  }
-  buttons = add_action_last_button(buttons, ACTION_HOME_CITY, "Change Home City");
-//  buttons = add_action_last_button(buttons, ACTION_CAPTURE_UNITS); // was acting on own tile instead of target tile it seems
-
-//  buttons = add_action_last_button(buttons, ACTION_CLEAN_POLLUTION, "Clean Pollution", ORDER_PERFORM_ACTION, ACTIVITY_CLEAN_POLLUTION, EXTRA_POLLUTION, EXTRA_POLLUTION);
-//  buttons = add_action_last_button(buttons, ACTION_CLEAN_FALLOUT, "Clean Fallout", ORDER_PERFORM_ACTION, null, null, EXTRA_FALLOUT);
-  buttons = add_action_last_button(buttons, ACTION_CONQUER_CITY);    
-  buttons = add_action_last_button(buttons, ACTION_CONVERT);
-  buttons = add_action_last_button(buttons, ACTION_CULTIVATE);
-
-  buttons = add_action_last_button(buttons, ACTION_SUICIDE_ATTACK, "Detonate Missile");
-  buttons = add_action_last_button(buttons, ACTION_NUKE, "Detonate Nuke");
-  buttons = add_action_last_button(buttons, ACTION_TRANSPORT_EMBARK, "Embark");
-  buttons = add_action_last_button(buttons, ACTION_TRADE_ROUTE);
-  buttons = add_action_last_button(buttons, ACTION_FORTIFY);
-  buttons = add_action_last_button(buttons, ACTION_HELP_WONDER);
-  buttons = add_action_last_button(buttons, ACTION_IRRIGATE, "Irrigate"); // works on blank tiles but not farmland
-  if (tech_known('Refrigeration'))
-    buttons = add_action_last_button(buttons, ACTION_IRRIGATE, "Irrigate Farmland", ORDER_PERFORM_ACTION, null, null, EXTRA_FARMLAND);
-  buttons = add_action_last_button(buttons, ACTION_JOIN_CITY);
-  buttons = add_action_last_button(buttons, ACTION_MINE, "Mine", ORDER_PERFORM_ACTION, null, null, EXTRA_MINE);
-  buttons = add_action_last_button(buttons, ACTION_PILLAGE, "Pillage Anything", ORDER_PERFORM_ACTION, null, null, -1);
-  buttons = add_action_last_button(buttons, ACTION_PLANT, "Plant");
-  buttons = add_action_last_button(buttons, ACTION_SPY_POISON_ESC, "Poison City");
-  buttons = add_action_last_button(buttons, ACTION_RECYCLE_UNIT);
-  buttons = add_action_last_button(buttons, ACTION_SPY_SABOTAGE_UNIT_ESC);
-  buttons = add_action_last_button(buttons, ACTION_SPY_ATTACK, "Spy vs. Spy");
-  buttons = add_action_last_button(buttons, ACTION_STEAL_MAPS);
-  buttons = add_action_last_button(buttons, ACTION_STEAL_MAPS_ESC);
-  buttons = add_action_last_button(buttons, ACTION_TRANSFORM_TERRAIN);
- //   buttons = add_action_last_button(buttons, ACTION_EXPEL_UNIT);
-  buttons = add_action_last_button(buttons, ACTION_TRANSPORT_UNLOAD);
-  buttons = add_action_last_button(buttons, ACTION_UPGRADE_UNIT);
-  buttons = add_action_last_button(buttons, ACTION_COUNT, "NO ACTION", ORDER_LAST);
-  var close_button = {
-    text: "Cancel (𝗪)", 
-    click: function() {
-      remove_active_dialog(id);
-      deactivate_goto(false);
-    }
-  };
-  buttons.push(close_button);
-
-  $(id).dialog({
-  title    : "Go and ...",
-  width    : "450px",
-  bgiframe : true,
-  html:    dhtml,
-  modal    : true,
-  buttons  : buttons });
-
-  $(id).dialog('open');
-  $(id).dialog('widget').position({my:"center top", at:"center top", of:window})
-
-  dialog_register(id);
-}
-
-/**************************************************************************
-  Possibly add an action button for "Go...And" dialog
-**************************************************************************/
-function add_action_last_button(buttons, action_id, override_name, order, activity, target, subtarget)
-{
-  // Eliminate actions known to be illegal for the utype given a rally point.
-  if (old_rally_active) {
-    // Only eliminate actions iff city production utype was known:
-    if (rally_virtual_utype_id != RALLY_DEFAULT_UTYPE_ID) {
-      //TODO:city might be making default utype, check rally_city_id's real VUT_UTYPE instead ^^
-      if (!utype_can_do_action(unit_types[rally_virtual_utype_id],action_id)) {
-        return buttons; // don't add
-      }
-    } 
-  }
-  // Eliminate illegal actions for a selected utype under Go...And
-  else if (current_focus.length) {
-    if (!utype_can_do_action(unit_type(current_focus[0]),action_id)) {
-      return buttons; // don't add
-    }
-  }
-  // Get ruleset name for action unless override title exists:
-  if (!override_name) override_name = actions[action_id]['ui_name'].replace("%s", "").replace("%s","");
-  var new_button = create_action_last_button(override_name, action_id, order, activity, target, subtarget);
-
-  buttons.push(new_button);
-  return buttons;
-}
-/**************************************************************************
-  Create a button for GO...AND last order dialog
-**************************************************************************/
-function create_action_last_button(title_text, action, order, activity, target, subtarget)
-{
-  var button = {
-    title: "Perform "+title_text+" after completing GOTO",
-    html:  title_text,
-    click: function() {
-      if (order) {
-        user_last_order = order;
-      } else {
-        user_last_order = ORDER_PERFORM_ACTION;
-      }
-      if (target) {
-        user_last_target = target;
-      }
-      if (subtarget) {
-        user_last_subtarget = subtarget;
-      }
-      if (activity) {
-        user_last_activity = activity;
-      }
-      goto_last_order = user_last_order;
-      user_last_action = action;
-      goto_last_action = action;
-      remove_active_dialog("#sel_last_action_dialog");
-      /* AFTER picking last action, we activate goto-pathing or rally-pathing,
-         to avoid cursor doing "shadow goto pathing" while modal dialog is up */
-      if (old_rally_active) {
-        rally_active = old_rally_active;
-        old_rally_active = false;
-        activate_rally_goto(cities[rally_city_id]);
-      } else if (current_focus.length > 0) {
-        activate_goto();
-      }
-    }
-  }
-
-  return button;
 }
 
 /**************************************************************************

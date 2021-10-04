@@ -50,8 +50,8 @@ pixel_border = 1
 tiles = { "row", "column", "tag"
 				; Scenario League tags in brackets
   0,  0, "u.armor"	  	; [Nemo] & [Lexxie]
-  0,  1, "u.howitzer"		; [Nemo] & [Lexxie]--fallback: u_howitzer_o is in units_oversize.spec<<FCW:remove this line if sprite sheet building fails
-  0,  2, "u.battleship"	; [Lexxie]
+  0,  1, "u.howitzer"		; [Nemo] & [Canik]
+  0,  2, "u.battleship"	        ; [Lexxie]
   0,  3, "u.bomber"		  ; [GB]
   0,  4, "u.cannon"		  ; [Lexxie]
   0,  5, "u.caravan"		; [Alex] & [CT]

@@ -27,7 +27,7 @@ $(document).ready(function () {
 			  $("#donate_link").hide();
 			}
 
-			if (window.location.href == 'https://freecivweb.org/') window.location.href='https://www.freecivweb.org/';
+			if (window.location.href == 'https://tacticsandtriumph.com/') window.location.href='https://www.tacticsandtriumph.com/';
 
 
 			if (!Detector.webgl) {

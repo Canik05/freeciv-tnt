@@ -6700,7 +6700,7 @@ type	= "Casus_Belli_Success"
 value	= 1
 reqs	=
     { "type", "name", "range", "present"
-      "Action", "Road", "Local", TRUE
+      "Action", "Build Road", "Local", TRUE
       "DiplRel", "War", "Local", FALSE
       "DiplRel", "Alliance", "Local", FALSE
     }
@@ -7269,11 +7269,11 @@ reqs    =
       "Action", "Conquer City",                    "Local", FALSE 
       "Action", "Heal Unit",                       "Local", FALSE 
       "Action", "Transform Terrain",               "Local", FALSE 
-      "Action", "Irrigate TF",                     "Local", FALSE 
-      "Action", "Mine TF",                         "Local", FALSE 
+      "Action", "Cultivate",                       "Local", FALSE 
+      "Action", "Plant",                           "Local", FALSE 
       "Action", "Pillage",                         "Local", FALSE 
       "Action", "Fortify",                         "Local", FALSE 
-      "Action", "Road",                            "Local", FALSE 
+      "Action", "Build Road",                      "Local", FALSE 
       "Action", "Convert Unit",                    "Local", FALSE 
       "Action", "Build Base",                      "Local", FALSE 
       "Action", "Build Mine",                      "Local", FALSE 
@@ -7341,11 +7341,11 @@ reqs    =
       "Action", "Conquer City",                    "Local", FALSE 
       "Action", "Heal Unit",                       "Local", FALSE 
       "Action", "Transform Terrain",               "Local", FALSE 
-      "Action", "Irrigate TF",                     "Local", FALSE 
-      "Action", "Mine TF",                         "Local", FALSE 
+      "Action", "Cultivate",                       "Local", FALSE 
+      "Action", "Plant",                           "Local", FALSE 
       "Action", "Pillage",                         "Local", FALSE 
       "Action", "Fortify",                         "Local", FALSE 
-      "Action", "Road",                            "Local", FALSE 
+      "Action", "Build Road",                      "Local", FALSE 
       "Action", "Convert Unit",                    "Local", FALSE 
       "Action", "Build Base",                      "Local", FALSE 
       "Action", "Build Mine",                      "Local", FALSE 

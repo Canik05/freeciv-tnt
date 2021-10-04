@@ -157,14 +157,6 @@ button {
   width: 30px;
   visibility:visible;
 }
-/* this removes dotted line from appearing around clicked/focused order button */
-.order_button > a:focus,
-.order_button:focus,
-.order_button > a > img:focus
-{
-  outline: none !important;
-}
- 
 
 #turn_done_button_div {
   position: absolute;
@@ -1151,17 +1143,12 @@ body:not(.mobile) .ui-dialog.unit_dialog {
 }
 
 .context-menu-list {
-  background: #00000098;
-  /*background: url(/images/bg-med-dark.jpg)*/
+  background: none;
 }
 
 .context-menu-item {
-  font-size: 120%;
-  padding: 0px 5px 1px;
-  color: #bcb0ab;
-  /*background-color: rgba(200,200,200,0.35);*/
-  background: none;
-  text-shadow: 2px 1px 2px #200;
+  font-size: 125%;
+  background-color: rgba(200,200,200,0.75);
 }
 
 @media (max-width: 900px) {
@@ -1252,7 +1239,6 @@ body:not(.mobile) .ui-dialog.unit_dialog {
 #active_unit_info {
   float: left;
   width: 100%;
-  cursor: help;
   color: white;
   background-color: rgba(0, 0, 0, 0.65);
   font-size: 86%;
@@ -2133,8 +2119,8 @@ input[type="email" i], #email {
 }
 
 #city_canvas_div {
-  width: 350px; 
-  height: 175px; 
+  width: 444px; 
+  height: 222px; 
   float: left;
   margin: 5px;
   border: 1px solid #888888;
@@ -2229,9 +2215,6 @@ input[type="email" i], #email {
   margin-left: 0px;
   margin-right: 0px;
   border-color: #000;
-}
-.happy_cause_help {
-  cursor: help;
 }
 /* city governor */
 .ui-slider-handle {

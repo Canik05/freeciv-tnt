@@ -86,6 +86,7 @@ class_flags =
     _("AttFromNonNative"), _("Can launch attack from non-native tiles.")
     _("CargoRestrained"), _("Can't attack as Cargo. Must first unload.")
     _("CanPillage")
+    _("Missile")
   }
 
 [veteran_system]
@@ -189,7 +190,7 @@ name          = _("?unitclass:Missile")
 min_speed     = 1
 hp_loss_pct   = 0
 hut_behavior  = "Frighten"
-flags         = "Unreachable", "DoesntOccupyTile", "Airliftable"
+flags         = "Unreachable", "DoesntOccupyTile", "Airliftable", "Missile"
 
 ; missile flag not class, indicates suicide explosion and possibly other things.
 [unitclass_bomb]
@@ -197,7 +198,7 @@ name          = _("?unitclass:Bomb")
 min_speed     = 1
 hp_loss_pct   = 0
 hut_behavior  = "Frighten"
-flags         = "Unreachable", "DoesntOccupyTile", "Airliftable" 
+flags         = "Unreachable", "DoesntOccupyTile", "Airliftable", "Missile"
 
 [unitclass_land]
 ; /* TRANS: Unit class: used adjectivally */
@@ -256,7 +257,7 @@ helptext      = _("\
 name          = _("?unitclass:Submarine")
 min_speed     = 3
 hp_loss_pct   = 0
-flags         = "DamageSlows", "AttackNonNative", "AttFromNonNative",  "Unreachable", "CanPillage"
+flags         = "DamageSlows", "AttackNonNative", "AttFromNonNative", "CanPillage", "Unreachable"
 helptext      = _("\
   • Visibility bonus: not visible to other players unless they have a unit or city adjacent to it.\n\
   • Crew Repair: each turn, regardless of movement, recovers 2 hit points.\
@@ -316,7 +317,6 @@ helptext      = _("\
   • INTERCEPTOR: can be given the Vigil order to auto-attack adjacent Air units.\n\
   • AIR COVER: Most units who cannot attack this unit also cannot attack other units on the tile.\
 ")
-
 [unitclass_balloon]
 ; /* TRANS: Unit class: used adjectivally */
 name          = _("?unitclass:Balloon")
@@ -633,6 +633,8 @@ Upkeep for Settlers costs food as well as production. A Settler\
  much food per turn.\
 ")
 
+
+
 ;A unique patch unit to provide fair starts regardless of lack of nearby water.
 ;to make as a start unit, use the letter "a": for example, cccwwwxxa
 [unit_welldigger]
@@ -657,7 +659,7 @@ vision_radius_sq = 4
 transport_cap = 0
 fuel          = 0
 uk_happy      = 0
-uk_shield     = 5
+uk_shield     = 4
 uk_food       = 2
 uk_gold       = 2
 flags         = "Settlers", "Infra", "NonMil", "HasNoZOC", "Cant_Fortify", "Unique", "Well-Digger", "Expellable"

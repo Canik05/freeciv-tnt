@@ -404,8 +404,6 @@ struct city {
     /* Orders should be cleared if an enemy is met. */
     bool vigilant;
     struct unit_order *orders;
-    /* Allows us to know rally point without processing orders */
-    int dest_tile;
   } rally_point;
 
   union {

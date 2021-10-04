@@ -2210,6 +2210,20 @@ reqs =
       "Building",  "Palace", "Player",  FALSE
       "UnitClass", "Land",   "Local",   TRUE
     }
+[effect_neolithic_people_are_too_slow]
+type = "Move_Bonus"
+value = 3
+reqs =
+    {
+      "type",      "name",              "range",  "present"
+      "UnitType", "Neolithic Settlers", "Local",  TRUE
+      "Tech",     "Iron Working",       "Player", FALSE
+      "Tech",     "The Wheel",          "Player", FALSE
+      "Tech",     "Polytheism",         "Player", FALSE
+      "Tech",     "Mathematics",        "Player", FALSE
+      "Building", "Great Wall",         "Player", FALSE
+    }
+
 [effect_palace]
 type    = "Output_Waste_Pct"
 value	= 60

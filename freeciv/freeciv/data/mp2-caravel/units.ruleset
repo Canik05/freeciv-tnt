@@ -90,6 +90,8 @@ class_flags =
     _("BorderPolice"), _("Military units from this class can peacefully expel certain foreign units.")
     _("AttFromNonNative"), _("Can launch attack from non-native tiles.")
     _("CargoRestrained"), _("Can't attack as Cargo. Must first unload.")
+    _("CanPillage")
+    _("Missile")
   }
 
 [veteran_system]
@@ -707,7 +709,7 @@ hitpoints     = 8
 firepower     = 1
 move_rate     = 1
 vision_radius_sq = 5
-transport_cap = 0
+transport_cap = 1
 fuel          = 0
 uk_happy      = 0
 uk_shield     = 0
@@ -2162,7 +2164,7 @@ name          = _("Artillery")
 class         = "Land"
 tech_req      = "Machine Tools"
 obsolete_by   = "Howitzer"
-graphic       = "u.artillery_o"
+graphic       = "u.artillery"
 graphic_alt   = "-"
 sound_move    = "m_artillery"
 sound_move_alt = "m_generic"
@@ -2300,7 +2302,7 @@ name          = _("Howitzer")
 class         = "Land"
 tech_req      = "Robotics"
 obsolete_by   = "None"
-graphic       = "u.howitzer_o"
+graphic       = "u.howitzer"
 graphic_alt   = "-"
 sound_move    = "m_howitzer"
 sound_move_alt = "m_generic"

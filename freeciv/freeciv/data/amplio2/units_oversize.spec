@@ -9,6 +9,7 @@ options = "+Freeciv-spec-Devel-2015-Mar-25"
 ;84 x 48 images give an extra 20 horizontal pixels for "oversize" images.
 
 artists = "
+    Canik [CK] <tacticsandtriumph.com>
     Lexxie9952 [Lexxie]
     Alex Mor [Alex]
     Allard H.S. Höfelt [AHS]
@@ -52,6 +53,4 @@ tiles = { "row", "column", "tag"
   0,  8, "u.wagon"                    ; Lexxie
   0,  9, "u.truck"                    ; Lexxie
   1,  0, "u.zeppelin"                 ; Lexxie
-  1,  1, "u.settlers_o"               ; Lexxie
-  1,  2, "u.phalanx_o"                ; Lexxie
 }

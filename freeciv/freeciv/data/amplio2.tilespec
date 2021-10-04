@@ -288,14 +288,18 @@ layer0_match_type = "land"
 [tile_swamp]
 tag = "swamp"
 blend_layer = 1
-num_layers = 1
+num_layers = 2
 layer0_match_type = "land"
+layer1_match_type = "forest"
+layer1_match_with = "forest"
 
 [tile_tundra]
 tag = "tundra"
 blend_layer = 1
-num_layers = 1
+num_layers = 2
 layer0_match_type = "land"
+layer1_match_type = "forest"
+layer1_match_with = "forest"
 
 [tile_inaccessible]
 tag = "inaccessible"

@@ -13,7 +13,7 @@
         e.printStackTrace();
     }
 %>
-<title>${empty title ? "Tactics & Triumph - 4X Strategy Nation Sim" : title}</title>
+<title>${empty title ? "Tactics & Triumph - Freeciv Games & Mods" : title}</title>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="author" content="Tactics & Triumph">
@@ -50,24 +50,24 @@
 	body {
 		padding-top: 60px;
 		padding-bottom: 20px;
-		color: #7596bd;
-  	background-image: url('/images/brickbg-zoomd1.jpg'); 
+		color: #a8a8a8;
+  	background-image: url('/images/bg-alt-dark.jpg'); 
 	}
 	h1, h2, h3, h4, h5, h6 {
-		color: #d3dfec;
+		color: #a8a8a8;
 		font-family: 'Freeciv', 'Segoe UI';
 		text-shadow: 1px 1px #222;
 	}
 	h1, h2, h3 {
 		font-family: 'Freeciv', 'Segoe UI';
-		border-bottom: 2px solid #215d75;
+		border-bottom: 2px solid #a8a8a8;
 	}
 	.table>thead>tr>th {
     vertical-align: bottom;
-    border-bottom: 2px solid #979d6d;
+    border-bottom: 2px solid #060d15;
 	}
 	.table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td {
-    border-top: 1px solid #674292;
+    border-top: 1px solid #060d15;
 	}
 	.input-group .form-control:first-child {
     border-bottom-right-radius: 0;
@@ -89,7 +89,7 @@
 	 */
 	.panel-freeciv {
 		background-color: rgba(243, 236, 209, 0.5);                
-		border-bottom: 1px solid #827d70;
+		border-bottom: 1px solid #2f251b;
 		border-radius: 3px;
 		margin-top: 1%;
 		padding: 1%;

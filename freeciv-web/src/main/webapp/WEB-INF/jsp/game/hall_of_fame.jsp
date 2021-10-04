@@ -103,7 +103,7 @@
      			<div class="col-md-12">
 
 		<h1>Hall Of Fame</h1>
-		These are the greatest players of Freeciv-web! Each row shows the result of one game.
+		These are the greatest players of Freeciv-TnT! Each row shows the result of one game.
         <br>
 
         <table style="width: 100%;">

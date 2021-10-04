@@ -17,11 +17,6 @@
 
 ***********************************************************************/
 
-const auto_attack_actions = [
-  ACTION_ATTACK, ACTION_SUICIDE_ATTACK,
-  ACTION_NUKE_UNITS, ACTION_NUKE_CITY, ACTION_NUKE
-];
-
 // Player income is calculated two ways. Sometimes the server gives it to us 
 // for free. When it doesn't, we need to calculate it in the client. This
 // keeps track of when our info for this is fresh from either source. 
@@ -919,8 +914,7 @@ function handle_non_integer_combat_scores(key)
   else {
     return; // skip message
   }
-  if (DEBUG_UNITS)
-    console.log("Non-integer combat strength added to warcalc data for "+unit_types[key]['name'])
+  console.log("Non-integer combat strength added to warcalc data for "+unit_types[key]['name'])
 }
 
 /**************************************************************************
@@ -1100,72 +1094,6 @@ function handle_unit_short_info(packet)
   }
 }
 
-/**********************************************************************//**
-  Request that the player makes a decision for the specified unit unless
-  it may be an automatic decision. In that case check if one of the auto
-  actions are enabled.
-**************************************************************************/
-function action_decision_handle(punit)
-{
-  var a;
-
-  for (a = 0; a < auto_attack_actions.length; a++) {
-    let action = auto_attack_actions[a];
-    if (utype_can_do_action(unit_type(punit), action) && auto_attack) {
-      /* An auto action like auto attack could be legal. Check for those at
-      * once so they won't have to wait for player focus. */
-      var packet = {
-        "pid" : packet_unit_get_actions,
-        "actor_unit_id" : punit['id'],
-        "target_unit_id" : IDENTITY_NUMBER_ZERO,
-        "target_tile_id": punit['action_decision_tile'],
-        "target_extra_id": EXTRA_NONE,
-        "disturb_player": false
-      };
-
-      send_request(JSON.stringify(packet));
-      return; // Exit, don't request other possible actions in the loop.
-    }
-  }
-  /* Other auto_action types can be checked here. Also see function below */
-
-  action_decision_request(punit);
-}
-
-/**********************************************************************//**
-  Do an auto action or request that the player makes a decision for the
-  specified unit.
-**************************************************************************/
-function action_decision_maybe_auto(actor_unit, action_probabilities,
-                                    target_tile, target_extra,
-                                    target_unit, target_city)
-{
-  var a;
-
-  for (a = 0; a < auto_attack_actions.length; a++) {
-    let action = auto_attack_actions[a];
-
-    if (action_prob_possible(action_probabilities[action])
-        && auto_attack) {
-
-      var target = target_tile['index'];
-      if (action == ACTION_NUKE_CITY) {
-        target = tile_city(target_tile);
-        if (!target) continue;
-        target = target['id'];
-      }
-
-      request_unit_do_action(action,
-          actor_unit['id'], target);
-
-      return; // Exit, don't request other possible actions in the loop.
-    }
-  }
-  /* Other auto_action types can be checked here. Also see function above */
-
-  action_decision_request(actor_unit);
-}
-
 /**************************************************************************
   Called to do basic handling for a unit_info or short_unit_info packet.
 
@@ -1204,17 +1132,16 @@ function handle_unit_packet_common(packet_unit)
   if (units[packet_unit['id']] == null) {
     /* This is a new unit. */
     if (should_ask_server_for_actions(packet_unit)) {
-      action_decision_handle(packet_unit);
+      action_decision_request(packet_unit);
     }
     packet_unit['anim_list'] = [];
     units[packet_unit['id']] = packet_unit;
     units[packet_unit['id']]['facing'] = 6;
   } else {
-    if ((punit['action_decision_want'] != packet_unit['action_decision_want']
-         || punit['action_decision_tile'] != packet_unit['action_decision_tile'])
+    if (punit['action_decision_want'] != packet_unit['action_decision_want']
         && should_ask_server_for_actions(packet_unit)) {
       /* The unit wants the player to decide. */
-      action_decision_handle(packet_unit);
+      action_decision_request(packet_unit);
     }
 
     update_unit_anim_list(units[packet_unit['id']], packet_unit);
@@ -1229,32 +1156,15 @@ function handle_unit_packet_common(packet_unit)
 
   update_tile_unit(units[packet_unit['id']]);
 
-  /* Update UI elements affected by a change to this unit's state:
-     1. If unit is done moving, advance focus. 
-     2. If focused on a new unit, update orders buttons and active units dialog.
-     3. and/or if ANY unit on the tile was the packet unit that underwent state
-        change, refresh orders buttons and active units dialog. 
-     TODO: this probably removes the need for numerous hacky update_active_units_dialog()
-     calls that are sent, often with a timeout, after sending a packet for the unit to
-     do an action.
+  if (current_focus.length > 0 && current_focus[0]['id'] == packet_unit['id']) {
+    update_active_units_dialog();
+    update_unit_order_commands();
 
-     9July2021. This is a test candidate and may be changed/removed if testing reveals
-                suboptimal results. */
-  if (current_focus.length > 0) {
-    if (current_focus[0]['id'] == packet_unit['id']) {
-      if (current_focus[0]['done_moving'] != packet_unit['done_moving']) {
-        update_unit_focus();
-      }
-    }
-    var tunits = tile_units(index_to_tile(current_focus[0]['tile']));
-    for (i = 0; i < tunits.length; i++) { 
-      if (tunits[i]['id'] == packet_unit['id']) {
-        update_active_units_dialog();
-        update_unit_order_commands();
-        break;
-      }
+    if (current_focus[0]['done_moving'] != packet_unit['done_moving']) {
+      update_unit_focus();
     }
   }
+
   /* TODO: update various dialogs and mapview. */
 }
 
@@ -1486,9 +1396,8 @@ function handle_unit_actions(packet)
   } else if (hasActions) {
     /* This was a background request. */
 
-    action_decision_maybe_auto(pdiplomat, action_probabilities,
-                               ptile, target_extra,
-                               target_unit, target_city);
+    /* No background requests are currently made. */
+    console.log("Received the reply to a background request I didn't do.");
   }
 }
 
@@ -1966,7 +1875,7 @@ function handle_edit_object_created(packet)
 
 function handle_goto_path(packet)
 {
-  if (goto_active||rally_active) {
+  if (goto_active) {
     update_goto_path(packet);
   }
   else { // middle-click to show path for units on tile
@@ -2151,46 +2060,14 @@ function handle_ruleset_extra_flag(packet)
   /* TODO: implement */
 }
 
-/************************************************************************//**
-  Handle a packet about a particular base type.
-****************************************************************************/
 function handle_ruleset_base(packet)
 {
-  var i;
-
-  for (i = 0; i < MAX_EXTRA_TYPES; i++) {
-    if (is_extra_caused_by(extras[i], EC_BASE)
-        && extras[i]['base'] == null) {
-      /* This is the first base without base data */
-      extras[i]['base'] = packet;
-      extras[extras[i]['name']]['base'] = packet;
-      return;
-    }
-  }
-
-  console.log("Didn't find Extra to put Base on");
-  console.log(packet);
+  /* TODO: Implement */
 }
 
-/************************************************************************//**
-  Handle a packet about a particular road type.
-****************************************************************************/
 function handle_ruleset_road(packet)
 {
-  var i;
-
-  for (i = 0; i < MAX_EXTRA_TYPES; i++) {
-    if (is_extra_caused_by(extras[i], EC_ROAD)
-        && extras[i]['road'] == null) {
-      /* This is the first road without road data */
-      extras[i]['road'] = packet;
-      extras[extras[i]['name']]['road'] = packet;
-      return;
-    }
-  }
-
-  console.log("Didn't find Extra to put Road on");
-  console.log(packet);
+  /* TODO: Implement */
 }
 
 /************************************************************************//**

@@ -1609,7 +1609,7 @@ graphic_alt	= "-"
 obsolete_by	=
     { "type", "name", "range"
     }
-build_cost	= 230
+build_cost	= 250
 upkeep		= 0
 sabotage	= 0
 sound		= "w_seti_program"
@@ -2077,7 +2077,7 @@ graphic_alt	= "-"
 obsolete_by	=
     { "type", "name", "range"
     }
-build_cost	= 220
+build_cost	= 250
 upkeep		= 0
 sabotage	= 0
 sound		= "w_teslas_laboratory"
@@ -2172,7 +2172,7 @@ graphic_alt	= "-"
 obsolete_by	=
     { "type", "name", "range"
     }
-build_cost	= 300
+build_cost	= 400
 upkeep		= 0
 sabotage	= 0
 sound		= "w_womens_suffrage"

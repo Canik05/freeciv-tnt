@@ -336,7 +336,7 @@
 						<table id="longturn-table" class="table">
 							<tr>
 								<th class="hidden-xs">Players</th>
-								<th>Game Info<br><span style="font-size:90%; font-weight:600; color: #3718c1"><i>Late-join bonus gold ensures FAIR-START&#8482; in the first 12 turns.</i></span></th>
+								<th>Game Info<br><span style="font-size:90%; font-weight:600; color: #32587d"><i>Late-join bonus gold ensures FAIR-START&#8482; in the first 12 turns.</i></span></th>
 								<th style="text-align:center" class="hidden-xs">State</th>
 								<th style="text-align:right">Turn</th>
 								<th style="text-align:center">Action</th>
@@ -359,7 +359,7 @@
 									</td>
 									<td>
 											<c:if test="${game.turn lt 13}">
-												<span style="color: #3718c1">${game.message}</span>
+												<span style="color: #41268d">${game.message}</span>
 											</c:if>
 											<c:if test="${game.turn > 12}">
 												${game.message}
@@ -368,7 +368,7 @@
 									<td class="hidden-xs" style="text-align:center">${game.state} <span style="color:#32587d; text-shadow:1px 1px #0001">${game.port}</span></td>
 									<td style="text-align:right">
 											<c:if test="${game.turn lt 13}">
-												<span style="color: #3718c1; text-shadow: 1px 1px #d9ceff;">${game.turn}</span>
+												<span style="color: #41268d; text-shadow: 1px 1px #d9ceff;">${game.turn}</span>
 											</c:if>
 											<c:if test="${game.turn > 12}">
 												${game.turn}
@@ -409,7 +409,7 @@
 								To start a new Play-By-Email game, 
 								<a href="/webclient/?action=pbem&amp;type=pbem">log in here</a></u>. To play your turn
 								in a running Play-By-Email game, click on the link in the last
-								e-mail you got from Freeciv-web. Games are expired after 7 days if
+								e-mail you got from Tactic&Triumph. Games are expired after 7 days if
 								you don't play your turn.
 							</p>
 						</div>

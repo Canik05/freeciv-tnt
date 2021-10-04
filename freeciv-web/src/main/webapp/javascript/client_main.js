@@ -252,12 +252,12 @@ function show_new_game_message()
   }
   else if (is_longturn()) {
     message = "Welcome, " + capitalize(username) + "! This is a Longturn game, where you play one turn per day. " +
-    "Just do your moves, and come back tomorrow when the timer advances to the next turn! You may " +
+    "Make your moves and come back tomorrow when the timer advances to the next turn! You may " +
     "bookmark this page to return. You can also find the game again at " + window.location.host + ".<br> "+
     "<font color='#90FFFF'>Freeciv is a game of diplomacy. Your nation is encouraged to talk to other nations. "+
-    "Please click to join the <a href='https://discord.gg/Zj8UQSN' target='_new'>community Discord chat server</a>. "+
-    "Players are responsible for following the #rules posted there. Be polite; please keep in-game talk "+
-    "related to the game; do not post spam to offsite links if you wish to remain in the game.</font> Good luck, have fun!";
+    "Please join the <a href='https://discord.gg/BrpzgpgMAF' target='_new'>community Discord chat</a>. "+
+    "Players are responsible for following the #rules posted there. Be polite; please keep talk related "+
+    "to the game; do not post spam or advertisements if you wish to remain in the game.</font> Good luck and have fun!";
 
     if (is_small_screen) {
       message += "This is your message window that reports ongoing game events. " +
@@ -266,10 +266,11 @@ function show_new_game_message()
     }
 
   } else if (is_small_screen()) {
-    message = "Welcome, " + capitalize(username) + "! You lead a great civilization. Your task is to conquer the world!\n" +
-      "Please join the <a href='https://discord.gg/Zj8UQSN' target='_new'>community Discord chat server</a>. "+
-      "Click on units for giving them orders, and drag units on the map to move them.\n" +
-      "Good luck, and have a lot of fun!\n<br><br>This message window reports game events. " +
+    message = "Welcome, " + capitalize(username) + "! You have just become ruler of a young but promising civilization!\n" +
+      "You must balance expansion, education, economy, military and diplomacy to thrive.\n" +
+      "Can you lead your people to glory? Can you dominate all others? Only time can tell..\n" +
+      "Please join the <a href='https://discord.gg/BrpzgpgMAF' target='_new'>community Discord chat</a>. "+
+      "This message window reports game events.\n Do not post spam or offsite advertisements." +
       "<u style='color:#fde'>Tap the yellow <b>minimize button</b> at the top to enter the game</u>. You can return here to view " +
       "game messages by hitting the maximize button."; 
 
@@ -285,8 +286,8 @@ function show_new_game_message()
       "a city. Click on units to get a list of available orders. \n" +
       "To move your units around, carefully drag the units to the \n" +
       "place you want it to go.\n" +
-      "Please join the <a href='https://discord.gg/Zj8UQSN' target='_new'>community Discord chat server</a>.\n"+
-      "Good luck, and have a lot of fun!";
+      "Please join the <a href='https://discord.gg/BrpzgpgMAF' target='_new'>community Discord chat</a>.\n"+
+      "Good luck and have fun!";
 
     } else {
       message = player_nation_text + " Your\n" +
@@ -295,8 +296,8 @@ function show_new_game_message()
       "and using your settlers to find a good place to build\n" +
       "a city. Right-click with the mouse on your units for a list of available \n" +
       "orders such as move, explore, build cities and attack. \n" +
-      "Please join the <a href='https://discord.gg/Zj8UQSN' target='_new'>community Discord chat server</a>.\n"+
-      "Good luck, and have a lot of fun!";
+      "Please join the <a href='https://discord.gg/BrpzgpgMAF' target='_new'>community Discord chat</a>.\n"+
+      "Good luck and have fun!";
 
     }
   } else if (game_loaded) {

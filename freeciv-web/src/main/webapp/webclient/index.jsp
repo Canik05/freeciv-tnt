@@ -30,7 +30,7 @@ try {
 <title>Freeciv-web</title>
 <link rel="stylesheet" href="/css/font-awesome.min.css">
 <link rel="stylesheet" type="text/css" href="/css/webclient.min.css?ts=${initParam.buildTimeStamp}" />
-<meta name="description" content="Freeciv-Web allows you to play Civ on the web for free. Single and multi-player! Can you build an empire that stands the test of time?">
+<meta name="description" content="Freeciv-Web allows you to play Civ on the web for free. Single and multiplayer! Can you build an empire that stands the test of time?">
 <% if (trackJsToken != null) { %>
 <script type="text/javascript">window._trackJs = { token: '<%= trackJsToken %>' };</script>
 <script type="text/javascript" src="https://cdn.trackjs.com/releases/current/tracker.js"></script>
@@ -73,16 +73,6 @@ var fcwDebug=<%= fcwDebug %>;
     <jsp:include page="pregame.jsp" flush="false"/>
     <jsp:include page="game.jsp" flush="false"/>
 
-<% if (gaTrackingId != null) { %>
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-  ga('create', '<%= gaTrackingId %>', 'auto');
-  ga('send', 'pageview');
-</script>
-<% } %>
 </body>
 
 

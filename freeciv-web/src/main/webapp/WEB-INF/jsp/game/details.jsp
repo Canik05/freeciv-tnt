@@ -41,7 +41,7 @@
 			text-shadow: 1px 1px #222;
 		}
 		body {
-			color: #ccc;
+			color: #7596bd;
 			background-image: url('/images/bg-dark.jpg'); 
 		}
 		@font-face {
@@ -154,7 +154,7 @@
 			<c:if test="${not empty port}">
 				<!-- message -->
 				<div class="row">
-					<h2>Freeciv-web server id: ${port}</h2>
+					<h2>Freeciv-TnT server id: ${port}</h2>
 					<c:if test="${not empty message}">
 							${message}
 					</c:if>

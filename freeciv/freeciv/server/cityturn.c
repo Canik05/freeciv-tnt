@@ -2606,19 +2606,6 @@ static struct unit *city_create_unit(struct city *pcity,
                                    * sizeof(struct unit_order));
     memcpy(punit->orders.list, pcity->rally_point.orders,
            pcity->rally_point.length * sizeof(struct unit_order));
-
-    /* FIXME: Heuristic Patch: units on rally-goto did not have a goto_tile,
-       making clients fail to show their GOTO activity. A fake tile (home_city
-       tile) gets associated to the unit. This is NOT the correct tile but 
-       it doesn't matter--it's not used in orders execution, and
-       is only used by the client to show if the unit is on GOTO, and gets
-       cleared after orders are fulfilled. 
-       3July2021: 
-       FIXED: put dest_tile into 1) rally packets and 2) city's rally struct,
-       then use that tile here. Commented line can be substituted back
-       for servers lacking the dest_tile field, and it still works! 
-    punit->goto_tile = unit_tile(punit); */
-    punit->goto_tile = index_to_tile(&(wld.map), pcity->rally_point.dest_tile);
   }
 
   /* This might destroy pcity and/or punit: */
@@ -2771,20 +2758,11 @@ static bool city_build_unit(struct player *pplayer, struct city *pcity)
       }
 
       if (punit) {
-        if (punit->goto_tile) {
-          notify_player(pplayer, city_tile(pcity), E_UNIT_BUILT, ftc_server,
-                _("🎯%s %s built %s, which left for a %s rally point."),                              
-                  UNIT_EMOJI(punit), city_link(pcity),
-                  utype_name_translation(utype),
-                  pcity->rally_point.persistent ? "<b>constant</b>" : ""
-                  );
-        } else {
-          notify_player(pplayer, city_tile(pcity), E_UNIT_BUILT, ftc_server,
-                        /* TRANS: <city> is finished building <unit/building>. */
-                        _("🔨[`%s`] %s is finished building %s."),
-                        utype_name_translation(utype), city_link(pcity),
-                        utype_name_translation(utype));
-        }
+        notify_player(pplayer, city_tile(pcity), E_UNIT_BUILT, ftc_server,
+                      /* TRANS: <city> is finished building <unit/building>. */
+                      _("🔨[`%s`] %s is finished building %s."),
+                      utype_name_translation(utype), city_link(pcity),
+                      utype_name_translation(utype));
       }
 
       /* After we created the unit remove the citizen. This will also
@@ -2827,7 +2805,6 @@ static bool city_build_unit(struct player *pplayer, struct city *pcity)
         pcity->rally_point.length = 0;
         pcity->rally_point.persistent = FALSE;
         pcity->rally_point.vigilant = FALSE;
-        pcity->rally_point.dest_tile = -1;
         free(pcity->rally_point.orders);
         pcity->rally_point.orders = NULL;
       }

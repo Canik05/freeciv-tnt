@@ -9,7 +9,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update --yes --quiet && \
     DEBIAN_FRONTEND=noninteractive apt-get install --yes \
         sudo \
         lsb-release \
-        locales && \
+        locales nano && \
     DEBIAN_FRONTEND=noninteractive apt-get clean --yes && \
     rm --recursive --force /var/lib/apt/lists/*
 
@@ -21,7 +21,7 @@ ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 
 ## Create user and ensure no passwd questions during scripts
-RUN useradd -m docker && echo "docker:docker" | chpasswd && adduser docker sudo && \
+RUN useradd -m docker && echo "docker:docker" | chpasswd && adduser docker root && \
     echo "docker ALL = (root) NOPASSWD: ALL\n" > /etc/sudoers.d/docker && \
     chmod 0440 /etc/sudoers.d/docker
 

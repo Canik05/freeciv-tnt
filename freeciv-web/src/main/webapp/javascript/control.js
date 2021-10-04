@@ -43,7 +43,6 @@ var keyboard_input = true;
 var unitpanel_active = false;
 var allow_right_click = false;
 var DEBUG_UNITS = false;  // console log tools for debugging unit issues
-var DEBUG_FOCUS = false;
 
 // performance: is_touch_device() was being called many times per second
 var touch_device = null; // TO DO: replace all is_touch_device() function calls
@@ -78,17 +77,8 @@ var city_paste_target = {}; // ctrl-shift-right-click for pasting city prod targ
 var current_focus = [];   // unit(s) in current focus selection
 var urgent_focus_queue = [];  /* The priority unit(s) for unit_focus_advance(). */
 var last_focus = null;    // last unit in focus before focus change
-
-// GOTO, RALLY, misc. state vars when in a request-goto-path mode:
 var goto_active = false;  // state for selecting goto target for a unit
-var rally_active = false;     // modifies goto_active to be setting a rally point
-// Transitional state var remembers rally_active in Go...And mode (rally_active pathing off while dialog is up):
-var old_rally_active = false;
-const RALLY_PERSIST = 2;    // value for rally_active indicating a persistent rally point will be set */
-// The default virtual utype for rally pathing. Mech.Inf in mp2c. Mounted Land class in other rules 
-const RALLY_DEFAULT_UTYPE_ID = 21; 
-var rally_virtual_utype_id = RALLY_DEFAULT_UTYPE_ID; // which utype to use when requesting rally path
-var rally_city_id = null; // city being told to set a rally point 
+var rally_mode = false;   // modifies goto_active to be setting a rally point
 var delayed_goto_active = false; // modifies goto_active state to give delayed goto command
 var paradrop_active = false;
 var airlift_active = false;
@@ -96,18 +86,11 @@ var airlift_active = false;
 var connect_active = false;  // indicates that goto_active goto_path is for connect mode
 var connect_extra = -1;      // type of EXTRA to make, e.g., EXTRA_ROAD, EXTRA_IRRIGATION
 var connect_activity = ACTIVITY_LAST;  // e.g., ACTIVITY_GEN_ROAD
+var action_tgt_sel_active = false;
+
 /* Will be set when the goto is activated. */
 var goto_last_order = -1;
 var goto_last_action = -1;
-/* User specified last actions appended to GOTO/RALLY */
-var user_last_action = null;
-var user_last_order = null;
-var user_last_activity = null;
-var user_last_target = null;
-var user_last_subtarget = null;
-
-// State var for Mode to select target tile with 'D' command:
-var action_tgt_sel_active = false;
 
 var SELECT_POPUP = 0;
 var SELECT_SEA = 1;
@@ -154,9 +137,7 @@ function control_init()
   $(window).bind('orientationchange resize', orientation_changed);
 
   $("#turn_done_button").click(send_end_turn);
-  if (!touch_device) $("#turn_done_button").tooltip({
-    show: { delay:200, effect:"none", duration: 0 }, hide: {delay:0, effect:"none", duration: 0}
-  });
+  if (!touch_device) $("#turn_done_button").tooltip();
 
   $("#freeciv_logo").click(function(event) {
     window.open('/', '_new');
@@ -251,8 +232,8 @@ function control_init()
     context_options['position'] = function(opt, x, y){
                                                 if (touch_device) return;
                                                 var new_top = mouse_y + $("#canvas_div").offset().top;
-                                                new_top = mouse_y + $("#canvas").offset().top-52;
-                                                opt.$menu.css({top: new_top , left: mouse_x+16});
+                                                new_top = mouse_y + $("#canvas").offset().top;
+                                                opt.$menu.css({top: new_top , left: mouse_x});
                                               };
   }
 
@@ -322,9 +303,7 @@ function control_init()
     });
 
   if (!touch_device) {
-    $("#game_unit_orders_default").tooltip({
-      show: { delay:200, effect:"none", duration: 0 }, hide: {delay:100, effect:"none", duration: 0}
-    });
+    $("#game_unit_orders_default").tooltip();
   }
 
   $("#overview_map").click(function(e) {
@@ -500,14 +479,14 @@ function update_mouse_cursor()
   var pcity = tile_city(ptile);
 
   // Don't enter map drag mode when clicking to release context menu
-  if (mapview_mouse_movement && !(goto_active||rally_active) && !came_from_context_menu) {
+  if (mapview_mouse_movement && !goto_active && !came_from_context_menu) {
     /* show move map cursor */
     $("#canvas_div").css("cursor", "move");
     real_mouse_move_mode = true;
-  } else if ( (goto_active||rally_active) && current_goto_turns != null) {
+  } else if (goto_active && current_goto_turns != null) {
     /* show goto cursor */
     $("#canvas_div").css("cursor", "crosshair");
-  } else if ( (goto_active||rally_active) && current_goto_turns == null) {
+  } else if (goto_active && current_goto_turns == null) {
     /* show invalid goto cursor*/
     $("#canvas_div").css("cursor", "not-allowed");
   } else if (pcity != null && client.conn.playing != null && city_owner_player_id(pcity) == client.conn.playing.playerno) {
@@ -896,8 +875,7 @@ function ask_server_for_actions(punit)
   }
 
   /* Only one action selection dialog at a time is supported. */
-  if (action_selection_in_progress_for != IDENTITY_NUMBER_ZERO
-      && action_selection_in_progress_for != punit.id) {
+  if (action_selection_in_progress_for != IDENTITY_NUMBER_ZERO) {
     console.log("Unit %d started action selection before unit %d was done",
                 action_selection_in_progress_for, punit.id);
   }
@@ -1076,20 +1054,19 @@ function unit_focus_urgent(punit)
 **************************************************************************/
 function control_unit_killed(punit)
 {
+  if (unit_is_in_focus(punit)) {
+    current_focus = unit_list_without(current_focus, punit);
+    update_active_units_dialog();
+    update_unit_order_commands();
+  }
+
   if (urgent_focus_queue != null) {
     urgent_focus_queue = unit_list_without(urgent_focus_queue, punit);
   }
 
-  if (unit_is_in_focus(punit)) {
-    if (current_focus.length == 1) {
-      /* if the unit in focus is removed, then advance the unit focus. */
-      advance_unit_focus(false);
-    } else {
-      current_focus = unit_list_without(current_focus, punit);
-    }
-
-    update_active_units_dialog();
-    update_unit_order_commands();
+  if (current_focus != null && current_focus.length < 1) {
+    /* if the unit in focus is removed, then advance the unit focus. */
+    advance_unit_focus(false);
   }
 }
 
@@ -1164,15 +1141,13 @@ function advance_unit_focus(same_type)
   var candidate = null;
   var i;
 
-  if (DEBUG_FOCUS) 
-    console.log("T%d. advance_unit_focus(). urgent_focus_queue[%d] waiting_units_list[%d]",
-                game_info.turn, urgent_focus_queue.length, waiting_units_list.length)
+  console.log("T%d. advance_unit_focus(). urgent_focus_queue[%d] waiting_units_list[%d]",
+              game_info.turn, urgent_focus_queue.length, waiting_units_list.length)
 
   if (client_is_observer()) return;
 
   if (urgent_focus_queue.length > 0) {
-    if (DEBUG_FOCUS)
-      console.log("  urgent_focus_queue[%d] processing...", urgent_focus_queue.length)
+    console.log("  urgent_focus_queue[%d] processing...", urgent_focus_queue.length)
 
     var focus_tile = (current_focus != null && current_focus.length > 0
                       ? current_focus[0]['tile']
@@ -1200,48 +1175,38 @@ function advance_unit_focus(same_type)
     }
 
     if (null != candidate) {
-      urgent_focus_queue = unit_list_without(urgent_focus_queue, candidate);
-      if (DEBUG_FOCUS)
-        console.log("    removed candidate:%d urgent_focus_queue[%d]",candidate.id,urgent_focus_queue.length);
+      urgent_focus_queue = unit_list_without(urgent_focus_queue, punit);
+      console.log("    removed candidate:%d urgent_focus_queue[%d]",candidate.id,urgent_focus_queue.length);
     }
-    if (DEBUG_FOCUS)
-      console.log("    finished urgent_focus_queue[%d]. candidate:%d",urgent_focus_queue.length,(candidate?candidate.id:"null"));
+    console.log("    finished urgent_focus_queue[%d]. candidate:%d",urgent_focus_queue.length,(candidate?candidate.id:"null"));
   }
 
   if (candidate == null) {
     candidate = find_best_focus_candidate(false, same_type);
-    if (DEBUG_FOCUS) {
-      console.log("  non-urgent processing #1. urgent_focus_queue[%d] waiting_units_list[%d]",
-                  urgent_focus_queue.length, waiting_units_list.length);
-      console.log("    find_best_focus_candidate(false) yields candidate:%d",(candidate?candidate.id:"null"))
-    }
+    console.log("  non-urgent processing #1. urgent_focus_queue[%d] waiting_units_list[%d]",
+                 urgent_focus_queue.length, waiting_units_list.length);
+    console.log("    find_best_focus_candidate(false) yields candidate:%d",(candidate?candidate.id:"null"))
   }
 
   if (candidate == null) {
     candidate = find_best_focus_candidate(true, same_type);
-    if (DEBUG_FOCUS) {
-      console.log("  non-urgent processing #2. candidate:%d",(candidate?candidate.id:"null"));
-      console.log("    find_best_focus_candidate(true) yields candidate:%d",(candidate?candidate.id:"null"))
-    }
+    console.log("  non-urgent processing #2. candidate:%d",(candidate?candidate.id:"null"));
+    console.log("    find_best_focus_candidate(true) yields candidate:%d",(candidate?candidate.id:"null"))
   }
 
   // remove state-blocking from leaving context menu
   came_from_context_menu = false;
 
   if (candidate != null) {
-    if (DEBUG_FOCUS) {
-      console.log("CLEAN-UP and EXIT for successful new candidate:%d\n",(candidate?candidate.id:"null"))
-      console.log(" ")
-    }
+    console.log("CLEAN-UP and EXIT for successful new candidate:%d\n",(candidate?candidate.id:"null"))
+    console.log(" ")
     clear_all_modes();
     clear_goto_tiles();   // TO DO: update mouse cursor function call too?
     save_last_unit_focus();
     set_unit_focus_and_redraw(candidate);
   } else {
-    if (DEBUG_FOCUS) {
-      console.log("NO FOCUS CANDIDATE FOUND. It's the end of the road, time for a drink.\n");
-      console.log(" ")
-    }
+    console.log("NO FOCUS CANDIDATE FOUND. It's the end of the road, time for a drink.\n");
+    console.log(" ")
     /* Couldn't center on a unit, then try to center on a city... */
     deactivate_goto(false);
     save_last_unit_focus();
@@ -1250,12 +1215,24 @@ function advance_unit_focus(same_type)
     update_active_units_dialog();
     $("#game_unit_orders_default").hide();
 
+    // Test removal
+    /* find a city to focus on if new game. consider removing this.
+    if (game_info['turn'] <= 1) {
+      for (var city_id in cities) {
+        var pcity = cities[city_id];
+        if (city_owner_player_id(pcity) == client.conn.playing.playerno) {
+          center_tile_mapcanvas(city_tile(pcity));
+          break;
+        }
+      }
+    }*/
     if (touch_device || is_small_screen())
     {
       $("#turn_done_button").button("option", "label", "<i class='fa fa-check-circle-o' style='color: green;'aria-hidden='true'></i>Done");
     } else {
         $("#turn_done_button").button("option", "label", "<i class='fa fa-check-circle-o' style='color: green;'aria-hidden='true'></i> Turn Done");
     }
+    console.log("Reached END OF WAITING LISTS. end_turn_info_message_shown == (%s) ", end_turn_info_message_shown)
     if (!end_turn_info_message_shown) {
       end_turn_info_message_shown = true;
       message_log.update({ event: E_BEGINNER_HELP, message: "All units have moved, click the \"Turn Done\" button to end your turn."});
@@ -1271,9 +1248,7 @@ function advance_unit_focus(same_type)
 function clear_all_modes()
 {
   goto_active = false;  // turn Go-To off if jumping focus to a new unit
-  rally_active = false;   // clear rally path goto for city
-  rally_city_id = null;
-  rally_virtual_utype_id = RALLY_DEFAULT_UTYPE_ID;
+  rally_mode = false;   // clear rally path goto for city
   connect_active = false;
   connect_extra = -1;      // type of EXTRA to make, e.g., EXTRA_ROAD, EXTRA_IRRIGATION
   connect_activity = ACTIVITY_LAST;  // e.g., ACTIVITY_GEN_ROAD
@@ -1281,11 +1256,6 @@ function clear_all_modes()
   delayed_goto_active = false;
   paradrop_active = false;
   airlift_active = false;
-  user_last_order = null;
-  user_last_action = null;
-  user_last_activity = null;
-  user_last_target = null;
-  user_last_subtarget = null;
   goto_last_order = ORDER_LAST;
   goto_last_action = ACTION_COUNT;
 }
@@ -1338,7 +1308,6 @@ function advance_focus_inactive_units()
 function button_more_orders()
 {
   show_order_buttons = 2;
-  simpleStorage.set('ordrbtns', show_order_buttons); // save preference
   update_unit_order_commands();
 }
 
@@ -1348,7 +1317,6 @@ function button_more_orders()
 function button_less_orders()
 {
   show_order_buttons = 1;
-  simpleStorage.set('ordrbtns', show_order_buttons); // save preference
   update_unit_order_commands();
 }
 
@@ -1358,7 +1326,6 @@ function button_less_orders()
 function button_hide_panels()
 {
   show_order_buttons = 0;
-  simpleStorage.set('ordrbtns', show_order_buttons); // save preference
   $("#game_unit_orders_default").hide();
   $("#game_status_panel_bottom").hide();
 }
@@ -1413,7 +1380,6 @@ function update_unit_order_commands()
       $("#order_more").show();
       $("#order_less").hide();
       $("#order_disband").hide();
-      $("#order_goand").hide();
     break;
 
     case 2:         // all legal orders buttons
@@ -1421,7 +1387,6 @@ function update_unit_order_commands()
       $("#order_less").show();
       $("#order_more").hide();
       $("#order_disband").show();
-      $("#order_goand").show();
     break;
   }
 
@@ -1659,7 +1624,7 @@ function update_unit_order_commands()
     if (pcity) {
       disband_type = 1; // flags Recycle icon
       $("#order_disband").prop('title', 'Recycle Unit (Shift-D)');
-      $("#order_disband").html("<span style='cursor:pointer' onclick='key_unit_disband();'><img src='/images/orders/disband_recycle.png' name='disband_button' alt='' border='0' width='30' height='30'></span>");
+      $("#order_disband").html("<a href='#' onclick='key_unit_disband();'><img src='/images/orders/disband_recycle.png' name='disband_button' alt='' border='0' width='30' height='30'></a>");
       // Cargo class disbands often for recycling shields, show button always, less threatening recycle version of it.
       if (client_rules_flag[CRF_MP2_C]) {
         if (ptype['name']=="Goods" || ptype['name']=="Well-Digger" || ptype['name']=="Tribesmen" || ptype['name']=="Freight") {
@@ -1672,7 +1637,7 @@ function update_unit_order_commands()
     } else {
       disband_type = 0; // flags Death/You're fired icon
       $("#order_disband").prop('title', 'Disband (Shift-D)');
-      $("#order_disband").html("<span style='cursor:pointer' onclick='key_unit_disband();'><img src='/images/orders/disband_default.png' name='disband_button' alt='' border='0' width='30' height='30'></span>");
+      $("#order_disband").html("<a href='#' onclick='key_unit_disband();'><img src='/images/orders/disband_default.png' name='disband_button' alt='' border='0' width='30' height='30'></a>");
     }
     // LEGIONS. rulesets which allow Legions to build Roads on non-domestic tiles-------------
     if ((client_rules_flag[CRF_LEGION_WORK]) && ptype['name'] == "Legion") {
@@ -2023,7 +1988,7 @@ function update_unit_order_commands()
                 unit_actions["unit_unload"] = {name: "Unload Transport (T)"};
                 $("#order_unload").show();
               } 
-              $("#order_activate_cargo").show(); // if no option to unload, show option to activate or 'wake' units
+            $("#order_activate_cargo").show(); // if no option to unload, show option to activate or 'wake' units
             }
           }
         }
@@ -2056,8 +2021,7 @@ function update_unit_order_commands()
   unit_actions = $.extend(unit_actions, {
             "sentry": {name: "Sentry (S)"},
             "wait": {name: "Wait (W)"},
-            "disband": {name: (disband_type ? "Recycle Unit (Shift-D)" : "Disband (Shift-D)")},
-            "goand": {name: "Go and ... (Ctrl-Alt-G)"}
+            "disband": {name: (disband_type ? "Recycle Unit (Shift-D)" : "Disband (Shift-D)")}
             });
 
   $(".context-menu-list").css("z-index", 5000);
@@ -2149,10 +2113,9 @@ function find_best_focus_candidate(accept_current, same_type)
       if ((!unit_is_in_focus(punit) || accept_current)
          && client.conn.playing != null
          && punit['owner'] == client.conn.playing.playerno
-         && ((punit['activity'] == ACTIVITY_IDLE
-              && punit['done_moving'] == false
-              && punit['movesleft'] > 0)
-              || should_ask_server_for_actions(punit))
+         && punit['activity'] == ACTIVITY_IDLE
+         && punit['movesleft'] > 0
+         && punit['done_moving'] == false
          && punit['ai'] == false
          && waiting_units_list.indexOf(punit['id']) < 0
          && punit['transported'] == false
@@ -2724,12 +2687,7 @@ function do_map_click(ptile, qtype, first_time_called)
     paradrop_active = false;
     airlift_active = false;
     return;
-  }
-
-  if (rally_active) {
-    send_city_rally_point(ptile);
-    return;
-  }
+  } 
 
   if (current_focus.length > 0 && current_focus[0]['tile'] == ptile['index']) {
     /* clicked on unit at the same tile, then deactivate goto and show context menu. */
@@ -2847,7 +2805,7 @@ function do_map_click(ptile, qtype, first_time_called)
 
         /* Conditions for overriding GOTO with a simulated manual cursor move command:
         * ADJACENT:  tile distance dx<=1 AND dy<=1.
-        * Not goto_active during a GO AND command, which is a GOTO with a goto_last_action != ACTION_COUNT
+        * Not goto_active during a NUKE command, which is a GOTO with a goto_last_action for Nuking the target.
         * goto_path.length must be 0, undefined, or 1;  if path is 2 or more to an adjacent tile, that means there is a legal path
         * to the next tile, that uses less moves by going to another tile first (e.g. stepping onto a river before going to Forest river)
         * in which case we wouldn't want to override it because (1) it HAS a legal path and (2) it's a superior path using less moves
@@ -2861,10 +2819,15 @@ function do_map_click(ptile, qtype, first_time_called)
         else true_goto_path_length = 0;
 
         if (  Math.abs(tile_dx)<=1 && Math.abs(tile_dy) <=1     // adjacent
-              && goto_last_action == ACTION_COUNT               // not an appended Go...And command
+              && goto_last_action != ACTION_NUKE                // not a nuke command appended to a GOTO
               && !connect_active                                // not in connect mode to make multiple roads/irrigation
               && (true_goto_path_length <= 1)   // don't override path>=2 which has better legal way to get to adjacent tile
           )                                    // "illegal" adjacent goto attempts render goto_path.length == undefined (true_goto_path_length will then be 0)
+
+            /* NOTE: instead of checking ACTION_NUKE we could check (goto_last_action==-1 OR ACTION_COUNT), which would allow other
+              * goto_last_actions to be added later (go to tile and build city, etc.) but this wasn't done for now because we don't
+              * want to deal with the risks of relying on -1 or ACTION_COUNT to always be set properly in every single case
+              */
         {
           console.log("GO TO overridden because adjacent tile.")
           switch (tile_dy)
@@ -3004,20 +2967,13 @@ function do_map_click(ptile, qtype, first_time_called)
 
           /* Perform the final action. */
           order['action'] = goto_last_action;
-          if (user_last_activity) order['activity'] = user_last_activity;
-          if (user_last_target) order['target'] = user_last_target;
-          if (user_last_subtarget) order['sub_target'] = user_last_subtarget;
 
           packet['orders'][pos] = Object.assign({}, order);
         }
 
-        /* The last order has now been used. Clear it.
-        ***** OR NOT, because we're in a loop  that might have many units all getting the last
-           order here. This should be cleared at the end of the loop when every unit sent its 
-           packet orders. ********** 7 July 2021 commented out. See clear_all_modes() below.
-           goto_last_order = ORDER_LAST;
-           goto_last_action = ACTION_COUNT;
-        */
+        /* The last order has now been used. Clear it. */
+        goto_last_order = ORDER_LAST;
+        goto_last_action = ACTION_COUNT;
 
         if (punit['id'] != goto_path['unit_id']) {
           /* Shouldn't happen. Maybe an old path wasn't cleared out. */
@@ -3072,7 +3028,6 @@ function do_map_click(ptile, qtype, first_time_called)
     }
 
     deactivate_goto(true);
-    clear_all_modes(); // 7 July 2021: clear all last_orders etc., AFTER every unit in loop got a chance to do them
   }  // END OF GO TO HANDLING ----------------------------------------------------------------------------------------------
   else if (paradrop_active && current_focus.length > 0) {
     punit = current_focus[0];
@@ -3523,15 +3478,11 @@ map_handle_key(keyboard_key, key_code, ctrl, alt, shift, the_event)
     break;
 
     case 'G':
-      if (ctrl && !shift && !alt) {
+      if (ctrl) {
         the_event.preventDefault(); // override possible browser shortcut
         draw_map_grid = !draw_map_grid;
         simpleStorage.set('mapgrid', draw_map_grid);
-      } else if ( (ctrl&&alt)) {
-        the_event.preventDefault(); // override possible browser shortcut
-        key_unit_go_and(shift);
-      }
-      else if (current_focus.length > 0) {
+      } else if (current_focus.length > 0) {
         activate_goto();
         delayed_goto_active = false;
         if (shift) delayed_goto_active = true;
@@ -3594,30 +3545,12 @@ map_handle_key(keyboard_key, key_code, ctrl, alt, shift, the_event)
         show_revolution_dialog();
       } else if (alt && shift && !ctrl) {
         key_unit_connect(EXTRA_ROAD)
-      }
-      /* CTRL-R: city rally point
-       * +SHIFT: make persistent
-       *   +ALT: select go...and last action before entering mode    */
-      else if (ctrl) {
+      } else if (ctrl && !alt) {      // CTRL-R: city rally point
         the_event.preventDefault(); // override possible browser shortcut
         var ptile = canvas_pos_to_tile(mouse_x, mouse_y); // get tile
         var pcity = tile_city(ptile); // check if it's a city
-        if (pcity != null) {  // rally points need origin city
-          rally_active = shift ? RALLY_PERSIST : 1; // 1==temporary, 2==permanent rally
-          rally_city_id = pcity['id']; // set rally city
-          if (pcity['production_kind'] == VUT_UTYPE) rally_virtual_utype_id = pcity['production_value'];
-          else rally_virtual_utype_id = RALLY_DEFAULT_UTYPE_ID;
-          if (alt) select_last_action(); // defer activate_rally_goto() until last-action picked
-          else activate_rally_goto(pcity);
-        }
-      }
-      else if (alt && !ctrl && !shift) {
-        add_client_message("Showing city rally points. <b>SPACE</b> = clear.");
-        //Show all city rally points
-        for (var city_id in cities) {
-          var pcity = cities[city_id];
-          var ptile = index_to_tile(pcity['tile']);
-          if (pcity['rally_point_length']) popit_req(ptile, true);
+        if (pcity!=null) {
+          activate_rally_goto(pcity, shift); // shift indicates persistent rally point
         }
       }
       else key_unit_road();
@@ -3657,7 +3590,6 @@ map_handle_key(keyboard_key, key_code, ctrl, alt, shift, the_event)
     case 'W':
       if (shift) {
         draw_city_output = !draw_city_output;
-        simpleStorage.set('drawTiles', draw_city_output); 
       } else if (!alt && !ctrl) key_unit_wait(false);
     break;
 
@@ -4088,10 +4020,6 @@ function handle_context_menu_callback(key)
       key_unit_disband();
       break;
 
-    case "goand":
-      key_unit_go_and(false);
-      break;
-
     case "unit_load":
       key_unit_load();
       break;
@@ -4121,10 +4049,7 @@ function handle_context_menu_callback(key)
       came_from_context_menu = false; // remove UI-blocking state.
       break;
   }
-  if (key != "goto" 
-      && key != "delaygoto"
-      && key != "goand"
-      && touch_device) {
+  if (key != "goto" && key != "delaygoto" && touch_device) {
     deactivate_goto(false);
   }
 }
@@ -4134,172 +4059,70 @@ function handle_context_menu_callback(key)
 **************************************************************************/
 function activate_goto()
 {
-  var order = ORDER_LAST;
-  var action = ACTION_COUNT;
-
   clear_goto_tiles();
   // Clear state vars so it's ready to immediately path to cursor
   prev_mouse_x = null;   prev_mouse_y = null;   prev_goto_tile = null;
-  if (user_last_action) {
-    order = user_last_order;
-    action = user_last_action;
-  }
-  activate_goto_last(order, action);
-}
-
-/**************************************************************************
-  Activate a regular goto.
-**************************************************************************/
-function send_city_rally_point(ptile)
-{
-  /* Here is an example of a well-formed rally packet:
-  packet = {"pid":138,"city_id":184,"length":2,"persistent":true,
-            "vigilant":false,"dest_tile":212,
-            "orders":[{"order":0,"activity":23,"sub_target":0,"action":77,"dir":2},
-            {"order":3,"activity":23,"sub_target":0,"action":77,"dir":2}]}          */
-
-  var goto_path = goto_request_map["0" + "," + ptile['x'] + "," + ptile['y']];
-
-  if (goto_path) {
-    var packet;
-
-    if (goto_path['length'] !== undefined) {
-      packet = {
-        "pid"       : packet_city_rally_point,
-        "city_id"   : rally_city_id,
-        "length"    : goto_path['length'],
-        "persistent": (rally_active==RALLY_PERSIST),
-        "vigilant"  : false,
-        "dest_tile" : ptile['index'],
-      }
-    } else { // Clicked city tile to cancel rally point
-      packet = {
-        "pid"       : packet_city_rally_point,
-        "city_id"   : rally_city_id,
-        "length"    : 0,
-        "persistent": false,
-        "vigilant"  : false,
-        "dest_tile" : ptile['index'],
-      }
-    }
-    var order = {
-      "order"      : ORDER_LAST,
-      "activity"   : ACTIVITY_LAST,
-      "sub_target" : 0,
-      "action"     : ACTION_COUNT,
-      "dir"        : -1
-    };
-
-    /* Add each individual order. */
-    packet['orders'] = [];
-    for (var i = 0; i < goto_path['length']; i++) {
-      if (goto_path['dir'][i] == -1) { /* Assume that this means refuel. */
-        order['order'] = ORDER_FULL_MP;
-      } else if (i + 1 != goto_path['length']) {
-        /* Don't try to do an action in the middle of the path. */
-        order['order'] = ORDER_MOVE;
-      } else { /* It is OK to end the path in an action. */
-        order['order'] = ORDER_ACTION_MOVE;
-      }
-      order['dir'] = goto_path['dir'][i];
-      order['activity'] = ACTIVITY_LAST;
-      order['sub_target'] = 0;
-      order['action'] = ACTION_COUNT;
-      packet['orders'][i] = Object.assign({}, order);
-    }
-    /* Handle future (not implemented cases) of a final order attached to the rally point */
-    if (goto_last_order != ORDER_LAST) {
-      var pos;
-      /* Should the final order be performed from the final tile or
-      * from the tile before it? In some cases both are legal. */
-      if (!order_wants_direction(goto_last_order, goto_last_action, ptile)) {
-        pos = packet['length'];                  // Append the final order.
-        packet['length'] = packet['length'] + 1; // Increase orders length.
-        /* Initialize the order to "empty" values. */
-        order['order'] = ORDER_LAST;
-        order['dir'] = -1;
-        order['activity'] = ACTIVITY_LAST;
-        order['sub_target'] = 0;
-        order['action'] = ACTION_COUNT;
-      } else {      // Replace the existing last order with the final order
-        pos = packet['length'] - 1;
-      }
-      order['order'] = goto_last_order;   // Set the final order.
-      order['action'] = goto_last_action; // Perform final action.
-      if (user_last_activity) order['activity'] = user_last_activity;
-      if (user_last_target) order['target'] = user_last_target;
-      if (user_last_subtarget) order['sub_target'] = user_last_subtarget;
-      packet['orders'][pos] = Object.assign({}, order);
-    } /* </end> unimplemented block for tack-on final order */
-    // Send the city rally point to server
-    send_request(JSON.stringify(packet));
-
-    // Notify user
-    if (goto_path['length'] !== undefined) {
-      message_log.update({
-        event: E_UNIT_ORDERS,
-        message: "🎯 "+cities[rally_city_id].name + " set "
-                + (rally_active==RALLY_PERSIST ? "<b>Constant " : "")
-                + "Rally Point</b> to {" + ptile.x + ", "+ptile.y + "}"});
-    } else {
-      message_log.update({
-        event: E_UNIT_ILLEGAL_ACTION,
-        message: "<img class='v' src='/images/e/redx.png'> "+cities[rally_city_id].name + " cancelled Rally Point."});
-    }
-  }
-
-  // Clean up. Be fresh.
-  clear_goto_tiles();
-  clear_all_modes();
-  deactivate_goto(false);
+  activate_goto_last(ORDER_LAST, ACTION_COUNT);
 }
 
 /**************************************************************************
   Activate a rally goto path.
   persist==true will make this rally permanent until deactivated.
 **************************************************************************/
-function activate_rally_goto(pcity/*, persist*/)
+function activate_rally_goto(pcity, persist)
 {
   clear_goto_tiles();
 
+  /* Here is an example of a well-formed rally goto
+  packet = {"pid":138,"city_id":184,"length":2,"persistent":true,"vigilant":false,"dest_tile":212,
+  "orders":[{"order":0,"activity":23,"sub_target":0,"action":77,"dir":2},{"order":3,"activity":23,"sub_target":0,"action":77,"dir":2}]}
+  */
   // Clear state vars so it's ready to immediately path to cursor
-  //rally_active = persist ? RALLY_PERSIST : 1; // 1==temporary, 2==permanent rally
+  rally_mode = true;
 
   message_log.update({
     event: E_BEGINNER_HELP,
-    message: "Click "+pcity['name']+"'s "
-    + (rally_active==RALLY_PERSIST ? "<b>constant</b> " : "") + "rally tile. <b>SPACE</b> aborts."
+    message: "Click tile to set "+pcity['name']+"'s "
+    + (persist ? "persistent " : "temporary ") + "rally point. <b>SPACE</b> aborts."
   });
 
+  /* TO DO:
+     1. set up virtual unit of unit_type based on the city's current production; if not 
+     making a unit then default to a land unit type.
+
+     2. if rally_mode==true make the goto path request sent to server specify to use a 
+        'virtual' unit type
+
+     3. make server intercept virtual unit type and process it with just a ptype and not a punit;
+        if necessary it would have to create a local var punit which it destroys later, but is not
+        part of units array or a really existing unit according to any game state or game data
+
+     4. make rally_mode==true change the color of goto paths drawn to red
+
+     5. make the clicking in do_map_click for goto check for rally_mode==true and if so, call
+        the function we make for constructing the well-formed packet as commented above.
+        that function will also clean-up
+
+     6. clicking a city or if it's active_city of unit is on its ptile, draw its rally point,
+        or middle clicking city will draw its rally point also.
+
+     7. city dialog will report the x,y of its rally point and whether its persistent, and have a clicky button
+        to clear rally point.
+
+     8. server execution of rally points should probably report that it happened and whether rally is cleared 
+        or will persistent.
+
+     */
+
   prev_mouse_x = null;   prev_mouse_y = null;   prev_goto_tile = null;
-  $("#canvas_div").css("cursor", "crosshair");
+  activate_goto_last(ORDER_LAST, ACTION_COUNT);
 
-  /* Set the virtual unit for pathing: use the type of unit being produced if city is 
-     producing unit, otherwise default to a high move rate land unit */
-  if (pcity['production_kind'] == VUT_UTYPE) {
-    rally_virtual_utype_id = pcity['production_value'];
-  } 
-  /* Heuristic: if a city NOT making a unit is given a rally point, it's impossible to know a utype
-   * for optimal goto-pathing. In this case the least potential for failure is a non-IgZoc land unit
-   * with high move points, as it will 1) avoid all illegal paths, 2) minimise instances of "inefficient"
-   * paths where, e.g., a land unit with high move points stupidly goes on hills or mountains because 
-   * a low move point unit would have ended its turn there. 
-   * This unit is Mech.Inf in mp2c and mounted Land in other rulesets. TODO: this could be set
-   * somewhere at ruleset load to find the highest move point Land unit who isn't IgZoc */
-  else rally_virtual_utype_id = RALLY_DEFAULT_UTYPE_ID;
-
-  /* Set the rally city for pathing */
-  /* Candidate for removal because we set rally_city_id much earlier so that we can use ALT
-  // to allow last_action selection without losing which city we clicked the mouse over
-  rally_city_id = pcity['id']; */
-  
-  /* Set what the unit should do on arrival: */
-  goto_last_order = ORDER_LAST;
-  goto_last_action = ACTION_COUNT;
-  if (user_last_action) {
-    goto_last_order = user_last_order;
-    goto_last_action = user_last_action;
-  }
+  /* TO DO LATER: this supports actions along the path and at end of path,
+     it could be very useful to have some such as:
+     go-and-attack, go-and-bombard,
+     go-and-pillage, go-and-sentry, etc.
+     possibly others but go-attack has more vital usefulness
+  */
 }
 
 /**************************************************************************
@@ -4322,7 +4145,7 @@ function activate_goto_last(last_order, last_action)
 
   $("#canvas_div").css("cursor", "crosshair");
 
-  /* Set what the unit should do on arrival: */
+  /* Set what the unit should do on arrival. */
   goto_last_order = last_order;
   goto_last_action = last_action;
 
@@ -4358,10 +4181,9 @@ function activate_goto_last(last_order, last_action)
 **************************************************************************/
 function deactivate_goto(will_advance_unit_focus)
 {
-  //console.log("deactivate_goto(%s) called!",will_advance_unit_focus);
+  //console.log("deactivate_goto called!")
   goto_active = false;
   delayed_goto_active = false;
-  rally_active = false;
   // connect uses goto mode also. reset:
   connect_active = false;
   connect_activity = ACTIVITY_LAST;
@@ -4394,9 +4216,7 @@ function send_end_turn()
   if (game_info == null) return;
 
   $("#turn_done_button").button( "option", "disabled", true);
-  if (!touch_device) $("#turn_done_button").tooltip({ disabled: true,
-    show: { delay:200, effect:"none", duration: 0 }, hide: {delay:0, effect:"none", duration: 0}
-  });
+  if (!touch_device) $("#turn_done_button").tooltip({ disabled: true });
   var packet = {"pid" : packet_player_phase_done, "turn" : game_info['turn']};
   send_request(JSON.stringify(packet));
   update_turn_change_timer();
@@ -6398,18 +6218,6 @@ function key_unit_disband()
   setSwalTheme();
   deactivate_goto(false);
 }
-/**************************************************************************
-  Activate "Go and..." action selection for GOTO and RALLY points
-**************************************************************************/
-function key_unit_go_and(delay) {
-  // GOTO and RALLY will select last action to append to path.
-  select_last_action();
-  // The below only for GOTO
-  if (current_focus.length > 0) {
-    delayed_goto_active = false;
-    if (delay) delayed_goto_active = true;
-  }
-}
 
 /**************************************************************************
   Move the unit(s) in focus in the specified direction.
@@ -6433,6 +6241,21 @@ function key_unit_move(dir)
       return;
     }
 
+    if (punit['transported']) {
+      if (unit_can_do_action(punit, ACTION_TRANSPORT_DISEMBARK1)) {
+        request_new_unit_activity(punit, ACTIVITY_IDLE, EXTRA_NONE);
+        request_unit_do_action(ACTION_TRANSPORT_DISEMBARK1, punit['id'],
+                               newtile['index']);
+        unit_move_sound_play(punit);
+      } else if (unit_can_do_action(punit, ACTION_TRANSPORT_DISEMBARK2)) {
+        request_new_unit_activity(punit, ACTIVITY_IDLE, EXTRA_NONE);
+        request_unit_do_action(ACTION_TRANSPORT_DISEMBARK2, punit['id'],
+                               newtile['index']);
+        unit_move_sound_play(punit);
+      }
+      return;
+    }
+
     /* Send the order to move using the orders system. */
     var order = {
       "order"      : ORDER_ACTION_MOVE,
@@ -6441,20 +6264,6 @@ function key_unit_move(dir)
       "sub_target" : 0,
       "action"     : ACTION_COUNT
     };
-
-    if (punit['transported']
-        /* No non domestic units */
-        && newtile['units'].every(function(ounit) {
-             return ounit['owner'] == client.conn.playing.playerno;
-           })
-        /* No non domestic cities */
-        && (tile_city(newtile) == null
-            || tile_city(newtile)['owner'] == client.conn.playing.playerno)
-        && !tile_has_extra(newtile, EXTRA_HUT)
-        && (newtile['extras_owner'] == client.conn.playing.playerno
-            || !tile_has_territory_claiming_extra(newtile))) {
-      order["order"] = ORDER_MOVE;
-    }
 
     var packet = {
       "pid"      : packet_unit_orders,
@@ -6496,7 +6305,21 @@ function key_unit_move_focus_index(dir, s)
       return;
     }
 
-    /* Send the order to move using the orders system. */
+    if (punit['transported']) {
+      if (unit_can_do_action(punit, ACTION_TRANSPORT_DISEMBARK1)) {
+        request_new_unit_activity(punit, ACTIVITY_IDLE, EXTRA_NONE);
+        request_unit_do_action(ACTION_TRANSPORT_DISEMBARK1, punit['id'],
+                               newtile['index']);
+        unit_move_sound_play(punit);
+      } else if (unit_can_do_action(punit, ACTION_TRANSPORT_DISEMBARK2)) {
+        request_new_unit_activity(punit, ACTIVITY_IDLE, EXTRA_NONE);
+        request_unit_do_action(ACTION_TRANSPORT_DISEMBARK2, punit['id'],
+                               newtile['index']);
+        unit_move_sound_play(punit);
+      }
+      return;
+    }
+
     var order = {
       "order"      : ORDER_ACTION_MOVE,
       "dir"        : dir,
@@ -6505,20 +6328,7 @@ function key_unit_move_focus_index(dir, s)
       "action"     : ACTION_COUNT
     }
 
-    if (punit['transported']
-        /* No non domestic units */
-        && newtile['units'].every(function(ounit) {
-             return ounit['owner'] == client.conn.playing.playerno;
-           })
-        /* No non domestic cities */
-        && (tile_city(newtile) == null
-            || tile_city(newtile)['owner'] == client.conn.playing.playerno)
-        && !tile_has_extra(newtile, EXTRA_HUT)
-        && (newtile['extras_owner'] == client.conn.playing.playerno
-            || !tile_has_territory_claiming_extra(newtile))) {
-      order["order"] = ORDER_MOVE;
-    }
-
+    /* Send the order to move using the orders system. */
     var packet = {
       "pid"      : packet_unit_orders,
       "unit_id"  : punit['id'],
@@ -6613,30 +6423,6 @@ function request_goto_path(unit_id, dst_x, dst_y)
 }
 
 /****************************************************************************
-  Request RALLY path for city with city_id with pathing assuming utype_id,
-  and dst_x, dst_y in map coords.
-****************************************************************************/
-function request_rally_path(city_id, dst_x, dst_y)
-{
-  //console.log("   request_rally_path("+dst_x+","+dst_y+") is " + request_rally_path.caller);
-
-  if (goto_request_map["0" + "," + dst_x + "," + dst_y] == null) {
-    goto_request_map["0" + "," + dst_x + "," + dst_y] = true;
-
-    var packet = {"pid" : packet_rally_path_req, 
-                  "city_id" : city_id, "utype_id" : rally_virtual_utype_id,
-                  "goal" : map_pos_to_tile(dst_x, dst_y)['index']};
-    send_request(JSON.stringify(packet));
-    current_goto_turns = null;
-    //$("#unit_text_details").html("Choose unit goto");
-    setTimeout(update_mouse_cursor, update_mouse_cursor_delay);
-  } else {
-    update_goto_path(goto_request_map["0" + "," + dst_x + "," + dst_y]);
-  }
-}
-
-
-/****************************************************************************
 ...
 ****************************************************************************/
 function check_request_goto_path()
@@ -6668,28 +6454,6 @@ function check_request_goto_path()
       else prev_goto_tile = FORCE_CHECKS_AGAIN; // ... request_goto_path x more times before blocking requests on the same tile.
     }
   }
-  // SAME AS ABOVE BUT FOR PATHING A CITY RALLY POINT:
-  else if (rally_active && (prev_mouse_x != mouse_x || prev_mouse_y != mouse_y || prev_goto_tile<=LAST_FORCED_CHECK)) {
-
-  ptile = canvas_pos_to_tile(mouse_x, mouse_y);
-
-  if (ptile != null) {
-    if (ptile['tile'] != prev_goto_tile) {
-      clear_goto_tiles(); // TO DO: goto tiles should not be in tiles[tild_id][goto_dir] which takes forever to clear, but their own array instead
-      /* Send request for goto_path to server. */
-      request_rally_path(rally_city_id, ptile['x'], ptile['y']);
-    }
-    // We don't want to constantly request the same tile if it hasn't changed, but we used to do that because sometimes
-    // the first request_rally_path+clear_goto_tiles didn't have time(?) to clean old paths and construct a new path properly:
-    if (prev_goto_tile <= LAST_FORCED_CHECK) {
-      prev_goto_tile ++;
-      if (prev_goto_tile > LAST_FORCED_CHECK) {
-        if (ptile) prev_goto_tile = ptile['tile']; // Flag to not make continuous server requests for the same tile.
-      }
-    } // FLAG to force request_rally_path more times to clean path redraw glitch.  FORCE_CHECKS_AGAIN can be tuned to -x which forces...
-    else prev_goto_tile = FORCE_CHECKS_AGAIN; // ... request_rally_path x more times before blocking requests on the same tile.
-  }
-}
   prev_mouse_x = mouse_x;
   prev_mouse_y = mouse_y;
 }
@@ -6701,36 +6465,22 @@ function update_goto_path(goto_packet)
 {
   //console.log("   update_goto_path caller is " + update_goto_path.caller);
 
-  if (goto_packet['unit_id'] === undefined) return;
-  //console.log(goto_packet);
-  var ptile;
-
   var punit = units[goto_packet['unit_id']];
-
-  // Get start tile: either punit location or pcity location:
-  if (goto_packet['unit_id'] == 0) { // flag for rally path
-    var pcity = cities[rally_city_id];
-    if (pcity == null) { // if no unit nor city then abort
-      return; 
-    }
-    // If we got here we have a city and are doing a rally path
-    ptile = city_tile(pcity);
-  } else {
-    ptile = index_to_tile(punit['tile']);
-  }
-  if (ptile == null) return;
-
+  if (punit == null) return;
+  var t0 = index_to_tile(punit['tile']);
+  var ptile = t0;
   var goaltile = index_to_tile(goto_packet['dest']);
   var refuel = 0;
 
-  // Don't bother checking goto for same tile unit is on
+  // don't bother check goto for same tile unit is on
   if (ptile==goaltile) return;
 
     for (var i = 0; i < goto_packet['dir'].length; i++) {
       if (ptile == null) break;
       var dir = goto_packet['dir'][i];
 
-      if (dir == -1) { /* Assume that this means refuel. */
+      if (dir == -1) {
+        /* Assume that this means refuel. */
         refuel++;
         continue;
       }
@@ -6797,10 +6547,9 @@ function popit()
 }
 
 /**************************************************************************
-  Request tile popup and/or goto/rally path of unit/city on tile.
-    goto_only suppresses popup and only shows paths
+  request tile popup
 **************************************************************************/
-function popit_req(ptile, goto_only)
+function popit_req(ptile)
 {
   /* Force prevention of contextmenu pop-up during a tile-info pop-up request
    * (i.e. double tap for tile info on mobile on a tile that has units which
@@ -6819,14 +6568,14 @@ function popit_req(ptile, goto_only)
   // to oneself
   copy_string_to_clipboard("%%%"+"tile"+ptile['index']+"~%");
 
-  if (!goto_only && tile_get_known(ptile) == TILE_KNOWN_UNSEEN) {
+  if (tile_get_known(ptile) == TILE_KNOWN_UNSEEN) {
     //TODO: The 2 lines below should be removed after next FCW server restart
     //comment made on 3 March 2020
    show_dialog_message("Tile info", "Location: x:" + ptile['x'] + " y:" + ptile['y']);
     return;
    // Let server give us tile info. OPTIONAL TODO: reconstruct some more based on our
    // own last known knowledge of the tile. Server only sends Terrain and that's it.
-  } else if (!goto_only && tile_get_known(ptile) == TILE_UNKNOWN) {
+  } else if (tile_get_known(ptile) == TILE_UNKNOWN) {
     show_dialog_message("Tile info", "Location: x:" + ptile['x'] + " y:" + ptile['y']);
     return;
   }
@@ -6840,11 +6589,9 @@ function popit_req(ptile, goto_only)
     focus_unit_id = current_focus[0]['id'];
   }
 
-  if (!goto_only) {
-    var packet = {"pid" : packet_info_text_req, "visible_unit" : punit_id,
-                  "loc" : ptile['index'], "focus_unit": focus_unit_id};
-    send_request(JSON.stringify(packet));
-  }
+  var packet = {"pid" : packet_info_text_req, "visible_unit" : punit_id,
+                "loc" : ptile['index'], "focus_unit": focus_unit_id};
+  send_request(JSON.stringify(packet));
 
   // IF middle-clicked a tile that: 1) has unit(s), 2) has GO TO orders; THEN: show the path(s)
   if (punit_id) { // units are on tile
@@ -6856,37 +6603,6 @@ function popit_req(ptile, goto_only)
           request_goto_path(tunits[u]['id'], tiles[goto_tile_id]['x'], tiles[goto_tile_id]['y']);
         }
       }
-    }
-  }
-  // IF middle-clicked a tile that: 1) has a city, 2) has rally point; THEN: show the path:
-  if (tile_city(ptile)) {
-    var pcity = tile_city(ptile);
-    if (pcity['rally_point_dest_tile'] > -1) {
-      var goaltile = index_to_tile(pcity['rally_point_dest_tile']);
-      var gpath_key = goaltile['x'] + "," + goaltile['y'] + "," + "1";
-      goto_request_map[gpath_key] = {
-        "dest"   :   pcity['rally_point_dest_tile'],
-        "length" :   pcity['rally_point_length'],
-        "pid"    :   292, // signifies rally point
-        "persist":   pcity['rally_point_persistent'],
-        "turns"  :   1, // dummy value
-        "unit_id":   0 // flag for city rally point
-      };
-      var dirs = [];
-      for (var i = 0; i < pcity['rally_point_length']; i++) {
-        var dir = pcity['rally_point_orders'][i]['dir'];
-        if (dir==-1) { // -1 is not a path move order but a stop/wait marker for full mp/refuel
-          goto_request_map[gpath_key]['length'] --;
-        } else { // add dir to path array
-          dirs.push(dir);
-          ptile['goto_dir'] = dir;
-          ptile = mapstep(ptile,dir);
-        }
-      }
-      if (dirs.length) {
-        goto_request_map[gpath_key]['dir'] = dirs;
-        goto_turns_request_map[gpath_key] = 1; // dummy value.
-      } else goto_request_map[gpath_key]['dir'] = [];
     }
   }
 }
@@ -7300,10 +7016,7 @@ function update_active_units_dialog()
   } else {
     $("#game_unit_panel").parent().hide();
   }
-  $("#active_unit_info").tooltip(
-    /* no fade-in, long fade-out to avoid flicker during recurring updates */
-    {show: { delay:0, effect:"none", duration: 100 }, hide: {delay:200, effect:"none", duration: 200}}
-  );
+  $("#active_unit_info").tooltip();
 }
 
 /**************************************************************************
