@@ -31,6 +31,7 @@
 				</ul>
 			</li>
 			<li id="donate_link"><a href="https://www.patreon.com/freeciv_val">Donations</a></li>
+			<li><a href="https://github.com/Canik05/freeciv-tnt">Source</a></li>
 			<li><a href="https://val.tacticsandtriumph.com/">TnT Valhalla</a></li>
 			<%--<li class="dropdown">
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" title="${pageContext.request.locale.language} ${pageContext.request.locale.country}">
