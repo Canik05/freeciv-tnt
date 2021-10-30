@@ -1,6 +1,9 @@
 Freeciv C source checkout and patching
 --------------------------------------
 
+** Below is how upstream (https://github.com/freeciv/freeciv-web) freeciv-web works.
+   It's not true for TnT at the moment. **
+
 This directory is where the Freeciv C server will be checked out from Git, and patched to work with Freeciv-web in the browser.
 
 Freeciv will be checkout out from here:  https://github.com/freeciv/freeciv
