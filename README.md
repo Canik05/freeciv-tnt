@@ -1,7 +1,7 @@
 THE FREECIV-WEB PROJECT
 -----------------------
 
-[![Build Status](https://github.com/Lexxie9952/fcw.org-server/workflows/continuous%20integration/badge.svg)](https://github.com/Lexxie9952/fcw.org-server/actions?query=workflow%3A%22continuous+integration%22)
+[![Build Status](https://github.com/Canik05/freeciv-tnt/workflows/continuous%20integration/badge.svg)](https://github.com/Canik05/freeciv-tnt/actions?query=workflow%3A%22continuous+integration%22)
 [![Code Quality: Javascript](https://img.shields.io/lgtm/grade/javascript/g/freeciv/freeciv-web.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/freeciv/freeciv-web/context:javascript)
 [![Total Alerts](https://img.shields.io/lgtm/alerts/g/freeciv/freeciv-web.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/freeciv/freeciv-web/alerts) [![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
 
@@ -52,7 +52,7 @@ Whatever the method you choose, you'll have to check out Freeciv-web to a
 directory on your computer, by installing [Git](http://git-scm.com/) and
 running this command:
  ```bash
-  git clone https://github.com/Lexxie9952/fcw.org-server.git --depth=10
+  git clone https://github.com/Canik05/freeciv-tnt.git --depth=10
  ```
 
 You may also want to change some parameters before installing, although
