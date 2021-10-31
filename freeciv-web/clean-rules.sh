@@ -23,6 +23,6 @@ printf "\nOverwriting auto-generated manual with release-version: MP2-Caravel"
    cp ~/freeciv-web/freeciv-web/src/derived/webapp/man/mp2-caravel7.bak.html ~/freeciv-web/freeciv-web/src/derived/webapp/man/mp2-caravel7.html
 
 printf "\nDirectly copying rules to Tomcat webapp\n"
-   cp ~/freeciv-web/freeciv-web/src/derived/webapp/man/*.* /var/lib/tomcat8/webapps/freeciv-web/man/
+   cp ~/freeciv-web/freeciv-web/src/derived/webapp/man/*.* /var/lib/tomcat9/webapps/freeciv-web/man/
 
 printf "\n*** REMINDER:  run ./build.sh to refresh and activate new manual.\n"

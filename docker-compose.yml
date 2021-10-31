@@ -7,7 +7,7 @@ services:
     container_name: tnt.com
     command: ["sleep", "infinity"]
     volumes:
-      - "data:/var/lib/tomcat8/webapps/data"
+      - "data:/var/lib/tomcat9/webapps/data"
     ports:
             #      - "8080:8081"
             #      - "4002"
