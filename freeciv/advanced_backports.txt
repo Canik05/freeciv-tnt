@@ -1,4 +1,9 @@
 Current baseline of the https://github.com/freeciv/freeciv used here is commit
 7be357005455ab53e97eb95aa9a196e9fb86aa9e
 
-This is a list of what is backported in advance of the convergence backporting commits being done by cazfi:
+------------------------------------------------------------------------------
+
+This is a list of what is backported in advance of the convergence backporting
+commits being done by cazfi:
+
+d8a54ddb6a5ac083c400411a3dd456267d0ac17f  osdn #42209
