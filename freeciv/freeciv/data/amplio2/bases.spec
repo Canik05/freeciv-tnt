@@ -50,7 +50,7 @@ tiles = { "row", "column", "tag"
  2,  5, "base.castle_bg"
  2,  6, "base.bunker_mg"
 ;[HH]
-  not used in FCW, had to save space to prevent a clipping bug
+;  not used in FCW, had to save space to prevent a clipping bug
  0,  2, "cd.occupied",
       "city.european_occupied_0",
       "city.classical_occupied_0",
