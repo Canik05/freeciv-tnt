@@ -38,10 +38,10 @@ ext_install_tomcat9 () {
   sudo mv apache-tomcat-9.* tomcat9
   rm "${TMPFILE}"
 
-  if ! getent group tomcat9 > /dev/null 2>&1 ; then
+  if ! getent group tomcat > /dev/null 2>&1 ; then
     sudo groupadd --system tomcat
   fi
-  if ! id tomcat9 > /dev/null 2>&1 ; then
+  if ! id tomcat > /dev/null 2>&1 ; then
     sudo useradd --system --home /var/lib/tomcat9 -g tomcat --shell /bin/false tomcat
   fi
 
