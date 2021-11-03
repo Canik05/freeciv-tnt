@@ -1667,6 +1667,7 @@ AC_CONFIG_FILES([Makefile
           data/mp2-brava/Makefile
           data/mp2-caravel/Makefile
           data/mp2b-occ/Makefile
+          data/SIM30/Makefile
           data/mp2b-valhalla/Makefile
 	  data/scenarios/Makefile
 	  data/nation/Makefile
