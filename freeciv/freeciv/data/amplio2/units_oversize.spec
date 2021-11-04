@@ -53,4 +53,9 @@ tiles = { "row", "column", "tag"
   0,  8, "u.wagon"                    ; Lexxie
   0,  9, "u.truck"                    ; Lexxie
   1,  0, "u.zeppelin"                 ; Lexxie
+  1,  1, "u.thor"                     ; SLeague, Canik
+  1,  2, "u.loki"                     ; SLeague, Canik
+  1,  3, "u.freya"                    ; WesArt, Canik
+  1,  4, "u.shadow_loki"              ; SLeague, Canik
+  1,  5, "u.neolithic"                ; SLeague, Canik
 }
