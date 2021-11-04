@@ -34,6 +34,8 @@ class_flags =
     _("BorderPolice"), _("Can peacefully expel certain foreign units.")
     _("Expellable"), _("Can be peacefully expelled from foreign tiles.")
     _("AttFromNonNative"), _("Can launch attack from non-native tiles.")
+    _("CanPillage")
+    _("Missile")
   }
 
 flags =
@@ -64,7 +66,7 @@ flags =
 veteran_names = _("drafted"), _("recruits"), _("green"), _("regular"), _("disciplined"), _("seasoned"), _("experienced"), _("expert"), _("master"), _("veteran"), _("hardened"), _("guards"), _("special"), _("commando"), _("elite")
 
 ; The percentage chance of increasing level through combat  
-veteran_raise_chance = 100, 80, 65, 50, 40, 30, 20, 12, 10, 8, 6, 4, 2, 1, 0
+veteran_base_raise_chance = 100, 80, 65, 50, 40, 30, 20, 12, 10, 8, 6, 4, 2, 1, 0
 
 ; The percentage chance of a settler/engineer increasing level through
 ; performing useful work (per turn)
@@ -493,7 +495,7 @@ uk_gold       = 0
 flags         = "Settlers", "NonMil", "Cities", "IgTer", "HasNoZOC"
 ; No veteran levels (level name is never displayed)
 veteran_names = _("green")
-veteran_raise_chance = 0
+veteran_base_raise_chance = 0
 veteran_work_raise_chance = 0
 veteran_power_fact = 100
 veteran_move_bonus = 0
@@ -537,7 +539,7 @@ uk_gold       = 1
 flags         = "Settlers", "NonMil", "Cities", "HasNoZOC"
 ; No veteran levels (level name is never displayed)
 veteran_names = _("green")
-veteran_raise_chance = 0
+veteran_base_raise_chance = 0
 veteran_work_raise_chance = 0
 veteran_power_fact = 100
 veteran_move_bonus = 0
@@ -582,7 +584,7 @@ uk_gold       = 1
 flags         = "FieldUnit", "Settlers", "NonMil", "AddToCity", "Unique", "HasNoZOC"
 ; No veteran levels (level name is never displayed)
 veteran_names = _("green")
-veteran_raise_chance = 0
+veteran_base_raise_chance = 0
 veteran_work_raise_chance = 0
 veteran_power_fact = 100
 veteran_move_bonus = 0
@@ -620,7 +622,7 @@ uk_gold       = 1
 flags         = "FieldUnit", "Settlers", "NonMil", "AddToCity", "Unique", "HasNoZOC"
 ; No veteran levels (level name is never displayed)
 veteran_names = _("green")
-veteran_raise_chance = 0
+veteran_base_raise_chance = 0
 veteran_work_raise_chance = 0
 veteran_power_fact = 100
 veteran_move_bonus = 0
@@ -2436,7 +2438,7 @@ uk_gold       = 3
 cargo         = "Land", "Small Land", "Big Land", "Merchant", "Non Military", "Raiders"
 flags         = "Settlers", "BadCityDefender"
 veteran_names = _("green"), _("veteran"), _("hardened"), _("elite")
-veteran_raise_chance      = 50, 33, 20, 0
+veteran_base_raise_chance = 50, 33, 20, 0
 veteran_work_raise_chance = 0, 0, 0, 0
 veteran_power_fact        = 100, 150, 175, 200
 veteran_move_bonus        = 0, 0, 0, 0
@@ -2514,7 +2516,7 @@ disembarks    = "Air"
 flags         = "FieldUnit", "OneAttack", "Nuclear", "AirAttacker", "Unique"
 ; No veteran levels (level name is never displayed)
 veteran_names = _("green")
-veteran_raise_chance = 0
+veteran_base_raise_chance = 0
 veteran_work_raise_chance = 0
 veteran_power_fact = 100
 veteran_move_bonus = 0
@@ -2565,7 +2567,7 @@ disembarks    = "Air"
 flags         = "FieldUnit", "OneAttack", "Nuclear", "AirAttacker", "Unique"
 ; No veteran levels (level name is never displayed)
 veteran_names = _("green")
-veteran_raise_chance = 0
+veteran_base_raise_chance = 0
 veteran_work_raise_chance = 0
 veteran_power_fact = 100
 veteran_move_bonus = 0
@@ -2617,7 +2619,7 @@ disembarks    = "Air"
 flags         = "FieldUnit", "OneAttack", "Nuclear", "AirAttacker", "NoHome"
 ; No veteran levels (level name is never displayed)
 veteran_names = _("green")
-veteran_raise_chance = 0
+veteran_base_raise_chance = 0
 veteran_work_raise_chance = 0
 veteran_power_fact = 100
 veteran_move_bonus = 0
@@ -2666,7 +2668,7 @@ disembarks    = "Air"
 flags         = "FieldUnit", "OneAttack", "Nuclear", "AirAttacker", "NoHome", "Paratroopers"
 ; No veteran levels (level name is never displayed)
 veteran_names = _("green")
-veteran_raise_chance = 0
+veteran_base_raise_chance = 0
 veteran_work_raise_chance = 0
 veteran_power_fact = 100
 veteran_move_bonus = 0
@@ -2710,7 +2712,7 @@ uk_gold       = 5
 flags         = "FieldUnit", "OneAttack", "Nuclear", "AirAttacker"
 ; No veteran levels (level name is never displayed)
 veteran_names = _("green")
-veteran_raise_chance = 0
+veteran_base_raise_chance = 0
 veteran_work_raise_chance = 0
 veteran_power_fact = 100
 veteran_move_bonus = 0
@@ -2780,7 +2782,7 @@ veteran_names =
   _("?diplomatic_rank:envoy"),
 ; /* TRANS: diplomatic rank */
   _("?diplomatic_rank:ambassador")
-veteran_raise_chance = 50, 33, 20, 0
+veteran_base_raise_chance = 50, 33, 20, 0
 veteran_work_raise_chance = 0, 0, 0, 0
 veteran_power_fact = 100, 105, 110, 115
 veteran_move_bonus = 0, 0, 0, 0
@@ -2893,7 +2895,7 @@ veteran_names =
   _("?diplomatic_rank:envoy"),
 ; /* TRANS: diplomatic rank */
   _("?diplomatic_rank:ambassador")
-veteran_raise_chance = 50, 33, 20, 0
+veteran_base_raise_chance = 50, 33, 20, 0
 veteran_work_raise_chance = 0, 0, 0, 0
 veteran_power_fact = 100, 105, 110, 115
 veteran_move_bonus = 0, 0, 0, 0
@@ -3007,7 +3009,7 @@ veteran_names =
   _("?diplomatic_rank:envoy"),
 ; /* TRANS: diplomatic rank */
   _("?diplomatic_rank:ambassador")
-veteran_raise_chance = 50, 33, 20, 0
+veteran_base_raise_chance = 50, 33, 20, 0
 veteran_work_raise_chance = 0, 0, 0, 0
 veteran_power_fact = 100, 105, 110, 115
 veteran_move_bonus = 0, 0, 0, 0
@@ -3120,7 +3122,7 @@ veteran_names =
   _("?diplomatic_rank:envoy"),
 ; /* TRANS: diplomatic rank */
   _("?diplomatic_rank:ambassador")
-veteran_raise_chance = 50, 33, 20, 0
+veteran_base_raise_chance = 50, 33, 20, 0
 veteran_work_raise_chance = 0, 0, 0, 0
 veteran_power_fact = 100, 105, 110, 115
 veteran_move_bonus = 0, 0, 0, 0
@@ -3230,7 +3232,7 @@ veteran_names =
   _("?spy_level:agent"),
 ; /* TRANS: Spy veteran level */
   _("?spy_level:spymaster")
-veteran_raise_chance = 50, 33, 20, 0
+veteran_base_raise_chance = 50, 33, 20, 0
 veteran_work_raise_chance = 0, 0, 0, 0
 veteran_power_fact = 100, 105, 110, 115
 veteran_move_bonus = 0, 0, 0, 0
@@ -3424,7 +3426,7 @@ flags         = "IgZOC", "NonMil", "NoBuild", "NoHome", "SuperSpy",
                 "EvacuateFirst", "Unbribable", "GameLoss", "Unique", "HasNoZOC"
 ; No veteran levels (level name is never displayed)
 veteran_names = _("green")
-veteran_raise_chance = 0
+veteran_base_raise_chance = 0
 veteran_work_raise_chance = 0
 veteran_power_fact = 100
 veteran_move_bonus = 0
@@ -3462,7 +3464,7 @@ flags         = "IgZOC", "NonMil", "Unbribable",
                 "EvacuateFirst", "SuperSpy", "NoHome", "NoBuild", "HasNoZOC"
 ; No veteran levels (level name is never displayed)
 veteran_names = _("green")
-veteran_raise_chance = 0
+veteran_base_raise_chance = 0
 veteran_work_raise_chance = 0
 veteran_power_fact = 100
 veteran_move_bonus = 0
