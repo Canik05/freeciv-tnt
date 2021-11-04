@@ -10,6 +10,7 @@ pkgdata_DATA =			\
 	game.ruleset		\
 	governments.ruleset	\
 	nations.ruleset		\
+	default.lua             \
 	script.lua		\
 	parser.lua		\
 	styles.ruleset		\
