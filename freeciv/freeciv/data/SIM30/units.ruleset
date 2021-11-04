@@ -15,8 +15,8 @@
 ; then the first unit with this role will be chosen.
 
 [datafile]
-options="+Freeciv-3.0-ruleset"
-format_version=10
+options="+Freeciv-ruleset-Devel-2017.Jan.02 web-compatible"
+format_version=20
 
 [control]
 ; Names for custom unit type flags. There can be up to 32 of these.
@@ -318,7 +318,7 @@ flags         = "Unreachable", "DoesntOccupyTile", "CanPillage"
 ; veteran_names = Special veteran level for this unit. See the definitions in
 ;                 game.ruleset. All of the veteran_* entries have to have the
 ;                 same length!
-; veteran_raise_chance =
+; veteran_base_raise_chance =
 ; veteran_work_raise_chance =
 ; veteran_power_fact =
 ; veteran_move_bonus =
