@@ -1,10 +1,10 @@
-As of 02-Nov-21,
+As of 05-Nov-21,
 current baseline of the https://github.com/freeciv/freeciv used by TnT is commit
-380ecf1767c700f93a7cbf61d949da4d452c250e
+9351ca9f40bb9def9ee5718a4ae050bd7617fd89
 
 ------------------------------------------------------------------------------
 
-This is a list of what is backported in advance of the convergence backporting
-commits being done by cazfi:
+This is a list of what has been backported in advance of the convergence
+backporting commits:
 
 d8a54ddb6a5ac083c400411a3dd456267d0ac17f  osdn #42209
