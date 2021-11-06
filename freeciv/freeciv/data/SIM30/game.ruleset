@@ -327,7 +327,7 @@ actor_reqs    =
     { "type",         "name",       "range", "present"
       "UnitFlag",     "Diplomat",   "Local", TRUE
       "MinMoveFrags", "1",          "Local", TRUE
-      "DiplRel",      "Is Foreign", "Local", TRUE
+      "DiplRel",      "Foreign", "Local", TRUE
       "UnitFlag",     "Spy",        "Local", FALSE
     }
 target_reqs  =
@@ -341,7 +341,7 @@ actor_reqs    =
     { "type",         "name",       "range"
       "UnitFlag",     "Spy",        "Local"
       "MinMoveFrags", "1",          "Local"
-      "DiplRel",      "Is Foreign", "Local"
+      "DiplRel",      "Foreign", "Local"
     }
 target_reqs  =
     { "type",        "name",      "range", "present"
@@ -354,7 +354,7 @@ actor_reqs    =
     { "type",         "name",       "range"
       "UnitType",     "Explorer",   "Local"
       "MinMoveFrags", "1",          "Local"
-      "DiplRel",      "Is foreign", "Local"
+      "DiplRel",      "Foreign", "Local"
     }
 target_reqs  =
     { "type",        "name",      "range", "present"
@@ -367,7 +367,7 @@ actor_reqs    =
     { "type",   "name", "range", "present"
       "UnitFlag", "Diplomat", "Local", TRUE
       "MinMoveFrags", "1", "Local", TRUE
-      "DiplRel", "Is Foreign", "Local", TRUE
+      "DiplRel", "Foreign", "Local", TRUE
       "UnitFlag", "Spy", "Local", FALSE
     }
 
@@ -377,7 +377,7 @@ actor_reqs    =
     { "type",   "name", "range"
       "UnitFlag", "Spy", "Local"
       "MinMoveFrags", "1", "Local"
-      "DiplRel", "Is Foreign", "Local"
+      "DiplRel", "Foreign", "Local"
     }
 
 [actionenabler_investigate_city_explorer]
@@ -386,7 +386,7 @@ actor_reqs    =
     { "type",   "name", "range"
       "UnitType", "Explorer", "Local"
       "MinMoveFrags", "1", "Local"
-      "DiplRel", "Is foreign", "Local"
+      "DiplRel", "Foreign", "Local"
     }
 
 [actionenabler_steal_maps]
@@ -396,7 +396,7 @@ actor_reqs    =
       "UnitFlag", "Spy", "Local"
       "UnitState", "OnLivableTile", "Local"
       "MinMoveFrags", "1", "Local"
-      "DiplRel", "Is foreign", "Local"
+      "DiplRel", "Foreign", "Local"
     }
 target_reqs  =
     { "type",   "name", "range", "present"
@@ -412,7 +412,7 @@ actor_reqs    =
       "UnitState",    "OnLivableTile", "Local"
       "MinMoveFrags", "1",             "Local"
       "Tech",         "Banking",       "Player"
-      "DiplRel",      "Is Foreign",    "Local"
+      "DiplRel",      "Foreign",    "Local"
     }
 target_reqs  =
     { "type",        "name",      "range",  "present"
@@ -427,7 +427,7 @@ actor_reqs    =
       "UnitFlag",     "Diplomat",      "Local", TRUE
       "UnitState",    "OnLivableTile", "Local", TRUE
       "MinMoveFrags", "1",             "Local", TRUE
-      "DiplRel",      "Is foreign",    "Local", TRUE
+      "DiplRel",      "Foreign",    "Local", TRUE
     }
 target_reqs  =
     { "type",        "name",      "range",  "present"
@@ -441,7 +441,7 @@ actor_reqs    =
       "UnitFlag",     "Spy",           "Local"
       "UnitState",    "OnLivableTile", "Local"
       "MinMoveFrags", "1",             "Local"
-      "DiplRel",      "Is foreign",    "Local"
+      "DiplRel",      "Foreign",    "Local"
     }
 target_reqs  =
     { "type",        "name",      "range",  "present"
@@ -455,7 +455,7 @@ actor_reqs    =
       "UnitFlag",     "Spy",           "Local"
       "UnitState",    "OnLivableTile", "Local"
       "MinMoveFrags", "1",             "Local"
-      "DiplRel",      "Is foreign",    "Local"
+      "DiplRel",      "Foreign",    "Local"
     }
 target_reqs  =
     { "type",   "name", "range", "present"
@@ -502,7 +502,7 @@ actor_reqs    =
       "DiplRel",      "Team",          "Local", FALSE
       "UnitState",    "OnLivableTile", "Local", TRUE
       "MinMoveFrags", "1",             "Local", TRUE
-      "DiplRel",      "Is foreign",    "Local", TRUE
+      "DiplRel",      "Foreign",    "Local", TRUE
       "UnitFlag",     "Spy",           "Local", FALSE
     }
 target_reqs  =
@@ -523,7 +523,7 @@ actor_reqs    =
       "DiplRel",      "Team",          "Local", FALSE
       "UnitState",    "OnLivableTile", "Local", TRUE
       "MinMoveFrags", "1",             "Local", TRUE
-      "DiplRel",      "Is foreign",    "Local", TRUE
+      "DiplRel",      "Foreign",    "Local", TRUE
     }
 target_reqs  =
     { "type",     "name",                  "range", "present"
@@ -543,7 +543,7 @@ actor_reqs    =
       "DiplRel", "Team", "Local", FALSE
       "UnitState", "OnLivableTile", "Local", TRUE
       "MinMoveFrags", "1", "Local", TRUE
-      "DiplRel", "Is foreign", "Local", TRUE
+      "DiplRel", "Foreign", "Local", TRUE
     }
 target_reqs    =
     { "type",   "name", "range", "present"
@@ -657,7 +657,7 @@ actor_reqs    =
       "UnitFlag", "Capturer", "Local", TRUE
       "DiplRel", "War", "Local", TRUE
       "MinMoveFrags", "1", "Local", TRUE
-      "DiplRel", "Is foreign", "Local", TRUE
+      "DiplRel", "Foreign", "Local", TRUE
     }
 target_reqs    =
     { "type",      "name",         "range", "present"
@@ -700,7 +700,7 @@ actor_reqs    =
       "UnitFlag", "Cities", "Local", TRUE
       "UnitState", "OnLivableTile", "Local", TRUE
       "MinMoveFrags", "1", "Local", TRUE
-      "DiplRel", "Is foreign", "Local", FALSE
+      "DiplRel", "Foreign", "Local", FALSE
     }
 target_reqs    =
     { "type",        "name",     "range", "present"
@@ -713,7 +713,7 @@ action = "Join City"
 actor_reqs    =
     { "type",   "name", "range", "present"
       "UnitFlag", "AddToCity", "Local", TRUE
-      "DiplRel", "Is foreign", "Local", FALSE
+      "DiplRel", "Foreign", "Local", FALSE
       "MinMoveFrags", "1", "Local", TRUE
     }
 
@@ -723,7 +723,7 @@ actor_reqs    =
 ;    { "type",          "name",           "range", "present"
 ;      "UnitClassFlag", "BorderPolice",   "Local", TRUE
 ;      "UnitState",     "OnDomesticTile", "Local", TRUE
-;      "DiplRel",       "Is foreign",     "Local", TRUE
+;      "DiplRel",       "Foreign",     "Local", TRUE
 ;      "DiplRel",       "Team",           "Local", FALSE
 ;      "DiplRel",       "Alliance",       "Local", FALSE
 ;      "DiplRel",       "War",            "Local", FALSE
@@ -762,7 +762,7 @@ action = "Destroy City"
 actor_reqs    =
     { "type",         "name",          "range", "present"
       "UnitFlag",     "GameLoss",      "Local", TRUE
-      "DiplRel",      "Is foreign",    "Local", FALSE
+      "DiplRel",      "Foreign",    "Local", FALSE
       "MinMoveFrags", "1",             "Local", TRUE
       "UnitState",    "OnLivableTile", "Local", TRUE
     }
@@ -833,7 +833,7 @@ actor_reqs    =
     { "type",      "name",        "range", "present"
       "UnitFlag",  "NoHome",      "Local", FALSE
       "UnitState", "HasHomeCity", "Local", TRUE
-      "DiplRel",   "Is foreign",  "Local", FALSE
+      "DiplRel",   "Foreign",  "Local", FALSE
     }
 
 [actionenabler_paradrop_not_forest_base]
@@ -886,7 +886,7 @@ actor_reqs    =
 action = "Upgrade Unit"
 actor_reqs    =
     { "type",    "name",       "range", "present"
-      "DiplRel", "Is foreign", "Local", FALSE
+      "DiplRel", "Foreign", "Local", FALSE
     }
 
 [actionenabler_airlift_light_unit]
