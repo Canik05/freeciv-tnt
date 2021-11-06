@@ -1229,6 +1229,7 @@ uk_happy      = 0
 uk_shield     = 0
 uk_food       = 0
 uk_gold       = 1
+vision_layer  = "Stealth"
 embarks       = "Helicopter"
 disembarks    = "Helicopter"
 flags         = "IgTer", "IgZOC", "Capturer", "Partial_Invis", "Marines", "Bombarder"
@@ -1953,9 +1954,10 @@ uk_happy      = 0
 uk_shield     = 4
 uk_food       = 1
 uk_gold       = 6
+vision_layer  = "Stealth"
 bombard_rate  = 5
 targets       = "Air", "Missile", "Helicopter"
-flags         = "Partial_Invis", "AirAttacker", "Unbribable"
+flags         = "AirAttacker", "Unbribable"
 roles         = "DefendGood"
 helptext      = _("\
 An improved Fighter, with improved attack and a higher movement\
@@ -1987,8 +1989,9 @@ uk_happy      = 1
 uk_shield     = 6
 uk_food       = 1
 uk_gold       = 10
+vision_layer  = "Stealth"
 bombard_rate = 6
-flags         = "Partial_Invis", "FieldUnit", "OneAttack", "AirAttacker", "Bombarder", "Unbribable"
+flags         = "FieldUnit", "OneAttack", "AirAttacker", "Bombarder", "Unbribable"
 roles         = "DefendOk"
 helptext      = _("\
 An improved Bomber, with improved attack and a higher movement\
@@ -2362,8 +2365,9 @@ uk_happy      = 0
 uk_shield     = 5
 uk_food       = 1
 uk_gold       = 4
+vision_layer  = "Stealth"
 cargo         = "Missile", "Non Military", "Raiders"
-flags         = "Partial_Invis", "BadCityDefender", "Only_Native_Attack", "Submarine", "Bombarder"
+flags         = "BadCityDefender", "Only_Native_Attack", "Submarine", "Bombarder"
 bombard_rate  = 8
 roles         = "Hunter"
 helptext      = _("\
@@ -2769,7 +2773,8 @@ uk_happy      = 0
 uk_shield     = 0
 uk_food       = 0
 uk_gold       = 2
-flags         = "Partial_Invis", "Diplomat", "IgZOC", "NonMil", "HasNoZOC"
+vision_layer  = "Stealth"
+flags         = "Diplomat", "IgZOC", "NonMil", "HasNoZOC"
 veteran_names =
 ; /* TRANS: diplomatic rank. */
 ; /* TRANS: Unless translated, the last character in "attache" should be */
@@ -2882,7 +2887,8 @@ uk_happy      = 0
 uk_shield     = 0
 uk_food       = 0
 uk_gold       = 4
-flags         = "Partial_Invis", "Diplomat", "IgZOC", "NonMil", "HasNoZOC"
+vision_layer  = "Stealth"
+flags         = "Diplomat", "IgZOC", "NonMil", "HasNoZOC"
 veteran_names =
 ; /* TRANS: diplomatic rank. */
 ; /* TRANS: Unless translated, the last character in "attache" should be */
@@ -2996,7 +3002,8 @@ uk_happy      = 0
 uk_shield     = 0
 uk_food       = 0
 uk_gold       = 6
-flags         = "Partial_Invis", "Diplomat", "IgZOC", "NonMil", "HasNoZOC"
+vision_layer  = "Stealth"
+flags         = "Diplomat", "IgZOC", "NonMil", "HasNoZOC"
 veteran_names =
 ; /* TRANS: diplomatic rank. */
 ; /* TRANS: Unless translated, the last character in "attache" should be */
@@ -3109,7 +3116,8 @@ uk_happy      = 0
 uk_shield     = 0
 uk_food       = 0
 uk_gold       = 8
-flags         = "Partial_Invis", "Diplomat", "IgZOC", "NonMil", "HasNoZOC"
+vision_layer  = "Stealth"
+flags         = "Diplomat", "IgZOC", "NonMil", "HasNoZOC"
 veteran_names =
 ; /* TRANS: diplomatic rank. */
 ; /* TRANS: Unless translated, the last character in "attache" should be */
@@ -3222,7 +3230,8 @@ uk_happy      = 0
 uk_shield     = 0
 uk_food       = 0
 uk_gold       = 10
-flags         = "Partial_Invis", "Diplomat", "IgZOC", "NonMil", "Spy", "HasNoZOC"
+vision_layer  = "Stealth"
+flags         = "Diplomat", "IgZOC", "NonMil", "Spy", "HasNoZOC"
 veteran_names =
 ; /* TRANS: Spy veteran level */
   _("?spy_level:informant"),
