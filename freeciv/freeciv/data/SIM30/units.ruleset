@@ -59,6 +59,7 @@ flags =
     _("Paratroopers")
     _("Bombarder")
     _("Nuclear")
+    _("CanHide"), _("In appropriate terrain, this unit can make a Hideout, which will conceal all land units on the tile.")
   }
 
 [veteran_system]
