@@ -361,8 +361,6 @@ flags         = "Unreachable", "DoesntOccupyTile", "CanPillage"
 ; "OneAttack"	= can only make a single attack, regardless of movement points
 ; "FieldUnit"	= cause unhappiness even when not being aggressive
 ; "Marines"	= can attack from non-native tile (from transport or city)
-; "Partial_Invis" = visible only to adjancent units; does not hide transported
-;		  units other than missiles
 ; "Settlers"	= can irrigate and build roads
 ; "Diplomat"	= can defend against diplomat actions (see diplchance
 ;                 server option)
@@ -1233,7 +1231,7 @@ uk_gold       = 1
 vision_layer  = "Stealth"
 embarks       = "Helicopter"
 disembarks    = "Helicopter"
-flags         = "IgTer", "IgZOC", "Capturer", "Partial_Invis", "Marines", "Bombarder"
+flags         = "IgTer", "IgZOC", "Capturer", "Marines", "Bombarder"
 roles         = "DefendGood", "Partisan", "BarbarianTech"
 helptext      = _("\
 Partisans are guerilla fighters who are experts\
