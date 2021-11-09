@@ -1,6 +1,6 @@
 As of 06-Nov-21,
 current baseline of the https://github.com/freeciv/freeciv used by TnT is commit
-60e8ef0a7bc0e5881ba61e2b1ce6bbf66c29afd0
+f9cf79a2f575b45194aed8bfc8b157553e181d6f
 
 ------------------------------------------------------------------------------
 
