@@ -170,8 +170,9 @@ const EFT_GULAG = 130;
 const EFT_STACK_ESCAPE_PCT = 131;
 const EFT_IMPR_BUILD_COST_PM = 132;
 const EFT_ACTION_RESIST_PCT = 133;
-//___________________
-const EFT_LAST = 133;
+const EFT_OUTPUT_ADD_BONUS = 134;
+const EFT_TERRAIN_DEFEND_ADD_BONUS = 135;
+const EFT_LAST = 136;
 
 */
 
