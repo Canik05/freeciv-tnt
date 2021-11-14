@@ -5073,8 +5073,12 @@ function key_unit_irrigate()
   var funits = get_units_in_focus();
   for (var i = 0; i < funits.length; i++) {
     var punit = funits[i];
-    /* EXTRA_NONE -> server decides */
-    request_new_unit_activity(punit, ACTIVITY_IRRIGATE, EXTRA_NONE);
+    if (tile_terrain(unit_tile(punit))['cultivate_time'] > 0) {
+      request_new_unit_activity(punit, ACTIVITY_CULTIVATE, EXTRA_NONE);
+    } else {
+      /* EXTRA_NONE -> server decides */
+      request_new_unit_activity(punit, ACTIVITY_IRRIGATE, EXTRA_NONE);
+    }
     // Focused unit got orders, make sure not on waiting_list now:
     remove_unit_id_from_waiting_list(punit['id']);
   }
@@ -5438,8 +5442,12 @@ function key_unit_mine()
   var funits = get_units_in_focus();
   for (var i = 0; i < funits.length; i++) {
     var punit = funits[i];
-    /* EXTRA_NONE -> server decides */
-    request_new_unit_activity(punit, ACTIVITY_MINE, EXTRA_NONE);
+    if (tile_terrain(unit_tile(punit))['plant_time'] > 0) {
+      request_new_unit_activity(punit, ACTIVITY_PLANT, EXTRA_NONE);
+    } else {
+      /* EXTRA_NONE -> server decides */
+      request_new_unit_activity(punit, ACTIVITY_MINE, EXTRA_NONE);
+    }
     // Unit received orders, don't ask orders later:
     remove_unit_id_from_waiting_list(punit['id']);
   }
