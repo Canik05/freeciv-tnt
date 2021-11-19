@@ -16,8 +16,6 @@ AC_CANONICAL_HOST
 AC_USE_SYSTEM_EXTENSIONS
 AC_C_BIGENDIAN
 
-FC_EMSCRIPTEN
-
 BUG_URL="$PACKAGE_BUGREPORT"
 WIKI_URL="http://www.freeciv.org/"
 MAIL_ADDRESS="freeciv-dev AT freelists.org"
@@ -106,10 +104,7 @@ if test "x$fc_cv_malloc_zero_ok" = "xtrue" ; then
   AC_DEFINE([MALLOC_ZERO_OK], [1], [It's ok to call malloc() for zero bytes])
 fi
 
-if test "x$emscripten" != "xyes" ; then
-  dnl Not needed in emscripten build as both users - fcdb and fcmp - are disabled
-  FC_CHECK_SQLITE3([], [AC_MSG_ERROR([sqlite3 not found])])
-fi
+FC_CHECK_SQLITE3([], [AC_MSG_ERROR([sqlite3 not found])])
 
 dnl set default values
 fcdb_all=no
@@ -128,15 +123,7 @@ AC_ARG_ENABLE([fcdb],
   AS_HELP_STRING([--enable-fcdb[=no/all/mysql/odbc/postgres/sqlite3]],
                  [database backends [sqlite3](no, or list)]),
 [databases=${enableval}],
-[if test "x$emscripten" != "xyes" ; then
-  databases=sqlite3
-else
-  databases=no
-fi])
-
-if test "x$emscripten" = "xyes" && test "x$databases" != "xno" ; then
-  AC_MSG_ERROR([fcdb not supported with emscripten])
-fi
+[databases=sqlite3])
 
 for db in $(echo $databases | $SED 's/,/ /g') ; do
   if test "x$db" = "xall" ; then
@@ -610,13 +597,10 @@ PKG_PROG_PKG_CONFIG
 if test "x$PKG_CONFIG" = "x" ; then
   AC_MSG_ERROR([pkg-config not found])
 fi
-
-if test "x$emscripten" != "xyes" ; then
-  PKG_CHECK_MODULES([CURL], [libcurl >= 7.15.4],,
-      [AC_MSG_ERROR([libcurl development files required])])
-  UTILITY_CFLAGS="${UTILITY_CFLAGS} ${CURL_CFLAGS}"
-  UTILITY_LIBS="${UTILITY_LIBS} ${CURL_LIBS}"
-fi
+PKG_CHECK_MODULES([CURL], [libcurl >= 7.15.4],,
+    [AC_MSG_ERROR([libcurl development files required])])
+UTILITY_CFLAGS="${UTILITY_CFLAGS} ${CURL_CFLAGS}"
+UTILITY_LIBS="${UTILITY_LIBS} ${CURL_LIBS}"
 
 AC_ARG_ENABLE([xml-registry],
   AS_HELP_STRING([--enable-xml-registry], [build xml-backend for registry (WIP)]),
@@ -634,15 +618,10 @@ if test "x$XMLREGISTRY" = "xyes" ; then
   AC_DEFINE([FREECIV_HAVE_XML_REGISTRY], [1], [Build xml-backend for registry])
 fi
 
-if test "x$emscripten" != "xyes" ; then
-  PKG_CHECK_MODULES([ICU], [icu-uc],,
-      [AC_MSG_ERROR([icu development files required])])
-  UTILITY_CFLAGS="${UTILITY_CFLAGS} ${ICU_CFLAGS}"
-  UTILITY_LIBS="${UTILITY_LIBS} ${ICU_LIBS}"
-else
-  CFLAGS="$CFLAGS -s USE_ICU=1"
-  CXXFLAGS="$CXXFLAGS -s USE_ICU=1"
-fi
+PKG_CHECK_MODULES([ICU], [icu-uc],,
+    [AC_MSG_ERROR([icu development files required])])
+UTILITY_CFLAGS="${UTILITY_CFLAGS} ${ICU_CFLAGS}"
+UTILITY_LIBS="${UTILITY_LIBS} ${ICU_LIBS}"
 
 dnl Set debug flags supported by compiler
 EXTRA_DEBUG_CFLAGS=""
@@ -816,8 +795,7 @@ dnl Should we build experimental versions of Qt programs
 AC_ARG_WITH([qt5x],
   AS_HELP_STRING([--with-qt5x], [build experimental versions of Qt programs]),
 [case "${withval}" in
- yes) qt_ver="Qt5x"
-      AC_DEFINE([FC_QT6_MODE], [1], [this is Qt5x based build]) ;;
+ yes) qt_ver="Qt5x" ;;
  *)   qt_ver="Qt5" ;;
 esac], [qt_ver="Qt5"])
 
@@ -1085,21 +1063,13 @@ dnl freeciv-modpack checks
 AC_ARG_ENABLE([fcmp],
   AS_HELP_STRING([--enable-fcmp=no/yes/gtk3/gtk3x/qt/cli/all/auto], [build freeciv-modpack-program [auto]]),
 [fc_mp=${enableval}],
-[if test "x$emscripten" = "xyes" ; then
-  fc_mp=no
-else
-  fc_mp=auto
-fi])
+[fc_mp=auto])
 
 fcmp_cli=no
 fcmp_gtk3=no
 fcmp_gtk3x=no
 fcmp_qt=no
 fcmp_list=
-
-if test "x$fc_mp" != "xno" && test "x$emscripten" = "xyes" ; then
-  AC_MSG_ERROR([fcmp not supported with emscripten])
-fi
 
 if test "x$fc_mp" = "xcli" ; then
   dnl Only cli requested -> no gui needed
@@ -1160,7 +1130,7 @@ fi
 
 if test "x$req_fcmp_gtk3x" = "xyes" ||
    test "x$modinst" = "xall" || test "x$modinst" = "xauto" ; then
-  PKG_CHECK_MODULES([GTK3X_MP], [gtk4 >= 3.98.1],
+  PKG_CHECK_MODULES([GTK3X_MP], [gtk4 >= 3.96.0],
 [
   GTK3X_MP_CFLAGS="$GTK3X_MP_CFLAGS -DGDK_VERSION_MIN_REQUIRED=GDK_VERSION_3_94"
   GTK3X_MP_CFLAGS="$GTK3X_MP_CFLAGS -DGLIB_VERSION_MIN_REQUIRED=GLIB_VERSION_2_60"
@@ -1426,7 +1396,12 @@ AC_CHECK_FUNCS([bind connect fileno flock ftime gethostbyname gethostname \
                 getline _strcoll stricoll _stricoll strcasecoll \
                 backtrace setenv putenv])
 
+dnl Possible "-Wmissing-declarations" and "-Werror" will prune out
+dnl cases where we should not use _mkdir() even if it's possible to link against it
+fc_save_CPPFLAGS="$CPPFLAGS"
+CPPFLAGS="$CPPFLAGS -Werror $EXTRA_DEBUG_CFLAGS"
 AC_CHECK_FUNCS([_mkdir])
+CPPFLAGS="$fc_save_CPPFLAGS"
 
 AC_MSG_CHECKING(for working gettimeofday)
   FC_CHECK_GETTIMEOFDAY_RUNTIME(,AC_DEFINE([HAVE_GETTIMEOFDAY], [1],
@@ -1692,7 +1667,7 @@ AC_CONFIG_FILES([Makefile
           data/mp2-brava/Makefile
           data/mp2-caravel/Makefile
           data/mp2b-occ/Makefile
-          data/SIM30/Makefile
+	  data/mp2b-desert/Makefile
           data/mp2b-valhalla/Makefile
 	  data/scenarios/Makefile
 	  data/nation/Makefile
