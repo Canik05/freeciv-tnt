@@ -703,6 +703,7 @@ function pregame_settings()
       + "<option value='mp2b-desert'>MP 2.2 Desert</option>"
       + "<option value='ag'>Multiplayer 2.1 Avant-garde</option>"
       + "<option value='mpplus'>Multiplayer+ 1.1</option>"
+      + "<option value='SIM30'>SIM Ruleset</option>"
       + "<option value='classic'>Classic</option>"
       + "<option value='civ2civ3'>Civ2Civ3</option>"
       + "</select><a id='ruleset_description'></a></td></tr>"
