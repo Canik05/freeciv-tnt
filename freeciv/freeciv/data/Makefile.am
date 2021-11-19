@@ -44,7 +44,7 @@ SRV_RE_FILES = \
 	mp2-brava.serv   \
         mp2-caravel.serv \
         mp2b-occ.serv    \
-	SIM30.serv       \
+	mp2b-desert.serv \
 	mp2b-valhalla.serv
 
 if SERVER
@@ -90,7 +90,7 @@ EXTRA_DIST = \
 	mp2-brava.serv   \
         mp2-caravel.serv \
         mp2b-occ.serv    \
-	SIM30.serv       \
+	mp2b-desert.serv \
         mp2b-valhalla.serv
 
 if CLIENT
@@ -100,7 +100,7 @@ else
 CLIENTDATADIRS = 
 endif
 
-SRV_RE_DATADIRS = default classic civ1 civ2 sandbox multiplayer alien civ2civ3 webperimental mpplus mp2 ag mp2-brava mp2-caravel mp2b-valhalla mp2b-occ nation SIM30
+SRV_RE_DATADIRS = default classic civ1 civ2 sandbox multiplayer alien civ2civ3 webperimental mpplus mp2 ag mp2-brava mp2-caravel mp2b-desert mp2b-valhalla mp2b-occ nation
 if SERVER
 SERVERDATADIRS = $(SRV_RE_DATADIRS) scenarios
 else
