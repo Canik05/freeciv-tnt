@@ -388,7 +388,7 @@
 
 		<div class="row">
 			<div class="col-md-12">
-					<h3>Join us on the Tactics & Triumph Discord!</h3>
+					<h3><a href="https://discord.com/invite/BrpzgpgMAF">Click here to join TnT's Discord</a></h3>
 			</div>
 		</div>
 
