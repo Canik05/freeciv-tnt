@@ -16,7 +16,6 @@ pkgdata_DATA =          \
 	techs.ruleset	\
 	terrain.ruleset	\
 	units.ruleset	\
-	README.actions  \
 	README.civ2civ3
 
 EXTRA_DIST = $(pkgdata_DATA)
