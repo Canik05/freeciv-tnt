@@ -18,7 +18,7 @@ format_version=20
 [ruledit]
 
 ; Which file to read description in from.
-description_file = "civ2civ3/README.civ2civ3"
+description_file = "SIM30/README.civ2civ3"
 
 [about]
 ; Ruleset name
@@ -40,7 +40,7 @@ Created for multiplayer, with AI being completely lost,\
 
 ; Detailed description
 ; When updating this, update also desciption_file in [ruledit] section to match
-description = *civ2civ3/README.civ2civ3*
+description = *SIM30/README.civ2civ3*
 
 [options]
 global_init_techs=""
