@@ -9,6 +9,7 @@ pkgdata_DATA =          \
 	effects.ruleset	\
 	script.lua	\
 	parser.lua	\
+	default.lua     \
 	styles.ruleset	\
 	game.ruleset	\
 	governments.ruleset \
