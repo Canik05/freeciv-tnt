@@ -11,6 +11,7 @@ artists = "
     Yautja
     Daniel Speyer
     Eleazar
+    Lexxie
 "
 
 [file]
@@ -65,24 +66,24 @@ tiles = { "row", "column","tag"
  5,  6, "t.l1.forest_n0e1s1w1"
  5,  7, "t.l1.forest_n1e1s1w1"
 
-;tundra as overlay
+;desert as overlay
 
- 6,  0, "t.l1.tundra_n0e0s0w0"
- 6,  1, "t.l1.tundra_n1e0s0w0"
- 6,  2, "t.l1.tundra_n0e1s0w0"
- 6,  3, "t.l1.tundra_n1e1s0w0"
- 6,  4, "t.l1.tundra_n0e0s1w0"
- 6,  5, "t.l1.tundra_n1e0s1w0"
- 6,  6, "t.l1.tundra_n0e1s1w0"
- 6,  7, "t.l1.tundra_n1e1s1w0"
- 7,  0, "t.l1.tundra_n0e0s0w1"
- 7,  1, "t.l1.tundra_n1e0s0w1"
- 7,  2, "t.l1.tundra_n0e1s0w1"
- 7,  3, "t.l1.tundra_n1e1s0w1"
- 7,  4, "t.l1.tundra_n0e0s1w1"
- 7,  5, "t.l1.tundra_n1e0s1w1"
- 7,  6, "t.l1.tundra_n0e1s1w1"
- 7,  7, "t.l1.tundra_n1e1s1w1"
+ 6,  0, "t.l1.desert_n0e0s0w0"
+ 6,  1, "t.l1.desert_n1e0s0w0"
+ 6,  2, "t.l1.desert_n0e1s0w0"
+ 6,  3, "t.l1.desert_n1e1s0w0"
+ 6,  4, "t.l1.desert_n0e0s1w0"
+ 6,  5, "t.l1.desert_n1e0s1w0"
+ 6,  6, "t.l1.desert_n0e1s1w0"
+ 6,  7, "t.l1.desert_n1e1s1w0"
+ 7,  0, "t.l1.desert_n0e0s0w1"
+ 7,  1, "t.l1.desert_n1e0s0w1"
+ 7,  2, "t.l1.desert_n0e1s0w1"
+ 7,  3, "t.l1.desert_n1e1s0w1"
+ 7,  4, "t.l1.desert_n0e0s1w1"
+ 7,  5, "t.l1.desert_n1e0s1w1"
+ 7,  6, "t.l1.desert_n0e1s1w1"
+ 7,  7, "t.l1.desert_n1e1s1w1"
 
 ;swamp as overlay
 
