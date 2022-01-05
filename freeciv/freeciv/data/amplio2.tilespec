@@ -233,8 +233,8 @@ layer0_match_type = "shallow"
 layer1_match_type = "ice"
 layer2_match_type = "ice"
 
-[tile_desert]
-tag = "desert"
+[tile_tundra]
+tag = "tundra"
 blend_layer = 1
 num_layers = 1
 layer0_match_type = "land"
@@ -293,8 +293,8 @@ layer0_match_type = "land"
 layer1_match_type = "forest"
 layer1_match_with = "forest"
 
-[tile_tundra]
-tag = "tundra"
+[tile_desert]
+tag = "desert"
 blend_layer = 1
 num_layers = 2
 layer0_match_type = "land"
