@@ -2233,7 +2233,7 @@ set =
       "hideouts", TRUE, FALSE
       "huts", 10, FALSE
       "killcitizen_pct", 60, FALSE        ; regulates % chance of pop kill by city pop-killer units
-      "landmass", 63, FALSE
+      "landmass", 90, FALSE
       "looting", "BASE_TRADE", FALSE
       "minplayers", 0, FALSE
       "move_bonus_in_frags", "ENABLED", TRUE   ;locked
@@ -2248,7 +2248,7 @@ set =
       "slot_control", TRUE, FALSE         ; multiple units per turn
       "slot_control_style", 1, FALSE      ; 1 = Shield2Gold units only
       "spaceship_travel_time", 225, FALSE
-      "specials", 350, FALSE
+      "specials", 100, FALSE
       "startpos", "DEFAULT", FALSE
       "startunits", "xxcccwwwADD", FALSE
       "techleak", 25, FALSE
