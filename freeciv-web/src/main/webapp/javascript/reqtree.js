@@ -21,6 +21,7 @@
 // add this to reqtree.c in the Freeciv C client:
 // printf("\"%d\": {\"x\":%d, \"y\":%d}, // %s \n", node->tech, startx, starty, text);
 // TODO! This really needs to be cleaned up.
+// New rulesets also need added in tech.js
 
 
 var reqtree = {
@@ -112,7 +113,6 @@ var reqtree = {
 "31": {"x":4680, "y":381}, // Fusion Power
 "74": {"x":4680, "y":481} // Stealth
 };
-
 
 
 // multiplayer ruleset
@@ -208,9 +208,7 @@ var reqtree_multiplayer = {
 };
 
 
-
 // civ2civ3 ruleset
-
 var reqtree_civ2civ3 = {
 "2": {"x":0, "y":0}, // Alphabet
 "10": {"x":0, "y":114}, // Ceremonial Burial
@@ -299,9 +297,109 @@ var reqtree_civ2civ3 = {
 "74": {"x":4506, "y":265}, // Stealth
 "26": {"x":4506, "y":408}, // Environmentalism
 "31": {"x":4757, "y":404} // Fusion Power
-
 };
 
+
+// SIM30 ruleset
+var reqtree_SIM30 = {
+"9": {"x":0, "y":0}, // Ceremonial Burial 
+"33": {"x":0, "y":222}, // Horseback Riding 
+"96": {"x":0, "y":444}, // Culture 
+"97": {"x":0, "y":618}, // Tools 
+"53": {"x":210, "y":32}, // Mysticism 
+"90": {"x":210, "y":273}, // Pictography 
+"93": {"x":210, "y":307}, // Hierarchy 
+"8": {"x":210, "y":389}, // Bronze Working 
+"91": {"x":210, "y":584}, // Dried Brick 
+"80": {"x":210, "y":618}, // The Wheel 
+"60": {"x":482, "y":0}, // Polytheism 
+"2": {"x":482, "y":100}, // Alphabet 
+"43": {"x":482, "y":180}, // Map Making 
+"86": {"x":482, "y":260}, // Warrior Code 
+"19": {"x":482, "y":350}, // Currency 
+"85": {"x":482, "y":430}, // Wagons 
+"44": {"x":482, "y":520}, // Masonry 
+"92": {"x":482, "y":600}, // Fired Brick 
+"67": {"x":815, "y":0}, // Religion 
+"12": {"x":815, "y":66}, // Code of Laws 
+"87": {"x":815, "y":147}, // Writing 
+"46": {"x":815, "y":228}, // Mathematics 
+"36": {"x":815, "y":320}, // Iron Working 
+"83": {"x":815, "y":401}, // Trade 
+"61": {"x":815, "y":482}, // Pottery 
+"18": {"x":815, "y":563}, // Construction 
+"51": {"x":1148, "y":41}, // Monarchy 
+"4": {"x":1148, "y":135}, // Astronomy 
+"40": {"x":1148, "y":229}, // Literacy 
+"89": {"x":1148, "y":367}, // Formation 
+"71": {"x":1148, "y":461}, // Seafaring 
+"52": {"x":1503, "y":55}, // Monotheism 
+"28": {"x":1503, "y":164}, // Feudalism 
+"57": {"x":1503, "y":258}, // Philosophy 
+"42": {"x":1503, "y":461}, // Navigation 
+"11": {"x":1836, "y":35}, // Chivalry 
+"81": {"x":1836, "y":117}, // Theology 
+"58": {"x":1836, "y":239}, // Physics 
+"84": {"x":1836, "y":273}, // University 
+"79": {"x":1836, "y":355}, // The Republic 
+"47": {"x":1836, "y":437}, // Medicine 
+"32": {"x":2108, "y":134}, // Gunpowder 
+"82": {"x":2108, "y":216}, // Theory of Gravity 
+"10": {"x":2108, "y":298}, // Chemistry 
+"35": {"x":2108, "y":332}, // Invention 
+"70": {"x":2108, "y":418}, // Architecture 
+"7": {"x":2108, "y":500}, // Banking 
+"39": {"x":2359, "y":60}, // Leadership 
+"48": {"x":2359, "y":154}, // Metallurgy 
+"27": {"x":2359, "y":286}, // Explosives 
+"21": {"x":2359, "y":415}, // Economics 
+"54": {"x":2359, "y":497}, // Advanced Navigation 
+"22": {"x":2857, "y":122}, // Electricity 
+"74": {"x":2857, "y":156}, // Steam Engine 
+"20": {"x":2857, "y":374}, // Democracy 
+"88": {"x":2857, "y":497}, // Naval Doctrine 
+"66": {"x":3273, "y":86}, // Refrigeration 
+"24": {"x":3273, "y":168}, // Engineering 
+"63": {"x":3273, "y":250}, // Railroad 
+"17": {"x":3273, "y":332}, // Conscription 
+"77": {"x":3524, "y":185}, // Tactics 
+"5": {"x":3524, "y":267}, // Atomic Theory 
+"34": {"x":3524, "y":355}, // Industrialization 
+"15": {"x":3940, "y":132}, // Communism 
+"3": {"x":3940, "y":214}, // Amphibious Warfare 
+"75": {"x":3940, "y":310}, // Steel 
+"78": {"x":3940, "y":414}, // The Corporation 
+"65": {"x":3940, "y":508}, // Refining 
+"41": {"x":4316, "y":100}, // Machine Tools 
+"23": {"x":4316, "y":194}, // Electronics 
+"31": {"x":4316, "y":276}, // Genetic Engineering 
+"26": {"x":4316, "y":442}, // Espionage 
+"14": {"x":4316, "y":524}, // Combustion 
+"45": {"x":4567, "y":222}, // Mass Production 
+"49": {"x":4567, "y":571}, // Miniaturization 
+"64": {"x":4818, "y":60}, // Recycling 
+"29": {"x":4818, "y":161}, // Flight 
+"6": {"x":4818, "y":332}, // Automobile 
+"55": {"x":4818, "y":414}, // Nuclear Fission 
+"50": {"x":5151, "y":104}, // Mobile Warfare 
+"62": {"x":5151, "y":311}, // Radio 
+"94": {"x":5151, "y":408}, // Nuclear Doctrine 
+"56": {"x":5151, "y":502}, // Nuclear Power 
+"37": {"x":5402, "y":58}, // Labor Union 
+"1": {"x":5402, "y":231}, // Advanced Flight 
+"16": {"x":5402, "y":326}, // Computers 
+"95": {"x":5402, "y":408}, // Intercontinental Ballistics 
+"25": {"x":5900, "y":45}, // Environmentalism 
+"13": {"x":5900, "y":152}, // Combined Arms 
+"68": {"x":5900, "y":234}, // Robotics 
+"69": {"x":5900, "y":342}, // Rocketry 
+"38": {"x":5900, "y":436}, // Laser 
+"59": {"x":6316, "y":283}, // Plastics 
+"72": {"x":6316, "y":365}, // Space Flight 
+"73": {"x":6567, "y":324}, // Stealth 
+"76": {"x":6567, "y":406}, // Superconductors 
+"30": {"x":6818, "y":226}, // Fusion Power 
+};
 
 // Mp plus and Mp-evo (mp2) ruleset.
 var reqtree_mpplus = {
